@@ -63,10 +63,6 @@ public class CircularList<T> {
 		this._currentNode = this.getFirstNode();
 	}
 	
-	private boolean isCurrentNodeFirstNode(){
-		return this.getCurrentNode() == this.getFirstNode();
-	}
-	
 	public T getAt(int index){
 		if(index > this.getSize()-1) throw new IndexOutOfBoundsException();
 		
