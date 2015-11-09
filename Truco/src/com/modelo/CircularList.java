@@ -1,4 +1,4 @@
-package com.ListaCircular.modelo;
+package com.modelo;
 
 public class CircularList<T> {
 

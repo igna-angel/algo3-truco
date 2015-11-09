@@ -5,7 +5,24 @@ import com.exceptions.NumeroFueraDeRangoException;
 public class Carta {
 
 	public enum Palo{
-		Indefinido, Espada, Basto, Oro, Copa,
+		Indefinido(0), Espada(1), Basto(2), Oro(3), Copa(4);
+		
+		private int _valorPalo;
+		private Palo(int valorPalo){
+			this._valorPalo = valorPalo;
+		}
+		
+		public int getValorPalo(){
+			return this._valorPalo;
+		}
+		
+		public static Palo getTipoPalo(int valorPalo){
+			for(Palo palo : Palo.values()){
+				if(palo.getValorPalo() == valorPalo) return palo;
+			}
+			
+			return Palo.Indefinido;
+		}
 	}
 	
 	
