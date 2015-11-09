@@ -51,19 +51,24 @@ public class Mazo {
 	
 	public int[] mezclar(){
 		int[] nuevoOrden = new int[Mazo.CARTAS_EN_MAZO];
+		int posicionInvalida = -1;
 		
-		Arrays.fill(nuevoOrden, -1);
+		Arrays.fill(nuevoOrden, posicionInvalida);
 		
 		int nuevaPosicion;
 		
 		for(int i = 0; i < Mazo.CARTAS_EN_MAZO; i++){
 			do{
 				nuevaPosicion = ThreadLocalRandom.current().nextInt(0, Mazo.CARTAS_EN_MAZO);
-			}while(nuevoOrden[nuevaPosicion] != -1);
+			}while(nuevoOrden[nuevaPosicion] != posicionInvalida);
 			
 			nuevoOrden[nuevaPosicion] = i;			
 		}
 		
 		return nuevoOrden;
+	}
+	
+	public Carta getCarta(int indice){
+		return this.getCartas().get(indice);
 	}
 }
