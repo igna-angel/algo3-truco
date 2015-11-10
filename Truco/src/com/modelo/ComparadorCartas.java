@@ -1,6 +1,5 @@
 package com.modelo;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -105,24 +104,17 @@ public class ComparadorCartas {
 		
 		// Si el array no tiene elementos, devuelvo -1
 		if (listaCartas.size() == 0) return -1;
-		
-		// Traigo el valor de todas las cartas
-		List<Integer> valoresCartas = new ArrayList<Integer>();
-		for (Carta carta: listaCartas) {
-			int valor = _comparador.get(carta.getPalo()).get(carta.getNumero());
-			valoresCartas.add(valor);
-		}
-		
-		// Recorro el array para encontrar el más alto
+
+		// Recorro la lista de cartas para encontrar la más alta
 		boolean esParda = false;
 		int indiceMayor = 0;
-		for (int i = 1; i < valoresCartas.size(); i++) {
-			if (valoresCartas.get(i) < valoresCartas.get(indiceMayor)) {
+		for (int i = 1; i < listaCartas.size(); i++) {
+			if (_comparador.get(listaCartas.get(i).getPalo()).get(listaCartas.get(i).getNumero()) < _comparador.get(listaCartas.get(indiceMayor).getPalo()).get(listaCartas.get(indiceMayor).getNumero())) {
 				indiceMayor = i;
 				esParda = false;
 			}
 			
-			else if (valoresCartas.get(i) == valoresCartas.get(indiceMayor)) {
+			else if (_comparador.get(listaCartas.get(i).getPalo()).get(listaCartas.get(i).getNumero()) == _comparador.get(listaCartas.get(indiceMayor).getPalo()).get(listaCartas.get(indiceMayor).getNumero())) {
 				esParda = true;
 			}
 		}
