@@ -22,7 +22,7 @@ public class MazoTest {
 	}
 	
 	@Test
-	public void seCreaMazoExitosamente(){
+	public void testSeCreaMazoExitosamente(){
 		this._mazo.crear();
 		
 		List<Carta> cartas = this._mazo.getCartas();

@@ -19,21 +19,21 @@ public class PartidoTest {
 	}
 	
 	@Test (expected = NoHayEquiposException.class)
-	public void seCreaPartidoVacio(){
+	public void testSeCreaPartidoVacio(){
 		Assert.assertEquals(0, this._partido.getCantidadDeRondas());
 		Assert.assertEquals(0, this._partido.getCantidadEquipos());
 		this._partido.getCantidadDeJugadoresPorEquipo();
 	}
 	
 	@Test
-	public void seAgregaUnEquipo(){
+	public void testSeAgregaUnEquipo(){
 		this._partido.agregarEquipo();
 		Assert.assertEquals(1, this._partido.getCantidadEquipos());
 		Assert.assertEquals(0, this._partido.getCantidadDeJugadoresPorEquipo());
 	}
 	
 	@Test
-	public void seAgregaUnJugadorAEquipo(){
+	public void testSeAgregaUnJugadorAEquipo(){
 		this._partido.agregarEquipo();
 		Assert.assertEquals(0, this._partido.getCantidadJugadoresEnEquipo(0));
 		this._partido.agregarJugadorAEquipo(0);
@@ -41,7 +41,7 @@ public class PartidoTest {
 	}
 	
 	@Test
-	public void seAgregaUnaRondaDebeSerRedonda(){
+	public void testSeAgregaUnaRondaDebeSerRedonda(){
 		this._partido.agregarEquipo();
 		this._partido.agregarEquipo();
 		
@@ -51,7 +51,7 @@ public class PartidoTest {
 	}
 	
 	@Test
-	public void sePideUnaNuevaRondaDebeSerPicaPica(){
+	public void testSePideUnaNuevaRondaDebeSerPicaPica(){
 		this._partido.agregarEquipo();
 		this._partido.agregarEquipo();
 		
@@ -75,6 +75,4 @@ public class PartidoTest {
 		this._partido.nuevaRonda();
 		Assert.assertTrue(this._partido.getRondaActual() instanceof RondaRedonda);
 	}
-	
-
 }

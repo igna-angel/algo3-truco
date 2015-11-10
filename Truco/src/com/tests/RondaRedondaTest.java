@@ -17,12 +17,12 @@ public class RondaRedondaTest {
 	}
 	
 	@Test
-	public void siguienteRondaDebeSerRondaPicaPica(){
+	public void testSiguienteRondaDebeSerRondaPicaPica(){
 		Assert.assertTrue(this._ronda.getRondaSiguiente(true) instanceof RondaPicaPica);
 	}
 	
 	@Test
-	public void siguienteRondaDebeSerRondaRedonda(){
+	public void testSiguienteRondaDebeSerRondaRedonda(){
 		Assert.assertTrue(this._ronda.getRondaSiguiente(false) instanceof RondaRedonda);
 	}
 }

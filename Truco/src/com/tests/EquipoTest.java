@@ -17,13 +17,13 @@ public class EquipoTest {
 	}
 	
 	@Test
-	public void seCreaEquipoVacioYSinPuntos(){
+	public void testSeCreaEquipoVacioYSinPuntos(){
 		Assert.assertEquals(0, this._equipo.getCantidadJugadores());
 		Assert.assertEquals(0, this._equipo.getPuntaje());
 	}
 	
 	@Test
-	public void seAgreganDosJugadoresAlEquipo(){
+	public void testSeAgreganDosJugadoresAlEquipo(){
 		this._equipo.agregarJugador();		
 		this._equipo.agregarJugador();	
 
@@ -31,7 +31,7 @@ public class EquipoTest {
 	}
 	
 	@Test
-	public void seAgreganPuntosAlEquipo(){
+	public void testSeAgreganPuntosAlEquipo(){
 		this._equipo.agregarPuntos(5);
 		this._equipo.agregarPuntos(1);
 		this._equipo.agregarPuntos(-5);

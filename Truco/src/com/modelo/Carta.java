@@ -16,7 +16,7 @@ public class Carta {
 			return this._valorPalo;
 		}
 		
-		public static Palo getTipoPalo(int valorPalo){
+		public static Palo getTipoPalo(int valorPalo){			
 			for(Palo palo : Palo.values()){
 				if(palo.getValorPalo() == valorPalo) return palo;
 			}

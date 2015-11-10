@@ -18,9 +18,8 @@ public class RondaPicaPicaTest {
 	}
 
 	@Test
-	public void siguienteRondaDebeSerRondaRedonda(){
+	public void testSiguienteRondaDebeSerRondaRedonda(){
 		Assert.assertTrue(this._ronda.getRondaSiguiente(true) instanceof RondaRedonda);
 		Assert.assertTrue(this._ronda.getRondaSiguiente(false) instanceof RondaRedonda);
 	}
-	
 }
