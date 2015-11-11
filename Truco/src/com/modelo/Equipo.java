@@ -14,7 +14,7 @@ public class Equipo {
 	}
 	
 	public void agregarJugador(){
-		this.getJugadores().add(new Jugador());
+		this.getJugadores().add(new JugadorHumano());
 	}
 	
 	public int getPuntaje(){

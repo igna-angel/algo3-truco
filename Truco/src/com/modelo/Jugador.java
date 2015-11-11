@@ -1,34 +1,22 @@
 package com.modelo;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class Jugador implements IRecibible {
+public abstract class Jugador{
+	
+	protected List<Carta> _cartasEnMano;
 
-	List<Carta> _cartas = null;
+	public abstract void recibirCarta();
 	
-	public Jugador(){
-		this._cartas = new ArrayList<Carta>();
-	}
-	
-	private List<Carta> getCartas(){
-		return this._cartas;
-	}
-	
-	public void recibirCarta(Carta carta){
-		this.getCartas().add(carta);
-	}
+	public abstract void mezclarMazo();
 
-	public void devolverCartas(){
-		this.getCartas().clear();
-	}
+	public abstract List<Carta> getCartasEnMano();
 	
-	public int getCantidadCartas(){
-		return this.getCartas().size();
-	}
+	public abstract void repartirCartas(Jugador... jugadoresEnMesa);
+
+	public abstract void devolverCartasAlMazo();
 	
-	public void bajarCarta(Mano mano, Carta carta){
-		this.getCartas().remove(carta);
-		mano.recibirCarta(carta);
-	}
+	public abstract Carta getCartaEnMano(int index);
+	
+	public abstract Carta bajarCarta();
 }
