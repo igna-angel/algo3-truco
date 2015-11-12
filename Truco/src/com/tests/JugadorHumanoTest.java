@@ -21,12 +21,12 @@ public class JugadorHumanoTest {
 		jugador2 = new JugadorHumano();
 		jugador3 = new JugadorHumano();
 		jugador4 = new JugadorHumano();
-		Mazo.getInstanciaMazo();
 	}
 	
 	@Test
 	public void repartirCartasExitosoTest(){
-		Mazo.getInstanciaMazo().crear();
+		Mazo mazo = new Mazo();
+		mazo.crear();
 		jugador1.repartirCartas(jugador2,jugador3,jugador4,jugador1);
 		
 		Assert.assertTrue(jugador1.getCartaEnMano(0) != null);
@@ -47,7 +47,8 @@ public class JugadorHumanoTest {
 	
 	@Test
 	public void devolverCartasAlMazoExitosoTest(){
-		Mazo.getInstanciaMazo().crear();
+		Mazo mazo = new Mazo();
+		mazo.crear();
 		jugador1.repartirCartas(jugador2,jugador3,jugador4,jugador1);
 		
 		jugador1.devolverCartasAlMazo();

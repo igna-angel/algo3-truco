@@ -23,5 +23,4 @@ public class Mano implements IRecibible{
 	public int getCantidadCartas(){
 		return this.getCartas().size();
 	}
-
 }

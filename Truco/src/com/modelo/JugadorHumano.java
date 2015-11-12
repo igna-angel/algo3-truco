@@ -10,7 +10,7 @@ public class JugadorHumano extends Jugador{
 	}
 	
 	public void mezclarMazo(){
-		Mazo.getInstanciaMazo().mezclar();
+		//Mazo.getInstanciaMazo().mezclar();
 	}
 	
 	public void repartirCartas(Jugador... jugadoresEnMesa){
@@ -33,7 +33,7 @@ public class JugadorHumano extends Jugador{
 	}
 
 	public void recibirCarta() {
-		Mazo.getInstanciaMazo().repartirCarta(this);
+		//Mazo.getInstanciaMazo().repartirCarta(this);
 	}
 
 	public List<Carta> getCartasEnMano() {
@@ -42,7 +42,7 @@ public class JugadorHumano extends Jugador{
 	
 	public void devolverCartasAlMazo(){
 		if(this._cartasEnMano.size() != 0){
-			Mazo.getInstanciaMazo().agregarCartasAlMazoPorFinalizacionDeRonda(this._cartasEnMano);
+		//	Mazo.getInstanciaMazo().agregarCartasAlMazoPorFinalizacionDeRonda(this._cartasEnMano);
 			this._cartasEnMano.clear();
 		} //trabajar excepciones
 	}

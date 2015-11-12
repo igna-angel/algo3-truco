@@ -9,28 +9,17 @@ import com.modelo.Carta.Palo;
 
 public class Mazo {
 	
-	public static final int CARTAS_EN_MAZO = 48;
+	public static final int CARTAS_EN_MAZO = 40;
 	public static final int CANTIDAD_DE_PALOS = 4;
 	
 	private List<Carta> _cartas = null;
 	
 	private static Mazo MazoInstancia = null;
-	
-	private Mazo() {
-		 _cartas = new ArrayList<Carta>();
+		
+	public Mazo(){
+		this._cartas = new ArrayList<Carta>();
 	}
 	
-	public static Mazo getInstanciaMazo() {
-		if(MazoInstancia == null) {
-			MazoInstancia = new Mazo();
-		}
-		return MazoInstancia;
-	}
-	
-//	public Mazo(){
-//		this._cartas = new ArrayList<Carta>();
-//	}
-//	
 	public List<Carta> getCartas(){
 		return this._cartas;
 	}
@@ -40,8 +29,12 @@ public class Mazo {
 		int palo = Palo.Indefinido.getValorPalo();
 		for(int i = 0; i < CANTIDAD_DE_PALOS; i++){
 			palo++;
-			for(int j = 1 ; j <= cartasPorPalo; j++){
+			for(int j = 1 ; j <= 7; j++){
 				this.getCartas().add(new Carta(Palo.getTipoPalo(palo), j));
+			}
+			
+			for(int k = 10; k <= 12; k++){
+				this.getCartas().add(new Carta(Palo.getTipoPalo(palo), k));
 			}
 		}
 	}
