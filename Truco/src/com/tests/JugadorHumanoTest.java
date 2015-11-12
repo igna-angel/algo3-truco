@@ -4,62 +4,50 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.modelo.Jugador;
+import com.modelo.Carta;
 import com.modelo.JugadorHumano;
-import com.modelo.Mazo;
+import com.modelo.Mano;
 
 public class JugadorHumanoTest {
 	
-	private Jugador jugador1;
-	private Jugador jugador2;
-	private Jugador jugador3;
-	private Jugador jugador4;
+	private JugadorHumano _jugador = null;
 	
 	@Before
 	public void setup(){
-		jugador1 = new JugadorHumano();
-		jugador2 = new JugadorHumano();
-		jugador3 = new JugadorHumano();
-		jugador4 = new JugadorHumano();
+		this._jugador = new JugadorHumano();
 	}
 	
 	@Test
-	public void repartirCartasExitosoTest(){
-		Mazo mazo = new Mazo();
-		mazo.crear();
-		jugador1.repartirCartas(jugador2,jugador3,jugador4,jugador1);
-		
-		Assert.assertTrue(jugador1.getCartaEnMano(0) != null);
-		Assert.assertTrue(jugador2.getCartaEnMano(0) != null);
-		Assert.assertTrue(jugador3.getCartaEnMano(0) != null);
-		Assert.assertTrue(jugador4.getCartaEnMano(0) != null);
-		
-		Assert.assertTrue(jugador1.getCartaEnMano(1) != null);
-		Assert.assertTrue(jugador2.getCartaEnMano(1) != null);
-		Assert.assertTrue(jugador3.getCartaEnMano(1) != null);
-		Assert.assertTrue(jugador4.getCartaEnMano(1) != null);
-		
-		Assert.assertTrue(jugador1.getCartaEnMano(2) != null);
-		Assert.assertTrue(jugador2.getCartaEnMano(2) != null);
-		Assert.assertTrue(jugador3.getCartaEnMano(2) != null);
-		Assert.assertTrue(jugador4.getCartaEnMano(2) != null);
+	public void testSeCreaJugadorVacio(){
+		Assert.assertEquals(0, this._jugador.getCantidadCartas());
 	}
 	
 	@Test
-	public void devolverCartasAlMazoExitosoTest(){
-		Mazo mazo = new Mazo();
-		mazo.crear();
-		jugador1.repartirCartas(jugador2,jugador3,jugador4,jugador1);
+	public void testElJugadorRecibeUnaCarta(){
+		this._jugador.recibirCarta(new Carta());
+		Assert.assertEquals(1, this._jugador.getCantidadCartas());
+	}
+	
+	@Test
+	public void testElJugadorDevuelveLasCartas(){
+		this._jugador.recibirCarta(new Carta());
+		this._jugador.recibirCarta(new Carta());
+		this._jugador.recibirCarta(new Carta());
 		
-		jugador1.devolverCartasAlMazo();
-		jugador2.devolverCartasAlMazo();
-		jugador3.devolverCartasAlMazo();
-		jugador4.devolverCartasAlMazo();
+		Assert.assertEquals(3, this._jugador.getCantidadCartas());
+		this._jugador.devolverCartas();
+		Assert.assertEquals(0, this._jugador.getCantidadCartas());
+	}
+	
+	@Test
+	public void testSeBajaUnaCarta(){
+		Mano mano = new Mano();
 		
-		Assert.assertTrue(jugador1.getCartaEnMano(0) == null);
-		Assert.assertTrue(jugador2.getCartaEnMano(0) == null);
-		Assert.assertTrue(jugador3.getCartaEnMano(0) == null);
-		Assert.assertTrue(jugador4.getCartaEnMano(0) == null);
-
+		Carta cartaTest = new Carta();
+		
+		this._jugador.recibirCarta(cartaTest);
+		this._jugador.bajarCarta(mano, cartaTest);
+		
+		Assert.assertEquals(0, this._jugador.getCantidadCartas());	
 	}
 }

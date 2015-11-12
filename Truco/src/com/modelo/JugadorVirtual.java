@@ -1,49 +1,16 @@
 package com.modelo;
 
-import java.util.List;
-
 public class JugadorVirtual extends Jugador {
 
 	@Override
-	public void recibirCarta() {
+	public void recibirCarta(Carta carta) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void mezclarMazo() {
+	public void bajarCarta(Mano mano, Carta carta) {
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public List<Carta> getCartasEnMano() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void repartirCartas(Jugador... jugadoresEnMesa) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void devolverCartasAlMazo() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Carta getCartaEnMano(int index) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Carta bajarCarta() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

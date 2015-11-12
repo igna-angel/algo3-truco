@@ -13,9 +13,7 @@ public class Mazo {
 	public static final int CANTIDAD_DE_PALOS = 4;
 	
 	private List<Carta> _cartas = null;
-	
-	private static Mazo MazoInstancia = null;
-		
+			
 	public Mazo(){
 		this._cartas = new ArrayList<Carta>();
 	}
@@ -25,7 +23,6 @@ public class Mazo {
 	}
 	
 	public void crear(){
-		int cartasPorPalo = CARTAS_EN_MAZO / CANTIDAD_DE_PALOS;
 		int palo = Palo.Indefinido.getValorPalo();
 		for(int i = 0; i < CANTIDAD_DE_PALOS; i++){
 			palo++;
@@ -76,22 +73,5 @@ public class Mazo {
 	
 	public Carta getCarta(int indice){
 		return this.getCartas().get(indice);
-	}
-
-	public void repartirCarta(Jugador jugadorEnMesa) {
-		List<Carta> cartasEnMano = jugadorEnMesa.getCartasEnMano();
-		this.entregarCarta(cartasEnMano);
-	}
-
-	private void entregarCarta(List<Carta> cartasEnMano) {
-		Carta cartaAEntregar = this._cartas.get(0);
-		this._cartas.remove(0);
-		cartasEnMano.add(cartaAEntregar);
-	}
-
-	public void agregarCartasAlMazoPorFinalizacionDeRonda(List<Carta> cartasEnMano) {
-		_cartas.add(cartasEnMano.get(0));
-		_cartas.add(cartasEnMano.get(1));
-		_cartas.add(cartasEnMano.get(2));
 	}
 }

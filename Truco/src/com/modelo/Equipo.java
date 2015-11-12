@@ -9,7 +9,7 @@ public class Equipo {
 		this._jugadores = new CircularList<Jugador>();
 	}
 	
-	private CircularList<Jugador> getJugadores(){
+	public CircularList<Jugador> getJugadores(){
 		return this._jugadores;
 	}
 	

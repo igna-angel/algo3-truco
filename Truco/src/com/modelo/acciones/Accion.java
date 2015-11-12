@@ -2,7 +2,6 @@ package com.modelo.acciones;
 
 import java.util.List;
 
-import com.modelo.Mano;
 
 /*
  * Cada uno de los métodos de esta clase abstracta, verifica si la acción que indica su nombre

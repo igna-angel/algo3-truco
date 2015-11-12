@@ -1,5 +1,8 @@
 package com.modelo;
 
+import com.exceptions.EmptyListException;
+import com.exceptions.ValueNotFoundException;
+
 public class CircularList<T> {
 
 	private Node<T> _firstNode;
@@ -55,7 +58,7 @@ public class CircularList<T> {
 		return this._firstNode;
 	}
 	
-	public void advanceNode(){
+	public void advanceCursor(){
 		this._currentNode = this.getCurrentNode().getNext();
 	}
 		
@@ -71,7 +74,7 @@ public class CircularList<T> {
 		this.resetToFirst();
 		
 		while(i < index){
-			this.advanceNode();
+			this.advanceCursor();
 			i++;
 		}
 		
@@ -79,10 +82,12 @@ public class CircularList<T> {
 	}
 	
 	public T getLast(){
+		if(this.isEmpty()) throw new EmptyListException();
 		return this.getLastNode().getValue();
 	}
 	
 	public T getFirst(){
+		if(this.isEmpty()) throw new EmptyListException();
 		return this.getFirstNode().getValue();
 	}
 	
@@ -95,7 +100,7 @@ public class CircularList<T> {
 		this.resetToFirst();
 		
 		while(i < index){
-			this.advanceNode();
+			this.advanceCursor();
 			i++;
 		}
 		
@@ -111,5 +116,35 @@ public class CircularList<T> {
 			this._lastNode = null;
 			this._size--;
 		}	
+	}
+	
+	public int getIndexOf(T value){
+		int i = 0;
+		boolean found = false;
+		
+		this.resetToFirst();		
+		while(!found && i < this.getSize()){
+			if(value == this.getCurrent()) 
+				found = true;
+			else{
+				this.advanceCursor();
+				i++;
+			}
+		}
+		
+		if(found) return i;
+		
+		throw new ValueNotFoundException();
+	}
+
+	public void moveCursorTo(int index){
+		this.resetToFirst();
+		
+		int i = 0;
+		
+		while(i < index){
+			this.advanceCursor();
+			i++;
+		}
 	}
 }

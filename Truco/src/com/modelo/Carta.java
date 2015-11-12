@@ -38,7 +38,7 @@ public class Carta {
 	}
 	
 	private void setCarta(Palo palo, int numero){
-		if(numero < 1 || numero > 12) throw new NumeroFueraDeRangoException();
+		if(numero < 1 || numero == 8 || numero == 9 || numero > 12) throw new NumeroFueraDeRangoException();
 		
 		this._palo = palo;
 		this._numero = numero;

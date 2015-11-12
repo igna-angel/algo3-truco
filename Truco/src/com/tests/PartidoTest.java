@@ -44,7 +44,11 @@ public class PartidoTest {
 	public void testSeAgregaUnaRondaDebeSerRedonda(){
 		this._partido.agregarEquipo();
 		this._partido.agregarEquipo();
+		this._partido.agregarJugadorAEquipo(0);
+		this._partido.agregarJugadorAEquipo(1);
 		
+		System.out.println(this._partido.getCantidadEquipos());
+		this._partido.crearOrdenJugadores();
 		this._partido.nuevaRonda();
 		Assert.assertEquals(1, this._partido.getCantidadDeRondas());
 		Assert.assertTrue(this._partido.getRondaActual() instanceof RondaRedonda);
@@ -62,7 +66,9 @@ public class PartidoTest {
 		this._partido.agregarJugadorAEquipo(1);
 		this._partido.agregarJugadorAEquipo(1);
 		
+		this._partido.crearOrdenJugadores();
 		this._partido.nuevaRonda();
+		
 		this._partido.getRondaActual().asignarPuntos(3, 4);
 		this._partido.nuevaRonda();
 		Assert.assertTrue(this._partido.getRondaActual() instanceof RondaRedonda);
