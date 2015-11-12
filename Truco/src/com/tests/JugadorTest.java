@@ -9,44 +9,44 @@ import com.modelo.Jugador;
 import com.modelo.Mano;
 
 public class JugadorTest {
-	private Jugador _jugador = null;
-	
-	@Before
-	public void setup(){
-		this._jugador = new Jugador();
-	}
-	
-	@Test
-	public void testSeCreaJugadorVacio(){
-		Assert.assertEquals(0, this._jugador.getCantidadCartas());
-	}
-	
-	@Test
-	public void testElJugadorRecibeUnaCarta(){
-		this._jugador.recibirCarta(new Carta());
-		Assert.assertEquals(1, this._jugador.getCantidadCartas());
-	}
-	
-	@Test
-	public void testElJugadorDevuelveLasCartas(){
-		this._jugador.recibirCarta(new Carta());
-		this._jugador.recibirCarta(new Carta());
-		this._jugador.recibirCarta(new Carta());
-		
-		Assert.assertEquals(3, this._jugador.getCantidadCartas());
-		this._jugador.devolverCartas();
-		Assert.assertEquals(0, this._jugador.getCantidadCartas());
-	}
-	
-	@Test
-	public void testSeBajaUnaCarta(){
-		Mano mano = new Mano();
-		
-		Carta cartaTest = new Carta();
-		
-		this._jugador.recibirCarta(cartaTest);
-		this._jugador.bajarCarta(mano, cartaTest);
-		
-		Assert.assertEquals(0, this._jugador.getCantidadCartas());	
-	}
+//	private Jugador _jugador = null;
+//	
+//	@Before
+//	public void setup(){
+//		this._jugador = new Jugador();
+//	}
+//	
+//	@Test
+//	public void testSeCreaJugadorVacio(){
+//		Assert.assertEquals(0, this._jugador.getCantidadCartas());
+//	}
+//	
+//	@Test
+//	public void testElJugadorRecibeUnaCarta(){
+//		this._jugador.recibirCarta(new Carta());
+//		Assert.assertEquals(1, this._jugador.getCantidadCartas());
+//	}
+//	
+//	@Test
+//	public void testElJugadorDevuelveLasCartas(){
+//		this._jugador.recibirCarta(new Carta());
+//		this._jugador.recibirCarta(new Carta());
+//		this._jugador.recibirCarta(new Carta());
+//		
+//		Assert.assertEquals(3, this._jugador.getCantidadCartas());
+//		this._jugador.devolverCartas();
+//		Assert.assertEquals(0, this._jugador.getCantidadCartas());
+//	}
+//	
+//	@Test
+//	public void testSeBajaUnaCarta(){
+//		Mano mano = new Mano();
+//		
+//		Carta cartaTest = new Carta();
+//		
+//		this._jugador.recibirCarta(cartaTest);
+//		this._jugador.bajarCarta(mano, cartaTest);
+//		
+//		Assert.assertEquals(0, this._jugador.getCantidadCartas());	
+//	}
 }
