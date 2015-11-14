@@ -4,19 +4,18 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.Assert;
 
-import com.exceptions.NumeroFueraDeRangoException;
-import com.modelo.Carta;
+//import com.exceptions.NumeroFueraDeRangoException;
+import com.modelo.Basto;
+//import com.modelo.Carta;
+import com.modelo.Copa;
+import com.modelo.Espada;
+import com.modelo.Oro;
+import com.modelo.Palo;
+import com.modelo.cartas.*;
 //import com.modelo.Carta.Palo;
 
 public class CartaTest {
 	
-//	private Carta _carta;
-//	
-//	@Before
-//	public void setup(){
-//		_carta = new Carta();
-//	}
-//
 //	@Test
 //	public void testSeCreaCartaVacia(){		
 //		Assert.assertEquals(Palo.Indefinido, this._carta.getPalo());

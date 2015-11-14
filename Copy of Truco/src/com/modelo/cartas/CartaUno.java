@@ -25,14 +25,25 @@ public class CartaUno extends Carta {
 	}
 	
 	private Carta resultadoVsCartaUnoCasoEspecial(CartaUno cartaUno){
-		if (this._palo instanceof Basto && (!(cartaUno.getPalo() instanceof Espada))){
-			return this;
-		} else if ((this._palo instanceof Oro && cartaUno.getPalo() instanceof Copa)
-				|| (this._palo instanceof Copa && cartaUno.getPalo() instanceof Oro)){
-			return new Parda();
-		} else {
+		
+		if(this._palo instanceof Espada){
 			return this;
 		}
+		
+		if ((this._palo instanceof Basto) && 
+			((!(cartaUno.getPalo() instanceof Espada)))){
+				return this;
+		} else if (((this._palo instanceof Copa) || (this._palo instanceof Oro)) &&
+				   ((cartaUno.getPalo() instanceof Basto) || 
+				    (cartaUno.getPalo() instanceof Espada))){
+			return cartaUno;
+		} else if (((this._palo instanceof Copa) && (cartaUno.getPalo() instanceof Oro))
+				||((this._palo instanceof Oro) && (cartaUno.getPalo() instanceof Copa))){
+			return new Parda();
+		} else {
+			return cartaUno;
+		}
+		
 	}
 	
 	private Carta resultadoVsCartaSegunPaloDeUno(Carta carta){
