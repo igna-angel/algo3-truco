@@ -4,15 +4,16 @@ import java.util.List;
 
 
 /*
- * Cada uno de los métodos de esta clase abstracta, verifica si la acción que indica su nombre
- * es posible de realizarse en la situación actual del juego
+ * Cada uno de los mï¿½todos de esta clase abstracta, verifica si la acciï¿½n que indica su nombre
+ * es posible de realizarse en la situaciï¿½n actual del juego
  */
 
 public abstract class Accion {
-	private int puntosQueOtorga;
+	protected int puntosQueOtorgaSiSeQuiere;
+	protected int puntosQueOtorgaSiNoSeQuiere;
 	
-	// Sirve esto? Y de servir, cómo se integraría a la interfaz gráfica para habilitar los botones correspondientes?
-	private List<String> proximasAccionesPosibles;	
+	// Sirve esto? Y de servir, cï¿½mo se integrarï¿½a a la interfaz grï¿½fica para habilitar los botones correspondientes?
+	protected List<String> proximasAccionesPosibles;	
 	
 	public abstract boolean accionTrucoEsPosible();
 	public abstract boolean accionReTrucoEsPosible();
@@ -25,6 +26,7 @@ public abstract class Accion {
 	public abstract boolean accionFaltaEnvidoEsPosible();
 	public abstract boolean accionEnvidoFaltaEnvidoEsPosible();
 	public abstract boolean accionEnvidoEnvidoFaltaEnvidoEsPosible();
+	public abstract boolean accionEnvidoRealEnvidoFaltaEnvidoEsPosible();
 	public abstract boolean accionEnvidoEnvidoRealEnvidoFaltaEnvidoEsPosible();
 	public abstract boolean accionRealEnvidoFaltaEnvidoEsPosible();
 	public abstract boolean accionFlorEsPosible();

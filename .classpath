@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="Copy of Truco/src"/>
+	<classpathentry kind="src" path="Truco/src"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/analysis/ant.jar"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/analysis/asm.jar"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/analysis/dom4j.jar"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/analysis/icu4j.jar"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/analysis/jaxen.jar"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/analysis/jdom.jar"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/analysis/junit.jar"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/analysis/pmd.jar"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/analysis/xalan.jar"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/analysis/xercesImpl.jar"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/analysis/xml-apis.jar"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/analysis/xmlParserAPIs.jar"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/analysis/xom.jar"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/ant-jar-1.8.3.jar"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/ant-junit-jar-1.8.3.jar"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/ant-launcher-jar-1.8.3.jar"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/asm-analysis-jar-5.0.1.jar"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/asm-commons-jar-5.0.1.jar"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/asm-jar-5.0.1.jar"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/asm-tree-jar-5.0.1.jar"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/asm-util-jar-5.0.1.jar"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/cobertura-jar-2.1.1.jar"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/commons-lang3-jar-3.3.2.jar"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/hamcrest-core-jar-1.3.jar"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/ivy.jar"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/jaxen-jar-1.1.4.jar"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/jetty-jar-6.1.14.jar"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/jetty-util-jar-6.1.14.jar"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/junit-jar-4.11.jar"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/logback-classic-jar-1.0.13.jar"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/logback-core-jar-1.0.13.jar"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/mockito-all-jar-1.9.0.jar"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/oro-jar-2.0.8.jar"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/servlet-api-2.5-jar-6.1.14.jar"/>
+	<classpathentry kind="lib" path="Copy of Truco/libs/slf4j-api-jar-1.7.5.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/analysis/ant.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/analysis/asm.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/analysis/dom4j.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/analysis/icu4j.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/analysis/jaxen.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/analysis/jdom.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/analysis/junit.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/analysis/pmd.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/analysis/xalan.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/analysis/xercesImpl.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/analysis/xml-apis.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/analysis/xmlParserAPIs.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/analysis/xom.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/ant-jar-1.8.3.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/ant-junit-jar-1.8.3.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/ant-launcher-jar-1.8.3.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/asm-analysis-jar-5.0.1.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/asm-commons-jar-5.0.1.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/asm-jar-5.0.1.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/asm-tree-jar-5.0.1.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/asm-util-jar-5.0.1.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/cobertura-jar-2.1.1.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/commons-lang3-jar-3.3.2.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/hamcrest-core-jar-1.3.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/ivy.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/jaxen-jar-1.1.4.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/jetty-jar-6.1.14.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/jetty-util-jar-6.1.14.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/junit-jar-4.11.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/logback-classic-jar-1.0.13.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/logback-core-jar-1.0.13.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/mockito-all-jar-1.9.0.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/oro-jar-2.0.8.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/servlet-api-2.5-jar-6.1.14.jar"/>
+	<classpathentry kind="lib" path="Truco/libs/slf4j-api-jar-1.7.5.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="Copy of Truco/bin"/>
+</classpath>
