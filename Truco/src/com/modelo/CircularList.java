@@ -118,6 +118,10 @@ public class CircularList<T> {
 		}	
 	}
 	
+	public boolean isCurrentFirst(){
+		return this.getCurrent() == this.getFirst();
+	}
+	
 	public int getIndexOf(T value){
 		int i = 0;
 		boolean found = false;

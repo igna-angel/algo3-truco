@@ -4,25 +4,26 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.modelo.JugadorHumano;
 import com.modelo.Partido;
-import com.modelo.RondaPicaPica;
+import com.modelo.Ronda;
 import com.modelo.RondaRedonda;
 
 public class RondaPicaPicaTest {
 
-	private RondaPicaPica _ronda;
+	private Ronda _ronda;
 	
 	@Before
 	public void setup(){
 		Partido partido = new Partido();
 		partido.agregarEquipo();
 		partido.agregarEquipo();
-		partido.agregarJugadorAEquipo(0);
-		partido.agregarJugadorAEquipo(1);
-		partido.crearOrdenJugadores();
-		partido.getOrdenJugadores().resetToFirst();
+		partido.agregarJugadorAEquipo(new JugadorHumano(), 0);
+		partido.agregarJugadorAEquipo(new JugadorHumano(), 1);
 		
-		this._ronda = new RondaPicaPica(partido, partido.getOrdenJugadores().getCurrent());
+		partido.crearPartido();
+		
+		this._ronda = partido.getRondaActual().getRondaSiguiente(true);
 	}
 
 	@Test

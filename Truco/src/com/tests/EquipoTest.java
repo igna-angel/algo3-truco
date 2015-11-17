@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.modelo.Equipo;
+import com.modelo.JugadorHumano;
 
 import org.junit.Assert;
 
@@ -24,8 +25,8 @@ public class EquipoTest {
 	
 	@Test
 	public void testSeAgreganDosJugadoresAlEquipo(){
-		this._equipo.agregarJugador();		
-		this._equipo.agregarJugador();	
+		this._equipo.agregarJugador(new JugadorHumano());		
+		this._equipo.agregarJugador(new JugadorHumano());	
 
 		Assert.assertEquals(2, this._equipo.getCantidadJugadores());
 	}

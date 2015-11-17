@@ -50,6 +50,5 @@ public class Carta {
 	
 	public int getNumero() {
 		return this._numero;
-	}
-	
+	}	
 }

@@ -13,6 +13,8 @@ public class Mazo {
 	public static final int CANTIDAD_DE_PALOS = 4;
 	
 	private List<Carta> _cartas = null;
+	
+	private int[] _mazoMezclado = null;
 			
 	public Mazo(){
 		this._cartas = new ArrayList<Carta>();
@@ -52,26 +54,41 @@ public class Mazo {
 		System.out.println("");
 	}
 	
-	public int[] mezclar(){
-		int[] nuevoOrden = new int[Mazo.CARTAS_EN_MAZO];
+	private int[] getMazoMezclado(){
+		return this._mazoMezclado;
+	}
+	
+	public void mezclar(){
+		this._mazoMezclado = new int[Mazo.CARTAS_EN_MAZO];
 		int posicionInvalida = -1;
 		
-		Arrays.fill(nuevoOrden, posicionInvalida);
+		Arrays.fill(this._mazoMezclado, posicionInvalida);
 		
 		int nuevaPosicion;
 		
 		for(int i = 0; i < Mazo.CARTAS_EN_MAZO; i++){
 			do{
 				nuevaPosicion = ThreadLocalRandom.current().nextInt(0, Mazo.CARTAS_EN_MAZO);
-			}while(nuevoOrden[nuevaPosicion] != posicionInvalida);
+			}while(this._mazoMezclado[nuevaPosicion] != posicionInvalida);
 			
-			nuevoOrden[nuevaPosicion] = i;			
+			this._mazoMezclado[nuevaPosicion] = i;			
 		}
-		
-		return nuevoOrden;
 	}
 	
 	public Carta getCarta(int indice){
 		return this.getCartas().get(indice);
 	}
+	
+	
+	public void repartir(CircularList<Jugador> jugadores, Jugador reparte, int cartasPorJugador){
+		jugadores.moveCursorTo(jugadores.getIndexOf(reparte));
+		
+		int cartasARepartir = jugadores.getSize() * cartasPorJugador;
+		
+		for(int i = 0; i < cartasARepartir; i++){
+			jugadores.advanceCursor();
+			jugadores.getCurrent().recibirCarta(this.getCarta(this.getMazoMezclado()[i]));			
+		}
+	}
+
 }

@@ -3,7 +3,6 @@ package com.modelo;
 
 import java.util.Stack;
 
-import com.exceptions.EmptyListException;
 import com.exceptions.NoHayEquiposException;
 
 public class Partido {
@@ -23,7 +22,9 @@ public class Partido {
 	public Partido(){
 		this._rondas = new Stack<Ronda>();
 		this._equipos = new CircularList<Equipo>();
-		this._manejadorDeRonda = new ManejadorDeRonda();	
+		this._manejadorDeRonda = new ManejadorDeRonda();
+		this._mazo = new Mazo();
+		this.getMazo().crear();
 	}
 	
 	public void crearOrdenJugadores(){
@@ -69,7 +70,7 @@ public class Partido {
 		if(getEquipos().isEmpty()) throw new NoHayEquiposException();
 		if(this.getRondas().isEmpty()){
 			this.getOrdenJugadores().resetToFirst();
-			this.getRondas().push(new RondaRedonda(this, this.getOrdenJugadores().getCurrent()));
+			this.getRondas().push(new RondaRedonda(this, this.getOrdenJugadores().getFirst()));
 		}
 		else this.getRondas().push(this.getNuevaRonda());
 	}
@@ -86,8 +87,8 @@ public class Partido {
 		return this.getEquipos().getAt(numeroEquipo).getCantidadJugadores();
 	}
 	
-	public void agregarJugadorAEquipo(int numeroEquipo){
-		this.getEquipos().getAt(numeroEquipo).agregarJugador();
+	public void agregarJugadorAEquipo(Jugador jugador, int numeroEquipo){
+		this.getEquipos().getAt(numeroEquipo).agregarJugador(jugador);
 	}
 	
 	public CircularList<Equipo> getEquipos(){
@@ -107,11 +108,11 @@ public class Partido {
 		return this.getCantidadDeJugadoresPorEquipo()*2;
 	}
 	
-	private boolean	esPicaPica(){
-		return (this.getCantidadDeJugadoresPorEquipo() >= JUGADORES_MINIMOS_PICAPICA_POR_EQUIPO && (this.obtenerMaximoPuntaje() >= this.PUNTAJE_PICAPICA_MIN && this.obtenerMaximoPuntaje() <= this.PUNTAJE_PICAPICA_MAX));
+	public boolean	esPicaPica(){
+		return (this.getCantidadDeJugadoresPorEquipo() >= JUGADORES_MINIMOS_PICAPICA_POR_EQUIPO && (this.getMaximoPuntaje() >= this.PUNTAJE_PICAPICA_MIN && this.getMaximoPuntaje() <= this.PUNTAJE_PICAPICA_MAX));
 	}
 	
-	private int obtenerMaximoPuntaje(){
+	public int getMaximoPuntaje(){
 		return (this.getEquipos().getFirst().getPuntaje() > this.getEquipos().getLast().getPuntaje()) ? this.getEquipos().getFirst().getPuntaje() : this.getEquipos().getLast().getPuntaje();
 	}
 
@@ -121,12 +122,23 @@ public class Partido {
 	}
 
 	public void crearPartido(){
-		this._mazo = new Mazo();
-		this._mazo.crear();
-		
 		this.crearOrdenJugadores();
 		
+		this.getMazo().mezclar();
+		this.getMazo().repartir(this.getOrdenJugadores(), this.getOrdenJugadores().getFirst(), this.CARTAS_POR_JUGADOR);
+	
 		this.nuevaRonda();
-		this.getRondaActual().repartir(this.getMazo().mezclar(), this.CARTAS_POR_JUGADOR);
 	}	
+	
+	public Jugador getProximoEnRepartir(){
+		this.getOrdenJugadores().resetToFirst();
+		int posicionAMover = this.getOrdenJugadores().getIndexOf(this.getRepartidorActual());
+		this.getOrdenJugadores().moveCursorTo(posicionAMover);
+		this.getOrdenJugadores().advanceCursor();
+		return this.getOrdenJugadores().getCurrent();
+	}
+	
+	public Jugador getRepartidorActual(){
+		return this.getRondaActual().getRepartio();
+	}
 }

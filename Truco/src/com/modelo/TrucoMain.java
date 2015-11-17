@@ -8,8 +8,8 @@ public class TrucoMain {
 		partido.agregarEquipo();
 		partido.agregarEquipo();
 		
-		partido.agregarJugadorAEquipo(0);
-		partido.agregarJugadorAEquipo(1);
+		partido.agregarJugadorAEquipo(new JugadorHumano(), 0);
+		partido.agregarJugadorAEquipo(new JugadorHumano(), 1);
 		
 		partido.crearPartido();
 		
