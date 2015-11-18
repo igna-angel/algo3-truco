@@ -3,8 +3,8 @@ package com.modelo;
 import java.util.HashMap;
 import java.util.List;
 
-import com.modelo.Carta;
-import com.modelo.Carta.Palo;
+import com.modelo.cartas.Carta;
+import com.modelo.cartas.Carta.Palo;
 
 public class ComparadorCartas {
 	private static HashMap<Palo, HashMap<Integer, Integer>> _comparador = null;

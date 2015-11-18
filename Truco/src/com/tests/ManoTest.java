@@ -4,8 +4,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.modelo.Carta;
 import com.modelo.Mano;
+import com.modelo.cartas.Carta;
+import com.modelo.cartas.CartaNormal;
 
 public class ManoTest {
 
@@ -24,15 +25,15 @@ public class ManoTest {
 	@Test
 	public void testSeAgregaUnaCartaALaMano(){
 		Assert.assertEquals(0, this._mano.getCantidadCartas());
-		this._mano.recibirCarta(new Carta());
+		this._mano.recibirCarta(new CartaNormal());
 		Assert.assertEquals(1, this._mano.getCantidadCartas());
 	}
 	
 	@Test
 	public void testSeRemueveUnaCartaDeLaMano(){
-		Carta cartaA = new Carta();
-		Carta cartaB = new Carta();
-		Carta cartaC = new Carta();
+		Carta cartaA = new CartaNormal();
+		Carta cartaB = new CartaNormal();
+		Carta cartaC = new CartaNormal();
 		
 		this._mano.recibirCarta(cartaA);
 		this._mano.recibirCarta(cartaB);
@@ -48,10 +49,10 @@ public class ManoTest {
 	@Test
 	public void testSeDevuelvenLasCartas(){
 		Assert.assertEquals(0, this._mano.getCantidadCartas());
-		this._mano.recibirCarta(new Carta());
-		this._mano.recibirCarta(new Carta());
-		this._mano.recibirCarta(new Carta());
-		this._mano.recibirCarta(new Carta());
+		this._mano.recibirCarta(new CartaNormal());
+		this._mano.recibirCarta(new CartaNormal());
+		this._mano.recibirCarta(new CartaNormal());
+		this._mano.recibirCarta(new CartaNormal());
 		Assert.assertEquals(4, this._mano.getCantidadCartas());
 		this._mano.devolverCartas();
 		Assert.assertEquals(0, this._mano.getCantidadCartas());

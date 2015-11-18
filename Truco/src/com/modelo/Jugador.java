@@ -1,5 +1,7 @@
 package com.modelo;
 
+import com.modelo.cartas.Carta;
+
 public abstract class Jugador implements IRecibible{
 	
 	protected Mano _mano;

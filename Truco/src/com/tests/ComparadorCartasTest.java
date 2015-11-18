@@ -7,9 +7,10 @@ import org.junit.Assert;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import com.modelo.Carta;
-import com.modelo.Carta.Palo;
 import com.modelo.ComparadorCartas;
+import com.modelo.cartas.Carta;
+import com.modelo.cartas.Carta.Palo;
+import com.modelo.cartas.CartaNormal;
 
 
 public class ComparadorCartasTest {
@@ -22,12 +23,12 @@ public class ComparadorCartasTest {
 	
 	@Before
 	public void setup(){
-		this._carta1 = new Carta(Palo.Espada, 1);
-		this._carta2 = new Carta(Palo.Basto, 1);
-		this._carta3 = new Carta(Palo.Espada, 7);
-		this._carta4 = new Carta(Palo.Copa, 7);
-		this._carta5 = new Carta(Palo.Oro, 4);
-		this._carta6 = new Carta(Palo.Copa, 4);
+		this._carta1 = new CartaNormal(Palo.Espada, 1);
+		this._carta2 = new CartaNormal(Palo.Basto, 1);
+		this._carta3 = new CartaNormal(Palo.Espada, 7);
+		this._carta4 = new CartaNormal(Palo.Copa, 7);
+		this._carta5 = new CartaNormal(Palo.Oro, 4);
+		this._carta6 = new CartaNormal(Palo.Copa, 4);
 	}
 	
 	@Test

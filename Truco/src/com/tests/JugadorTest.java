@@ -4,10 +4,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.modelo.Carta;
 import com.modelo.Jugador;
 import com.modelo.JugadorHumano;
 import com.modelo.Vuelta;
+import com.modelo.cartas.Carta;
+import com.modelo.cartas.CartaNormal;
 
 public class JugadorTest {
 	private Jugador _jugador = null;
@@ -25,7 +26,7 @@ public class JugadorTest {
 	@Test
 	public void testElJugadorRecibeUnaCarta(){
 		Assert.assertEquals(0, this._jugador.getCantidadCartas());
-		this._jugador.recibirCarta(new Carta());
+		this._jugador.recibirCarta(new CartaNormal());
 		Assert.assertEquals(1, this._jugador.getCantidadCartas());
 	}
 	
@@ -33,9 +34,9 @@ public class JugadorTest {
 	public void testElJugadorDevuelveLasCartas(){
 		Assert.assertEquals(0, this._jugador.getCantidadCartas());
 
-		this._jugador.recibirCarta(new Carta());
-		this._jugador.recibirCarta(new Carta());
-		this._jugador.recibirCarta(new Carta());
+		this._jugador.recibirCarta(new CartaNormal());
+		this._jugador.recibirCarta(new CartaNormal());
+		this._jugador.recibirCarta(new CartaNormal());
 		
 		Assert.assertEquals(3, this._jugador.getCantidadCartas());
 		
@@ -48,7 +49,7 @@ public class JugadorTest {
 	public void testSeBajaUnaCarta(){
 		Vuelta vuelta = new Vuelta();
 		
-		Carta cartaTest = new Carta();
+		Carta cartaTest = new CartaNormal();
 		
 		Assert.assertEquals(0, this._jugador.getCantidadCartas());
 

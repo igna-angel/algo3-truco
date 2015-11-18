@@ -3,7 +3,12 @@ package com.modelo;
 public class TrucoMain {
 	
 	public static void main(String[] args){
-		Partido partido = new Partido();
+	
+		Mazo mazo = new Mazo();
+		mazo.crear();
+		mazo.imprimir();
+		
+		/*Partido partido = new Partido();
 		
 		partido.agregarEquipo();
 		partido.agregarEquipo();
@@ -19,7 +24,7 @@ public class TrucoMain {
 			partido.getOrdenJugadores().getCurrent().imprimirCartas();
 			System.out.println();
 			partido.getOrdenJugadores().advanceCursor();
-		}
+		}*/
 	}
 
 }

@@ -5,7 +5,16 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-import com.modelo.Carta.Palo;
+import com.modelo.cartas.Carta;
+import com.modelo.cartas.Carta.Palo;
+import com.modelo.cartas.CartaAnchoBasto;
+import com.modelo.cartas.CartaAnchoEspada;
+import com.modelo.cartas.CartaAnchoFalso;
+import com.modelo.cartas.CartaDos;
+import com.modelo.cartas.CartaNormal;
+import com.modelo.cartas.CartaSieteEspada;
+import com.modelo.cartas.CartaSieteOro;
+import com.modelo.cartas.CartaTres;
 
 public class Mazo {
 	
@@ -25,17 +34,46 @@ public class Mazo {
 	}
 	
 	public void crear(){
+		this.crearNormales();
+		this.crearEspeciales();
+	}
+	
+	private void crearNormales(){
 		int palo = Palo.Indefinido.getValorPalo();
 		for(int i = 0; i < CANTIDAD_DE_PALOS; i++){
 			palo++;
-			for(int j = 1 ; j <= 7; j++){
-				this.getCartas().add(new Carta(Palo.getTipoPalo(palo), j));
+			for(int j = 4 ; j < 7; j++){
+				this.getCartas().add(new CartaNormal(Palo.getTipoPalo(palo), j));
 			}
 			
+			
 			for(int k = 10; k <= 12; k++){
-				this.getCartas().add(new Carta(Palo.getTipoPalo(palo), k));
+				this.getCartas().add(new CartaNormal(Palo.getTipoPalo(palo), k));
 			}
 		}
+		
+		this.getCartas().add(new CartaNormal(Palo.Basto, 7));
+		this.getCartas().add(new CartaNormal(Palo.Copa, 7));
+	}
+	
+	private void crearEspeciales(){		
+		this.getCartas().add(new CartaAnchoFalso(Palo.Copa));
+		this.getCartas().add(new CartaAnchoFalso(Palo.Oro));
+		this.getCartas().add(new CartaAnchoBasto());
+		this.getCartas().add(new CartaAnchoEspada());
+		
+		int palo = Palo.Indefinido.getValorPalo();
+		palo++;
+		
+		while(palo < (Mazo.CANTIDAD_DE_PALOS+1)){
+			this.getCartas().add(new CartaDos(Palo.getTipoPalo(palo)));
+			this.getCartas().add(new CartaTres(Palo.getTipoPalo(palo)));
+			palo++;
+		}
+
+		this.getCartas().add(new CartaSieteOro());
+		this.getCartas().add(new CartaSieteEspada());
+		
 	}
 	
 	public void imprimir(){		
@@ -78,7 +116,6 @@ public class Mazo {
 	public Carta getCarta(int indice){
 		return this.getCartas().get(indice);
 	}
-	
 	
 	public void repartir(CircularList<Jugador> jugadores, Jugador reparte, int cartasPorJugador){
 		jugadores.moveCursorTo(jugadores.getIndexOf(reparte));

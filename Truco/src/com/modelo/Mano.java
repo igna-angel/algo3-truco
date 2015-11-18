@@ -3,6 +3,8 @@ package com.modelo;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.modelo.cartas.Carta;
+
 public class Mano implements IRecibible{
 
 	private List<Carta> _cartas = null;
