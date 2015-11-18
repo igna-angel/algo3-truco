@@ -61,11 +61,23 @@ public class CartaOnce extends Carta{
 
 	@Override
 	public Carta vs(CartaOnce cartaOnce) {
-		return new Parda();
+		return new Parda(cartaOnce);
 	}
 
 	@Override
 	public Carta vs(CartaDoce cartaDoce) {
 		return cartaDoce;
+	}
+	
+	public Carta vs(Parda parda){
+		 if (parda.getCartaParda() instanceof CartaCuatro
+		  || parda.getCartaParda() instanceof CartaCinco
+		  || parda.getCartaParda() instanceof CartaSeis
+		  || parda.getCartaParda() instanceof CartaSiete
+		  || parda.getCartaParda() instanceof CartaDiez){
+			 return this;
+		 } else {
+			 return parda;
+		 }
 	}
 }

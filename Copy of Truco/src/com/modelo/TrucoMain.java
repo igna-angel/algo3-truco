@@ -28,7 +28,6 @@ public class TrucoMain {
 		mazo.imprimir();
 		
 		mazo.imprimir(mazo.mezclar());
-		
 	}
 
 }

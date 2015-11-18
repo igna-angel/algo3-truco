@@ -30,7 +30,7 @@ public class CartaCuatro extends Carta{
 
 	@Override
 	public Carta vs(CartaCuatro cartaCuatro) {
-		return new Parda();
+		return new Parda(cartaCuatro);
 	}
 
 	@Override
@@ -61,5 +61,9 @@ public class CartaCuatro extends Carta{
 	@Override
 	public Carta vs(CartaDoce cartaDoce) {
 		return cartaDoce;
+	}
+	
+	public Carta vs(Parda parda){
+		return parda;
 	}
 }

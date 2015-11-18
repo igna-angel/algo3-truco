@@ -39,7 +39,7 @@ public class CartaUno extends Carta {
 			return cartaUno;
 		} else if (((this._palo instanceof Copa) && (cartaUno.getPalo() instanceof Oro))
 				||((this._palo instanceof Oro) && (cartaUno.getPalo() instanceof Copa))){
-			return new Parda();
+			return new Parda(cartaUno);
 		} else {
 			return cartaUno;
 		}
@@ -107,6 +107,24 @@ public class CartaUno extends Carta {
 	public Carta vs(CartaDoce cartaDoce) {
 		return this;
 	}
-
-
+	
+	public Carta vs(Parda parda){
+		
+		if (this._palo instanceof Basto
+		 || this._palo instanceof Espada){
+			return this;
+		} else 		
+		 if (parda.getCartaParda() instanceof CartaCuatro
+		  || parda.getCartaParda() instanceof CartaCinco
+		  || parda.getCartaParda() instanceof CartaSeis
+		  || parda.getCartaParda() instanceof CartaSiete
+		  || parda.getCartaParda() instanceof CartaDiez
+		  || parda.getCartaParda() instanceof CartaOnce
+		  || parda.getCartaParda() instanceof CartaDoce){
+			 return this;
+		 } else {
+			 return parda;
+		 }
+	}
+	
 }

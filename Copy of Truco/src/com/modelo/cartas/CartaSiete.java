@@ -70,7 +70,7 @@ public class CartaSiete extends Carta{
 	private Carta cartaContraSieteCasoEspecial(CartaSiete cartaSiete) {
 		if ((this._palo instanceof Basto && cartaSiete.getPalo() instanceof Copa)
 		||  (this._palo instanceof Copa && cartaSiete.getPalo() instanceof Basto)){
-			return new Parda();
+			return new Parda(cartaSiete);
 		} else if (this._palo instanceof Espada || cartaSiete.getPalo() instanceof Oro){
 			return this;
 		} else if (this._palo instanceof Oro || (!(cartaSiete.getPalo() instanceof Espada))){
@@ -93,5 +93,20 @@ public class CartaSiete extends Carta{
 	@Override
 	public Carta vs(CartaDoce cartaDoce) {
 		return this.cartaContraGenerica(cartaDoce);
+	}
+	
+	public Carta vs(Parda parda){
+		
+		if (this._palo instanceof Espada
+		 || this._palo instanceof Oro){
+			return this;
+		} else
+		 if (parda.getCartaParda() instanceof CartaCuatro
+		  || parda.getCartaParda() instanceof CartaCinco
+		  || parda.getCartaParda() instanceof CartaSeis){
+			 return this;
+		 } else {
+			 return parda;
+		 }
 	}
 }

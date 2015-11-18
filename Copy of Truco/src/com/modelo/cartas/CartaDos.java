@@ -28,7 +28,7 @@ public class CartaDos extends Carta{
 	}
 	
 	public Carta vs(CartaDos cartaDos) {
-		return new Parda();
+		return new Parda(cartaDos);
 	}
 
 	@Override
@@ -74,4 +74,20 @@ public class CartaDos extends Carta{
 	public Carta vs(CartaDoce cartaDoce) {
 		return this;
 	}
+	
+	public Carta vs(Parda parda){
+		 if (parda.getCartaParda() instanceof CartaCuatro
+		  || parda.getCartaParda() instanceof CartaCinco
+		  || parda.getCartaParda() instanceof CartaSeis
+		  || parda.getCartaParda() instanceof CartaSiete
+		  || parda.getCartaParda() instanceof CartaDiez
+		  || parda.getCartaParda() instanceof CartaOnce
+		  || parda.getCartaParda() instanceof CartaDoce
+		  || parda.getCartaParda() instanceof CartaUno){
+			 return this;
+		 } else {
+			 return parda;
+		 }
+	}
+
 }

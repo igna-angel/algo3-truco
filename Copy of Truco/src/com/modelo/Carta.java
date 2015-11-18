@@ -10,6 +10,7 @@ import com.modelo.cartas.CartaSeis;
 import com.modelo.cartas.CartaSiete;
 import com.modelo.cartas.CartaTres;
 import com.modelo.cartas.CartaUno;
+import com.modelo.cartas.Parda;
 
 //import com.exceptions.NumeroFueraDeRangoException;
 
@@ -44,6 +45,8 @@ public abstract class Carta {
 	public abstract Carta vs(CartaOnce cartaOnce);
 	
 	public abstract Carta vs(CartaDoce cartaDoce);
+	
+	public abstract Carta vs(Parda parda);
 	
 	
 //	public Carta(){

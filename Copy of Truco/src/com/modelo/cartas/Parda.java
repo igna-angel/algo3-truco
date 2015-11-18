@@ -3,71 +3,75 @@ package com.modelo.cartas;
 import com.modelo.Carta;
 
 public class Parda extends Carta{
+	
+	private Carta cartaConParda = null;
+	
+	public  Parda(Carta cartaParda){
+		this.cartaConParda = cartaParda;
+	}
+	
+	public Carta getCartaParda(){
+		return cartaConParda;
+	}
 
 	@Override
 	public Carta vs(Carta carta) {
-		// TODO Auto-generated method stub
-		return null;
+		return carta.vs(this);
 	}
 
 	@Override
 	public Carta vs(CartaUno cartaUno) {
-		// TODO Auto-generated method stub
-		return null;
+		return cartaUno.vs(this);
 	}
 
 	@Override
 	public Carta vs(CartaDos cartaDos) {
-		// TODO Auto-generated method stub
-		return null;
+		return cartaDos.vs(this);
 	}
 
 	@Override
 	public Carta vs(CartaTres cartaTres) {
-		// TODO Auto-generated method stub
-		return null;
+		return cartaTres.vs(this);
 	}
 
 	@Override
 	public Carta vs(CartaCuatro cartaCuatro) {
-		// TODO Auto-generated method stub
-		return null;
+		return cartaCuatro.vs(this);
 	}
 
 	@Override
 	public Carta vs(CartaCinco cartaCinco) {
-		// TODO Auto-generated method stub
-		return null;
+		return cartaCinco.vs(this);
 	}
 
 	@Override
 	public Carta vs(CartaSeis cartaSeis) {
-		// TODO Auto-generated method stub
-		return null;
+		return cartaSeis.vs(this);
 	}
 
 	@Override
 	public Carta vs(CartaSiete cartaSiete) {
-		// TODO Auto-generated method stub
-		return null;
+		return cartaSiete.vs(this);
 	}
 
 	@Override
 	public Carta vs(CartaDiez cartaDiez) {
-		// TODO Auto-generated method stub
-		return null;
+		return cartaDiez.vs(this);
 	}
 
 	@Override
 	public Carta vs(CartaOnce cartaOnce) {
-		// TODO Auto-generated method stub
-		return null;
+		return cartaOnce.vs(this);
 	}
 
 	@Override
 	public Carta vs(CartaDoce cartaDoce) {
-		// TODO Auto-generated method stub
-		return null;
+		return cartaDoce.vs(this);
 	}
 
+	@Override
+	public Carta vs(Parda parda) {
+		return this;
+	}
+	
 }

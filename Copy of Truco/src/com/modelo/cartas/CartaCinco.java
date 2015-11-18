@@ -35,7 +35,7 @@ public class CartaCinco extends Carta{
 
 	@Override
 	public Carta vs(CartaCinco cartaCinco) {
-		return new Parda();
+		return new Parda(cartaCinco);
 	}
 
 	@Override
@@ -61,5 +61,13 @@ public class CartaCinco extends Carta{
 	@Override
 	public Carta vs(CartaDoce cartaDoce) {
 		return cartaDoce;
+	}
+	
+	public Carta vs(Parda parda){
+		 if (parda.getCartaParda() instanceof CartaCuatro){
+			 return this;
+		 } else {
+			 return parda;
+		 }
 	}
 }
