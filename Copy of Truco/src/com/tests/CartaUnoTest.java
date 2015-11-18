@@ -4,12 +4,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.modelo.Basto;
-import com.modelo.Copa;
-import com.modelo.Espada;
-import com.modelo.Oro;
-import com.modelo.Palo;
+import com.modelo.cartas.Basto;
 import com.modelo.cartas.CartaUno;
+import com.modelo.cartas.Copa;
+import com.modelo.cartas.Espada;
+import com.modelo.cartas.Oro;
+import com.modelo.cartas.Palo;
 
 public class CartaUnoTest {
 	

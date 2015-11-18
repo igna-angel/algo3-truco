@@ -4,13 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.Assert;
 
-//import com.exceptions.NumeroFueraDeRangoException;
-import com.modelo.Basto;
-//import com.modelo.Carta;
-import com.modelo.Copa;
-import com.modelo.Espada;
-import com.modelo.Oro;
-import com.modelo.Palo;
 import com.modelo.cartas.*;
 //import com.modelo.Carta.Palo;
 

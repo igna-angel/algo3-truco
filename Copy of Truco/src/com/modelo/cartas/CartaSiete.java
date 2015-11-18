@@ -1,11 +1,6 @@
 package com.modelo.cartas;
 
-import com.modelo.Basto;
 import com.modelo.Carta;
-import com.modelo.Copa;
-import com.modelo.Espada;
-import com.modelo.Oro;
-import com.modelo.Palo;
 
 public class CartaSiete extends Carta{
 	public static final int VALOR_REPRESENTATIVO = 7;
@@ -71,12 +66,14 @@ public class CartaSiete extends Carta{
 		if ((this._palo instanceof Basto && cartaSiete.getPalo() instanceof Copa)
 		||  (this._palo instanceof Copa && cartaSiete.getPalo() instanceof Basto)){
 			return new Parda(cartaSiete);
-		} else if (this._palo instanceof Espada || cartaSiete.getPalo() instanceof Oro){
+		} else if (this._palo instanceof Espada && (!(cartaSiete.getPalo() instanceof Oro))){
 			return this;
-		} else if (this._palo instanceof Oro || (!(cartaSiete.getPalo() instanceof Espada))){
+		} else if (this._palo instanceof Oro && (!(cartaSiete.getPalo() instanceof Espada))){
 			return this;
-		} else {
+		} else if (this._palo instanceof Oro && cartaSiete.getPalo() instanceof Espada){
 			return cartaSiete;
+		} else {
+			return this;
 		}
 	}
 

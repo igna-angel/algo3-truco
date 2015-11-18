@@ -1,7 +1,6 @@
 package com.modelo.cartas;
 
 import com.modelo.Carta;
-import com.modelo.Palo;
 
 public class CartaCuatro extends Carta{
 	public static final int VALOR_REPRESENTATIVO = 4;

@@ -1,11 +1,6 @@
 package com.modelo.cartas;
 
-import com.modelo.Basto;
 import com.modelo.Carta;
-import com.modelo.Copa;
-import com.modelo.Espada;
-import com.modelo.Oro;
-import com.modelo.Palo;
 
 public class CartaUno extends Carta {
 	

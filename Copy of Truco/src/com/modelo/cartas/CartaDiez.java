@@ -1,9 +1,6 @@
 package com.modelo.cartas;
 
 import com.modelo.Carta;
-import com.modelo.Espada;
-import com.modelo.Oro;
-import com.modelo.Palo;
 
 public class CartaDiez extends Carta{
 	public static final int VALOR_REPRESENTATIVO = 10;

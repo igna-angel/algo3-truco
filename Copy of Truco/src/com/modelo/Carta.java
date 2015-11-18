@@ -10,6 +10,7 @@ import com.modelo.cartas.CartaSeis;
 import com.modelo.cartas.CartaSiete;
 import com.modelo.cartas.CartaTres;
 import com.modelo.cartas.CartaUno;
+import com.modelo.cartas.Palo;
 import com.modelo.cartas.Parda;
 
 //import com.exceptions.NumeroFueraDeRangoException;

@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+import com.modelo.cartas.Basto;
 import com.modelo.cartas.CartaCinco;
 import com.modelo.cartas.CartaCuatro;
 import com.modelo.cartas.CartaDiez;
@@ -15,6 +16,10 @@ import com.modelo.cartas.CartaSeis;
 import com.modelo.cartas.CartaSiete;
 import com.modelo.cartas.CartaTres;
 import com.modelo.cartas.CartaUno;
+import com.modelo.cartas.Copa;
+import com.modelo.cartas.Espada;
+import com.modelo.cartas.Oro;
+import com.modelo.cartas.Palo;
 
 //import com.modelo.Carta.Palo;
 
