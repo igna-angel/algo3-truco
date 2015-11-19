@@ -1,6 +1,9 @@
 package com.modelo;
 
+import java.util.List;
 import java.util.Stack;
+
+import com.modelo.acciones.Accion;
 
 public abstract class Ronda {
 
@@ -27,5 +30,17 @@ public abstract class Ronda {
 	
 	public Jugador getRepartio(){
 		return this._repartio;
+	}
+	
+	protected Stack<Vuelta> getVueltas(){
+		return this._vueltas;
+	}
+	
+	public void nuevaVuelta(List<Accion> acciones){
+		this.getVueltas().push(new Vuelta(this, acciones));
+	}
+	
+	public int getCantidadDeJugadoresTotales(){
+		return this.getPartido().getCantidadDeJugadoresTotales();
 	}
 }

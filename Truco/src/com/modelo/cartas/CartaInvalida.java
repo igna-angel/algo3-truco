@@ -1,34 +1,30 @@
 package com.modelo.cartas;
 
-public class CartaTres extends Carta{
-
-	public CartaTres(Palo palo) {
-		super(palo, 3);
-	}	
+public class CartaInvalida extends Carta {
 
 	@Override
 	public Carta ganador(IPeleable peleable) {
 		return peleable.ganador(this);
-	}	
-	
+	}
+
 	@Override
 	public Carta ganador(CartaInvalida invalida) {
-		return this;
+		return invalida;
 	}
 	
 	@Override
 	public Carta ganador(CartaNormal normal) {
-		return this;
+		return normal;
 	}
 
 	@Override
 	public Carta ganador(CartaAnchoFalso anchoFalso) {
-		return this;
+		return anchoFalso;
 	}
 
 	@Override
 	public Carta ganador(CartaDos dos) {
-		return this;
+		return dos;
 	}
 
 	@Override

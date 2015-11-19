@@ -5,54 +5,58 @@ public class CartaNormal extends Carta{
 	public CartaNormal() {
 		super();
 	}	
-	
-	@Override
-	public boolean ganaA(IPeleable peleable) {
-		return !peleable.ganaA(this);
-	}	
-	
+
 	public CartaNormal(Palo palo, int numero) {
 		super(palo, numero);
+	}
+
+	@Override
+	public Carta ganador(IPeleable peleable) {
+		return peleable.ganador(this);
 	}	
-
+	
 	@Override
-	public boolean ganaA(CartaNormal normal) {
-		return (normal.getNumero() <= this.getNumero());
+	public Carta ganador(CartaInvalida invalida) {
+		return this;
 	}
 
 	@Override
-	public boolean ganaA(CartaAnchoFalso anchoFalso) {
-		return false;
+	public Carta ganador(CartaNormal normal) {
+		return (normal.getNumero() < this.getNumero())? this : normal;
 	}
 
 	@Override
-	public boolean ganaA(CartaDos dos) {
-		return false;
+	public Carta ganador(CartaAnchoFalso anchoFalso) {
+		return anchoFalso;
 	}
 
 	@Override
-	public boolean ganaA(CartaTres tres) {
-		return false;
+	public Carta ganador(CartaDos dos) {
+		return dos;
 	}
 
 	@Override
-	public boolean ganaA(CartaSieteOro sieteOro) {
-		return false;
+	public Carta ganador(CartaTres tres) {
+		return tres;
 	}
 
 	@Override
-	public boolean ganaA(CartaSieteEspada sieteOro) {
-		return false;
+	public Carta ganador(CartaSieteOro sieteOro) {
+		return sieteOro;
 	}
 
 	@Override
-	public boolean ganaA(CartaAnchoBasto anchoBasto) {
-		return false;
+	public Carta ganador(CartaSieteEspada sieteEspada) {
+		return sieteEspada;
 	}
 
 	@Override
-	public boolean ganaA(CartaAnchoEspada anchoEspada) {
-		return false;
+	public Carta ganador(CartaAnchoBasto anchoBasto) {
+		return anchoBasto;
 	}
 
+	@Override
+	public Carta ganador(CartaAnchoEspada anchoEspada) {
+		return anchoEspada;
+	}
 }

@@ -7,48 +7,52 @@ public class CartaSieteEspada extends Carta{
 	}	
 	
 	@Override
-	public boolean ganaA(IPeleable peleable) {
-		return !peleable.ganaA(this);
+	public Carta ganador(IPeleable peleable) {
+		return peleable.ganador(this);
 	}	
 
 	@Override
-	public boolean ganaA(CartaNormal normal) {
-		return true;
+	public Carta ganador(CartaInvalida invalida) {
+		return this;
+	}
+	
+	@Override
+	public Carta ganador(CartaNormal normal) {
+		return this;
 	}
 
 	@Override
-	public boolean ganaA(CartaAnchoFalso anchoFalso) {
-		return true;
+	public Carta ganador(CartaAnchoFalso anchoFalso) {
+		return this;
 	}
 
 	@Override
-	public boolean ganaA(CartaDos dos) {
-		return true;
+	public Carta ganador(CartaDos dos) {
+		return this;
 	}
 
 	@Override
-	public boolean ganaA(CartaTres tres) {
-		return true;
+	public Carta ganador(CartaTres tres) {
+		return this;
 	}
 
 	@Override
-	public boolean ganaA(CartaSieteOro sieteOro) {
-		return true;
+	public Carta ganador(CartaSieteOro sieteOro) {
+		return this;
 	}
 
 	@Override
-	public boolean ganaA(CartaSieteEspada sieteOro) {
-		return true;
+	public Carta ganador(CartaSieteEspada sieteEspada) {
+		return sieteEspada;
 	}
 
 	@Override
-	public boolean ganaA(CartaAnchoBasto anchoBasto) {
-		return false;
+	public Carta ganador(CartaAnchoBasto anchoBasto) {
+		return anchoBasto;
 	}
 
 	@Override
-	public boolean ganaA(CartaAnchoEspada anchoEspada) {
-		return false;
+	public Carta ganador(CartaAnchoEspada anchoEspada) {
+		return anchoEspada;
 	}
-
 }

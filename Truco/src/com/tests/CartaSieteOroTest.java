@@ -9,6 +9,7 @@ import com.modelo.cartas.CartaAnchoBasto;
 import com.modelo.cartas.CartaAnchoEspada;
 import com.modelo.cartas.CartaAnchoFalso;
 import com.modelo.cartas.CartaDos;
+import com.modelo.cartas.CartaInvalida;
 import com.modelo.cartas.CartaNormal;
 import com.modelo.cartas.CartaSieteEspada;
 import com.modelo.cartas.CartaSieteOro;
@@ -21,7 +22,7 @@ public class CartaSieteOroTest {
 	
 	@Before
 	public void setup(){
-		_carta = new CartaSieteOro();
+		this._carta = new CartaSieteOro();
 	}
 
 	@Test
@@ -32,59 +33,67 @@ public class CartaSieteOroTest {
 	}
 	
 	@Test
+	public void testGanaACartaInvalida(){
+		Carta carta = new CartaSieteOro();
+		Carta cartaInvalida = new CartaInvalida();
+		
+		Assert.assertEquals(carta, carta.ganador(cartaInvalida));
+	}
+	
+	@Test
 	public void testGanaACartaNormal(){
 		Carta carta = new CartaSieteOro();
 		Carta cartaNormal = new CartaNormal(Palo.Copa, 12);
 		
-		Assert.assertTrue(carta.ganaA(cartaNormal));
+		Assert.assertEquals(carta, carta.ganador(cartaNormal));
 	}
 	
 	@Test
 	public void testGanaACartaAnchoFalso(){
 		Carta carta = new CartaSieteOro();
 		Carta cartaFalso = new CartaAnchoFalso(Palo.Oro);
-		Assert.assertTrue(carta.ganaA(cartaFalso));
+		Assert.assertEquals(carta, carta.ganador(cartaFalso));
 	}
 	
 	@Test
 	public void testGanaACartaDos(){
 		Carta carta = new CartaSieteOro();
 		Carta cartaDos = new CartaDos(Palo.Copa);
-		Assert.assertTrue(carta.ganaA(cartaDos));
+		Assert.assertEquals(carta, carta.ganador(cartaDos));
 	}
 	
 	@Test
 	public void testGanaACartaTres(){
 		Carta carta = new CartaSieteOro();
 		Carta cartaTres = new CartaTres(Palo.Copa);
-		Assert.assertTrue(carta.ganaA(cartaTres));
+		Assert.assertEquals(carta, carta.ganador(cartaTres));
 	}
 	
 	@Test
 	public void testGanaACartaSieteOro(){
 		Carta carta = new CartaSieteOro();
 		Carta cartaSieteOro = new CartaSieteOro();
-		Assert.assertFalse(carta.ganaA(cartaSieteOro));
+		Assert.assertEquals(carta, carta.ganador(cartaSieteOro));
 	}
 	
 	@Test
 	public void testGanaACartaSieteEspada(){
 		Carta carta = new CartaSieteOro();
 		Carta cartaSieteEspada = new CartaSieteEspada();
-		Assert.assertFalse(carta.ganaA(cartaSieteEspada));
+		Assert.assertEquals(cartaSieteEspada, carta.ganador(cartaSieteEspada));
 	}
 	
 	@Test
 	public void testGanaACartaAnchoBasto(){
 		Carta carta = new CartaSieteOro();
 		Carta cartaAnchoBasto = new CartaAnchoBasto();
-		Assert.assertFalse(carta.ganaA(cartaAnchoBasto));
+		Assert.assertEquals(cartaAnchoBasto, carta.ganador(cartaAnchoBasto));
 	}
 	
 	@Test
 	public void testGanaACartaAnchoEspada(){
 		Carta carta = new CartaSieteOro();
 		Carta cartaAnchoEspada = new CartaAnchoEspada();
-		Assert.assertFalse(carta.ganaA(cartaAnchoEspada));
+		Assert.assertEquals(cartaAnchoEspada, carta.ganador(cartaAnchoEspada));
 	}
 }

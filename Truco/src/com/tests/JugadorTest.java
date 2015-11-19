@@ -47,7 +47,7 @@ public class JugadorTest {
 	
 	@Test
 	public void testSeBajaUnaCarta(){
-		Vuelta vuelta = new Vuelta();
+		Vuelta vuelta = new Vuelta(null, null);
 		
 		Carta cartaTest = new CartaNormal();
 		

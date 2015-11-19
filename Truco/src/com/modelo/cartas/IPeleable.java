@@ -2,14 +2,15 @@ package com.modelo.cartas;
 
 public interface IPeleable {
 
-	public boolean ganaA(IPeleable peleable);
+	public Carta ganador(IPeleable peleable);
 	
-	public boolean ganaA(CartaNormal normal);
-	public boolean ganaA(CartaAnchoFalso anchoFalso);
-	public boolean ganaA(CartaDos dos);
-	public boolean ganaA(CartaTres tres);
-	public boolean ganaA(CartaSieteOro sieteOro);
-	public boolean ganaA(CartaSieteEspada sieteOro);
-	public boolean ganaA(CartaAnchoBasto anchoBasto);
-	public boolean ganaA(CartaAnchoEspada anchoEspada);
+	public Carta ganador(CartaInvalida invalida);
+	public Carta ganador(CartaNormal normal);
+	public Carta ganador(CartaAnchoFalso anchoFalso);
+	public Carta ganador(CartaDos dos);
+	public Carta ganador(CartaTres tres);
+	public Carta ganador(CartaSieteOro sieteOro);
+	public Carta ganador(CartaSieteEspada sieteEspada);
+	public Carta ganador(CartaAnchoBasto anchoBasto);
+	public Carta ganador(CartaAnchoEspada anchoEspada);
 }
