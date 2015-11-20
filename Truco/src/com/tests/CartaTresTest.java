@@ -11,6 +11,7 @@ import com.modelo.cartas.CartaAnchoFalso;
 import com.modelo.cartas.CartaDos;
 import com.modelo.cartas.CartaInvalida;
 import com.modelo.cartas.CartaNormal;
+import com.modelo.cartas.CartaPardaTres;
 import com.modelo.cartas.CartaSieteEspada;
 import com.modelo.cartas.CartaSieteOro;
 import com.modelo.cartas.CartaTres;
@@ -72,7 +73,7 @@ public class CartaTresTest {
 	public void testGanaACartaTres(){
 		Carta carta = new CartaTres(Palo.Copa);
 		Carta cartaTres = new CartaTres(Palo.Copa);
-		Assert.assertEquals(carta, carta.ganador(cartaTres));
+		Assert.assertTrue(carta.ganador(cartaTres) instanceof CartaPardaTres);
 	}
 	
 	@Test

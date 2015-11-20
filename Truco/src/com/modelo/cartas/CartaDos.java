@@ -28,7 +28,7 @@ public class CartaDos extends Carta {
 
 	@Override
 	public Carta ganador(CartaDos dos) {
-		return dos;
+		return new CartaPardaDos();
 	}
 
 	@Override
@@ -54,5 +54,25 @@ public class CartaDos extends Carta {
 	@Override
 	public Carta ganador(CartaAnchoEspada anchoEspada) {
 		return anchoEspada;
+	}
+
+	@Override
+	public Carta ganador(CartaPardaNormal pardaNormal) {
+		return this;
+	}
+
+	@Override
+	public Carta ganador(CartaPardaAnchoFalso pardaFalso) {
+		return this;
+	}
+
+	@Override
+	public Carta ganador(CartaPardaDos pardaDos) {
+		return pardaDos;
+	}
+
+	@Override
+	public Carta ganador(CartaPardaTres pardaTres) {
+		return pardaTres;
 	}	
 }

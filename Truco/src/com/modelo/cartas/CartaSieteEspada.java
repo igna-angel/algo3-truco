@@ -55,4 +55,24 @@ public class CartaSieteEspada extends Carta{
 	public Carta ganador(CartaAnchoEspada anchoEspada) {
 		return anchoEspada;
 	}
+
+	@Override
+	public Carta ganador(CartaPardaNormal pardaNormal) {
+		return this;
+	}
+
+	@Override
+	public Carta ganador(CartaPardaAnchoFalso pardaFalso) {
+		return this;
+	}
+
+	@Override
+	public Carta ganador(CartaPardaDos pardaDos) {
+		return this;
+	}
+
+	@Override
+	public Carta ganador(CartaPardaTres pardaTres) {
+		return this;
+	}
 }

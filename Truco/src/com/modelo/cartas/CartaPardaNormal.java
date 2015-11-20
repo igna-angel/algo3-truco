@@ -1,39 +1,41 @@
 package com.modelo.cartas;
 
-public class CartaTres extends Carta{
+import com.exceptions.PardaInvalidaException;
 
-	public CartaTres(Palo palo) {
-		super(palo, 3);
-	}	
+public class CartaPardaNormal extends Carta{
 
+	public CartaPardaNormal(int numero) {
+		super(Palo.Indefinido, numero);
+	}
+	
 	@Override
 	public Carta ganador(IPeleable peleable) {
 		return peleable.ganador(this);
-	}	
-	
+	}
+
 	@Override
 	public Carta ganador(CartaInvalida invalida) {
 		return this;
 	}
-	
+
 	@Override
 	public Carta ganador(CartaNormal normal) {
-		return this;
+		return (normal.getNumero() <= this.getNumero())? this : normal;
 	}
 
 	@Override
 	public Carta ganador(CartaAnchoFalso anchoFalso) {
-		return this;
+		return anchoFalso;
 	}
 
 	@Override
 	public Carta ganador(CartaDos dos) {
-		return this;
+		return dos;
 	}
 
 	@Override
 	public Carta ganador(CartaTres tres) {
-		return new CartaPardaTres();
+		return tres;
 	}
 
 	@Override
@@ -58,21 +60,22 @@ public class CartaTres extends Carta{
 
 	@Override
 	public Carta ganador(CartaPardaNormal pardaNormal) {
-		return this;
+		throw new PardaInvalidaException();
 	}
 
 	@Override
 	public Carta ganador(CartaPardaAnchoFalso pardaFalso) {
-		return this;
+		throw new PardaInvalidaException();
 	}
 
 	@Override
 	public Carta ganador(CartaPardaDos pardaDos) {
-		return this;
+		throw new PardaInvalidaException();
 	}
 
 	@Override
 	public Carta ganador(CartaPardaTres pardaTres) {
-		return pardaTres;
+		throw new PardaInvalidaException();
 	}
+
 }

@@ -13,4 +13,8 @@ public interface IPeleable {
 	public Carta ganador(CartaSieteEspada sieteEspada);
 	public Carta ganador(CartaAnchoBasto anchoBasto);
 	public Carta ganador(CartaAnchoEspada anchoEspada);
+	public Carta ganador(CartaPardaNormal pardaNormal);
+	public Carta ganador(CartaPardaAnchoFalso pardaFalso);
+	public Carta ganador(CartaPardaDos pardaDos);
+	public Carta ganador(CartaPardaTres	pardaTres);
 }
