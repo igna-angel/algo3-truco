@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.Assert;
 
+import com.exceptions.NumeroCartasACompararIncorrectoException;
 import com.modelo.ComparadorCartas;
 import com.modelo.Mazo;
 
@@ -78,6 +79,10 @@ public class ComparadorCartasTest {
 		//Sietes oro y espada
 		Assert.assertEquals(7,comparador.compararCartas(mazo.getCarta(0),mazo.getCarta(38)).getNumero());
 		Assert.assertEquals(7,comparador.compararCartas(mazo.getCarta(0),mazo.getCarta(39)).getNumero());
-		
+	}
+	
+	@Test (expected = NumeroCartasACompararIncorrectoException.class)
+	public void testSiIngresoNumeroIncorrectoDeCartasPosibleOcurreExcepcion(){
+		comparador.compararCartas(mazo.getCarta(0),mazo.getCarta(1),mazo.getCarta(2));
 	}
 }
