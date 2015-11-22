@@ -3,6 +3,8 @@ package com.modelo;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.modelo.cartas.Carta;
+
 public class Mano implements IRecibible{
 
 	private List<Carta> _cartas = null;
@@ -11,7 +13,7 @@ public class Mano implements IRecibible{
 		this._cartas = new ArrayList<Carta>();
 	}
 	
-	private List<Carta> getCartas(){
+	public List<Carta> getCartas(){
 		return this._cartas;
 	}
 	
@@ -22,5 +24,17 @@ public class Mano implements IRecibible{
 	
 	public int getCantidadCartas(){
 		return this.getCartas().size();
+	}
+	
+	public boolean contiene(Carta carta){
+		return this.getCartas().contains(carta);
+	}
+
+	public void quitarCarta(Carta carta) {
+		this.getCartas().remove(carta);
+	}
+
+	public void devolverCartas() {
+		this.getCartas().clear();
 	}
 }

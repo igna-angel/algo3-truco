@@ -8,8 +8,8 @@ public class RondaRedonda extends Ronda {
 
 	@Override
 	public Ronda getRondaSiguiente(boolean esPicaPica) {		
-		if(esPicaPica) return new RondaPicaPica(this.getPartido(), this.getProximoEnRepartir());
-		else return new RondaRedonda(this.getPartido(), this.getProximoEnRepartir());
+		if(esPicaPica) return new RondaPicaPica(this.getPartido(), this.getPartido().getProximoEnRepartir());
+		else return new RondaRedonda(this.getPartido(), this.getPartido().getProximoEnRepartir());
 	}
 
 }

@@ -8,7 +8,7 @@ public class RondaPicaPica extends Ronda {
 
 	@Override
 	public Ronda getRondaSiguiente(boolean esPicaPica) {
-		return new RondaRedonda(this.getPartido(), this.getProximoEnRepartir());
+		return new RondaRedonda(this.getPartido(), this.getPartido().getProximoEnRepartir());
 	}
 
 }

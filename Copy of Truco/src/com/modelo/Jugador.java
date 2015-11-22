@@ -1,28 +1,41 @@
 package com.modelo;
 
-import java.util.List;
+import com.modelo.cartas.Carta;
 
-public abstract class Jugador{
+public abstract class Jugador implements IRecibible{
 	
-	protected List<Carta> _cartas;
-
-	public abstract void recibirCarta(Carta carta);
-
-	protected List<Carta> getCartas(){
-		return this._cartas;
+	protected Mano _mano;
+	
+	public Jugador(){
+		this._mano = new Mano();
+	}
+	
+	protected Mano getMano(){
+		return this._mano;
+	}
+	
+	public void recibirCarta(Carta carta){
+		this.getMano().recibirCarta(carta);
 	}
 	
 	public int getCantidadCartas(){
-		return this.getCartas().size();
+		return this.getMano().getCantidadCartas();
 	}
-		
-	public abstract void bajarCarta(Mano mano, Carta carta);
 	
 	public void imprimirCartas(){
-		this.getCartas().forEach(carta ->
+		this.getMano().getCartas().forEach(carta ->
 			{
 				System.out.println("Palo: " + carta.getPalo() + "Numero: " + carta.getNumero());
 			}
 		);
 	}
+	
+	public void bajarCarta(Vuelta vuelta, Carta carta){
+		this.getMano().quitarCarta(carta);
+		vuelta.recibirCarta(carta);
+	}
+		
+	public void devolverCartas(){
+		this.getMano().devolverCartas();
+	}	
 }

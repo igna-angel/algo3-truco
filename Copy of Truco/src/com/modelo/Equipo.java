@@ -13,8 +13,8 @@ public class Equipo {
 		return this._jugadores;
 	}
 	
-	public void agregarJugador(){
-		this.getJugadores().add(new JugadorHumano());
+	public void agregarJugador(Jugador jugador){
+		this.getJugadores().add(jugador);
 	}
 	
 	public int getPuntaje(){

@@ -1,88 +1,78 @@
 package com.modelo.cartas;
 
-import com.modelo.Carta;
-
 public class CartaTres extends Carta{
-	public static final int VALOR_REPRESENTATIVO = 3;
+
+	public CartaTres(Palo palo) {
+		super(palo, 3);
+	}	
+
+	@Override
+	public Carta ganador(IPeleable peleable) {
+		return peleable.ganador(this);
+	}	
 	
-	public CartaTres(Palo palo){
-		this._palo = palo;
-		this._numero = VALOR_REPRESENTATIVO;
-	}
-	
-	public Carta vs(Carta carta) {
-		return carta.vs(this);
-	}
-
-	public Carta vs(CartaUno cartaUno) {
-		if (cartaUno.getPalo() instanceof Basto || cartaUno.getPalo() instanceof Espada){
-			return cartaUno;
-		} else {
-			return this;
-		}
-	}
-	
-	public Carta vs(CartaDos cartaDos) {
+	@Override
+	public Carta ganador(CartaInvalida invalida) {
 		return this;
-	}
-
-	@Override
-	public Carta vs(CartaTres cartaTres) {
-		return new Parda(cartaTres);
-	}
-
-	@Override
-	public Carta vs(CartaCuatro cartaCuatro) {
-		return this;
-	}
-
-	@Override
-	public Carta vs(CartaCinco cartaCinco) {
-		return this;
-	}
-
-	@Override
-	public Carta vs(CartaSeis cartaSeis) {
-		return this;
-	}
-
-	@Override
-	public Carta vs(CartaSiete cartaSiete) {
-		if (cartaSiete.getPalo() instanceof Oro || cartaSiete.getPalo() instanceof Espada){
-			return cartaSiete;
-		} else {
-			return this;
-		}
 	}
 	
 	@Override
-	public Carta vs(CartaDiez cartaDiez) {
+	public Carta ganador(CartaNormal normal) {
 		return this;
 	}
 
 	@Override
-	public Carta vs(CartaOnce cartaOnce) {
+	public Carta ganador(CartaAnchoFalso anchoFalso) {
 		return this;
 	}
 
 	@Override
-	public Carta vs(CartaDoce cartaDoce) {
+	public Carta ganador(CartaDos dos) {
 		return this;
 	}
-	
-	public Carta vs(Parda parda){
-		 if (parda.getCartaParda() instanceof CartaCuatro
-		  || parda.getCartaParda() instanceof CartaCinco
-		  || parda.getCartaParda() instanceof CartaSeis
-		  || parda.getCartaParda() instanceof CartaSiete
-		  || parda.getCartaParda() instanceof CartaDiez
-		  || parda.getCartaParda() instanceof CartaOnce
-		  || parda.getCartaParda() instanceof CartaDoce
-		  || parda.getCartaParda() instanceof CartaUno
-		  || parda.getCartaParda() instanceof CartaDos){
-			 return this;
-		 } else {
-			 return parda;
-		 }
+
+	@Override
+	public Carta ganador(CartaTres tres) {
+		return new CartaPardaTres();
+	}
+
+	@Override
+	public Carta ganador(CartaSieteOro sieteOro) {
+		return sieteOro;
+	}
+
+	@Override
+	public Carta ganador(CartaSieteEspada sieteEspada) {
+		return sieteEspada;
+	}
+
+	@Override
+	public Carta ganador(CartaAnchoBasto anchoBasto) {
+		return anchoBasto;
+	}
+
+	@Override
+	public Carta ganador(CartaAnchoEspada anchoEspada) {
+		return anchoEspada;
+	}
+
+	@Override
+	public Carta ganador(CartaPardaNormal pardaNormal) {
+		return this;
+	}
+
+	@Override
+	public Carta ganador(CartaPardaAnchoFalso pardaFalso) {
+		return this;
+	}
+
+	@Override
+	public Carta ganador(CartaPardaDos pardaDos) {
+		return this;
+	}
+
+	@Override
+	public Carta ganador(CartaPardaTres pardaTres) {
+		return pardaTres;
 	}
 }

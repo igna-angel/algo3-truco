@@ -1,73 +1,54 @@
 package com.modelo;
 
-import com.modelo.cartas.CartaCinco;
-import com.modelo.cartas.CartaCuatro;
-import com.modelo.cartas.CartaDiez;
-import com.modelo.cartas.CartaDoce;
-import com.modelo.cartas.CartaDos;
-import com.modelo.cartas.CartaOnce;
-import com.modelo.cartas.CartaSeis;
-import com.modelo.cartas.CartaSiete;
-import com.modelo.cartas.CartaTres;
-import com.modelo.cartas.CartaUno;
-import com.modelo.cartas.Palo;
-import com.modelo.cartas.Parda;
+import com.exceptions.NumeroFueraDeRangoException;
 
-//import com.exceptions.NumeroFueraDeRangoException;
+public class Carta {
 
-public abstract class Carta {
-	
-	protected Palo _palo;
-	protected int _numero;
-	//private int _numero = 0;
-	
-//	public Carta(Palo palo){
-//		this.setCarta(palo);
-//	}
-	
-	public abstract Carta vs(Carta carta);
-	
-	public abstract Carta vs(CartaUno cartaUno);
-	
-	public abstract Carta vs(CartaDos cartaDos);
-	
-	public abstract Carta vs(CartaTres cartaTres);
-	
-	public abstract Carta vs(CartaCuatro cartaCuatro);
-	
-	public abstract Carta vs(CartaCinco cartaCinco);
-	
-	public abstract Carta vs(CartaSeis cartaSeis);
-	
-	public abstract Carta vs(CartaSiete cartaSiete);
-	
-	public abstract Carta vs(CartaDiez cartaDiez);
-	
-	public abstract Carta vs(CartaOnce cartaOnce);
-	
-	public abstract Carta vs(CartaDoce cartaDoce);
-	
-	public abstract Carta vs(Parda parda);
+	public enum Palo{
+		Indefinido(0), Espada(1), Basto(2), Oro(3), Copa(4);
+		
+		private int _valorPalo;
+		private Palo(int valorPalo){
+			this._valorPalo = valorPalo;
+		}
+		
+		public int getValorPalo(){
+			return this._valorPalo;
+		}
+		
+		public static Palo getTipoPalo(int valorPalo){			
+			for(Palo palo : Palo.values()){
+				if(palo.getValorPalo() == valorPalo) return palo;
+			}
+			
+			return Palo.Indefinido;
+		}
+	}
 	
 	
-//	public Carta(){
-//		this(Palo.Indefinido, 1);
-//	}
+	private Palo _palo = Palo.Indefinido;
+	private int _numero = 0; 
 	
-//	private void setCarta(Palo palo){
-//		this._palo = palo;
-//	}
+	public Carta(Palo palo, int numero){
+		this.setCarta(palo, numero);
+	}
 	
-	public int getNumero(){
-		return this._numero;
+	public Carta(){
+		this(Palo.Indefinido, 1);
+	}
+	
+	private void setCarta(Palo palo, int numero){
+		if(numero < 1 || numero == 8 || numero == 9 || numero > 12) throw new NumeroFueraDeRangoException();
+		
+		this._palo = palo;
+		this._numero = numero;
 	}
 	
 	public Palo getPalo(){
 		return this._palo;
 	}
 	
-//	public int getNumero() {
-//		return this._numero;
-//	}
-	
+	public int getNumero() {
+		return this._numero;
+	}	
 }
