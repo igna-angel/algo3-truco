@@ -6,8 +6,8 @@ public class ValeCuatro extends ReTruco {
 		super(accionDecorar);
 	}
 	
-	public String cantar(){
-		return this.accionADecorar.cantar() + " ValeCuatro";
+	public int cantar(){
+		return this.accionADecorar.cantar() + 1;
 	}
 
 }

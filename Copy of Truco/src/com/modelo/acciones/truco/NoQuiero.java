@@ -6,7 +6,7 @@ public class NoQuiero extends TrucoDecorator{
 		super(accionDecorar);
 	}
 	
-	public String cantar(){
-		return this.accionADecorar.cantar() + "NoQuiero";
+	public int cantar(){
+		return this.accionADecorar.cantar();
 	}
 }

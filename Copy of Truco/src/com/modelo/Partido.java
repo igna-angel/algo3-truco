@@ -141,4 +141,8 @@ public class Partido {
 	public Jugador getRepartidorActual(){
 		return this.getRondaActual().getRepartio();
 	}
+
+	public int getcantidadDePuntosFaltantes() {
+		return 0;
+	}
 }

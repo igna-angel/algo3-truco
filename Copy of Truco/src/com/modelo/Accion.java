@@ -2,5 +2,5 @@ package com.modelo;
 
 public interface Accion {
 	
-	public abstract String cantar();
+	public abstract int cantar();
 }

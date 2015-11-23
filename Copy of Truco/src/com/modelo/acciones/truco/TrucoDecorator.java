@@ -9,7 +9,7 @@ public class TrucoDecorator implements AccionTruco{
 	}
 	
 	@Override
-	public String cantar() {
+	public int cantar() {
 		return this.accionADecorar.cantar();
 	}
 

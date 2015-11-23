@@ -9,7 +9,7 @@ public class EnvidoDecorator implements AccionEnvido {
 	}
 	
 	@Override
-	public String cantar() {
+	public int cantar() {
 		return accionADecorar.cantar();
 	}
 

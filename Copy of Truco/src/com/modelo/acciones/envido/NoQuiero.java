@@ -6,8 +6,8 @@ public class NoQuiero extends EnvidoDecorator {
 		super(accionDecorar);
 	}
 	
-	public String cantar(){
-		return this.accionADecorar.cantar() + "NoQuiero";
+	public int cantar(){
+		return this.accionADecorar.cantar();
 	}
 
 }

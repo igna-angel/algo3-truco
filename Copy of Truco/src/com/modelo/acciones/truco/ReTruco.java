@@ -6,8 +6,8 @@ public class ReTruco extends TrucoDecorator {
 		super(accionDecorar);
 	}
 	
-	public String cantar(){
-		return this.accionADecorar.cantar() + " ReTruco";
+	public int cantar(){
+		return this.accionADecorar.cantar() + 1;
 	}
 
 }

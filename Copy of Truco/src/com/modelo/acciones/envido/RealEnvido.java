@@ -6,7 +6,7 @@ public class RealEnvido extends EnvidoDecorator {
 		super(accionDecorar);
 	}
 
-	public String cantar(){
-		return this.accionADecorar.cantar() + "RealEnvido";
+	public int cantar(){
+		return this.accionADecorar.cantar() + 2;
 	}
 }
