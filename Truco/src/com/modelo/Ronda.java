@@ -3,8 +3,6 @@ package com.modelo;
 import java.util.List;
 import java.util.Stack;
 
-import com.modelo.acciones.Accion;
-
 public abstract class Ronda {
 
 	private Partido _partido;

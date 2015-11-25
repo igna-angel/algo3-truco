@@ -9,6 +9,7 @@ public class Partido {
 
 	private final int PUNTAJE_PICAPICA_MIN = 5;
 	private final int PUNTAJE_PICAPICA_MAX = 25;
+	private final int PUNTAJE_MAXIMO_JUEGO = 30;
 	private final int JUGADORES_MINIMOS_PICAPICA_POR_EQUIPO = 3;
 	private final int CARTAS_POR_JUGADOR = 3;
 	
@@ -140,5 +141,32 @@ public class Partido {
 	
 	public Jugador getRepartidorActual(){
 		return this.getRondaActual().getRepartio();
+	}
+
+	public int getcantidadDePuntosFaltantes() {
+		
+		int puntajeA;
+		int puntajeB;
+		
+		puntajeA = this._equipos.getFirst().getPuntaje();
+		puntajeB = this._equipos.getLast().getPuntaje();
+		
+		return puntajeFaltanteParaGanarEntreDosEquipos(puntajeA,puntajeB);
+	}
+	
+	private int puntajeFaltanteParaGanarEntreDosEquipos(int puntajeA, int puntajeB){
+		if (puntajeA > puntajeB){
+			return puntajeFaltanteSegunMalasOBuenas(puntajeA);
+		} else {
+			return puntajeFaltanteSegunMalasOBuenas(puntajeB);
+		}	
+	}
+	
+	private int puntajeFaltanteSegunMalasOBuenas(int puntaje){
+		if(puntaje < 15){
+			return this.PUNTAJE_MAXIMO_JUEGO;
+		} else {
+			return (this.PUNTAJE_MAXIMO_JUEGO - puntaje);
+		}
 	}
 }

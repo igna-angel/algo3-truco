@@ -3,7 +3,6 @@ package com.modelo;
 import java.util.List;
 import java.util.Stack;
 
-import com.modelo.acciones.Accion;
 import com.modelo.cartas.Carta;
 import com.modelo.cartas.CartaInvalida;
 
