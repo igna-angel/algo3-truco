@@ -41,4 +41,15 @@ public abstract class Ronda {
 	public int getCantidadDeJugadoresTotales(){
 		return this.getPartido().getCantidadDeJugadoresTotales();
 	}
+	
+	public void seCantoTruco(){
+		
+		Accion truco = this._partido.getManejadorDeRonda().cantarTruco(this._partido);
+		
+		this.getVueltas().peek().getAcciones().add(truco);	
+	}
+
+	public void nuevaVuelta() {
+		this.getVueltas().push(new Vuelta(this));
+	}
 }

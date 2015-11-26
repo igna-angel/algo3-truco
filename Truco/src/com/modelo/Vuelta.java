@@ -1,5 +1,6 @@
 package com.modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
@@ -19,6 +20,13 @@ public class Vuelta implements IRecibible {
 		this._cartaGanadora = new CartaInvalida();
 		this._ronda = ronda;
 	}
+	
+	public Vuelta(Ronda ronda) {
+		this._cartas = new Stack<Carta>();
+		this._acciones = new ArrayList<Accion>();
+		this._cartaGanadora = new CartaInvalida();
+		this._ronda = ronda;
+	}
 
 	public Stack<Carta> getCartas(){
 		return this._cartas;
@@ -35,6 +43,10 @@ public class Vuelta implements IRecibible {
 	// Lo cambio para usar en la IA de la maquina - Ignacio (private a public)
 	public Ronda getRonda(){
 		return this._ronda;
+	}
+	
+	public List<Accion> getAcciones(){
+		return this._acciones;
 	}
 	
 	private boolean esFinDeVuelta(){

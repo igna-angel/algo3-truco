@@ -61,6 +61,10 @@ public class CircularList<T> {
 	public void advanceCursor(){
 		this._currentNode = this.getCurrentNode().getNext();
 	}
+	
+	public void turnBackCursor(){
+		this._currentNode = this.getCurrentNode().getPrevious();
+	}
 		
 	public void resetToFirst(){
 		this._currentNode = this.getFirstNode();

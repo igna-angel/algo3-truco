@@ -109,7 +109,7 @@ public class Partido {
 		return this.getCantidadDeJugadoresPorEquipo()*2;
 	}
 	
-	public boolean	esPicaPica(){
+	public boolean esPicaPica(){
 		return (this.getCantidadDeJugadoresPorEquipo() >= JUGADORES_MINIMOS_PICAPICA_POR_EQUIPO && (this.getMaximoPuntaje() >= this.PUNTAJE_PICAPICA_MIN && this.getMaximoPuntaje() <= this.PUNTAJE_PICAPICA_MAX));
 	}
 	
@@ -120,6 +120,14 @@ public class Partido {
 	public void agregarPuntos(int puntajeA, int puntajeB) {
 		this.getEquipos().getFirst().agregarPuntos(puntajeA);
 		this.getEquipos().getLast().agregarPuntos(puntajeB);
+	}
+	
+	public int getPuntosPrimerEquipo(){
+		return this.getEquipos().getFirst().getPuntaje();
+	}
+	
+	public int getPuntosUltimoEquipo(){
+		return this.getEquipos().getLast().getPuntaje();
 	}
 
 	public void crearPartido(){
@@ -141,6 +149,11 @@ public class Partido {
 	
 	public Jugador getRepartidorActual(){
 		return this.getRondaActual().getRepartio();
+	}
+	
+	public Jugador getJugadorSiguienteAlActual(){
+		this.getOrdenJugadores().advanceCursor();
+		return this.getOrdenJugadores().getCurrent();
 	}
 
 	public int getcantidadDePuntosFaltantes() {
@@ -169,4 +182,9 @@ public class Partido {
 			return (this.PUNTAJE_MAXIMO_JUEGO - puntaje);
 		}
 	}
+
+	public void volverJugadorQueCantoPreviamente() {
+		this.getOrdenJugadores().turnBackCursor();
+	}
+
 }
