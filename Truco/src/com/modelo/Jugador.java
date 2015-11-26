@@ -59,7 +59,7 @@ public abstract class Jugador implements IRecibible{
 		} else 
 		
 		if (respuesta.equals("retruco")){
-			return manejadorDeRonda.cantarReTruco(accion,partido);
+			return manejadorDeRonda.cantarReTruco(true,partido);
 		} else {
 			throw new AccionNoPosibleException();
 		}
@@ -81,7 +81,7 @@ public abstract class Jugador implements IRecibible{
 		} else 
 		
 		if (respuesta.equals(("valecuatro"))){
-			return manejadorDeRonda.cantarValeCuatro(accion,partido);
+			return manejadorDeRonda.cantarValeCuatro(true,partido);
 		} else {
 			throw new AccionNoPosibleException();
 		}

@@ -1,5 +1,7 @@
 package com.modelo;
 
+import com.exceptions.ReTrucoNoCantadoException;
+import com.exceptions.TrucoNoCantadoException;
 import com.modelo.acciones.truco.*;
 
 public class ManejadorDeRonda {
@@ -19,20 +21,29 @@ public class ManejadorDeRonda {
 		return jugadorAAceptarAccion;
 	}
 	
-	public Accion cantarReTruco(AccionTruco truco, Partido partido){
+	public Accion cantarReTruco(boolean trucoYaCantado, Partido partido){
 		
-		ReTruco reTruco = new ReTruco(truco);
-		Accion reTrucoAceptado = this.getJugadorQueDebeAceptar(partido).responderA(reTruco,this,partido);
-		partido.volverJugadorQueCantoPreviamente();
-		return reTrucoAceptado;
+		if (trucoYaCantado){
+			ReTruco reTruco = new ReTruco(new Truco());
+			Accion reTrucoAceptado = this.getJugadorQueDebeAceptar(partido).responderA(reTruco,this,partido);
+			partido.volverJugadorQueCantoPreviamente();
+			partido.getRondaActual().elReTrucoFueCantado();
+			return reTrucoAceptado;
+		} else {
+			throw new TrucoNoCantadoException();
+		}
 	}
 
-	public Accion cantarValeCuatro(ReTruco retruco, Partido partido) {
+	public Accion cantarValeCuatro(boolean reTrucoYaCantado, Partido partido) {
 		
-		ValeCuatro valeCuatro = new ValeCuatro(retruco);
-		Accion valeCuatroAceptado = this.getJugadorQueDebeAceptar(partido).responderA(valeCuatro);
-		partido.volverJugadorQueCantoPreviamente();
-		return valeCuatroAceptado;
+		if (reTrucoYaCantado){
+			ValeCuatro valeCuatro = new ValeCuatro(new ReTruco(new Truco()));
+			Accion valeCuatroAceptado = this.getJugadorQueDebeAceptar(partido).responderA(valeCuatro);
+			partido.volverJugadorQueCantoPreviamente();
+			partido.getRondaActual().elValeCuatroFueCantado();
+			return valeCuatroAceptado;
+		} else {
+			throw new ReTrucoNoCantadoException();
+		}
 	}
-	
 }

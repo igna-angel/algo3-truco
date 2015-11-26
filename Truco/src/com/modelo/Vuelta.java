@@ -12,6 +12,7 @@ public class Vuelta implements IRecibible {
 	private Stack<Carta> _cartas = null;
 	private Carta _cartaGanadora = null;
 	private List<Accion> _acciones = null;
+	private List<Accion> _accionesTruco = null;
 	private Ronda _ronda;
 	
 	public Vuelta(Ronda ronda, List<Accion> acciones) {
@@ -23,7 +24,9 @@ public class Vuelta implements IRecibible {
 	
 	public Vuelta(Ronda ronda) {
 		this._cartas = new Stack<Carta>();
-		this._acciones = new ArrayList<Accion>();
+		this._acciones = new ArrayList<Accion>(); //me va a servir separarlas me parece 
+												//por eso hice unas para el truco (Fabrizio)
+		this._accionesTruco = new ArrayList<Accion>();
 		this._cartaGanadora = new CartaInvalida();
 		this._ronda = ronda;
 	}
@@ -40,13 +43,16 @@ public class Vuelta implements IRecibible {
 		this._cartaGanadora = carta;
 	}
 	
-	// Lo cambio para usar en la IA de la maquina - Ignacio (private a public)
 	public Ronda getRonda(){
 		return this._ronda;
 	}
 	
 	public List<Accion> getAcciones(){
 		return this._acciones;
+	}
+	
+	public List<Accion> getAccionesTruco(){
+		return this._accionesTruco;
 	}
 	
 	private boolean esFinDeVuelta(){
@@ -62,4 +68,5 @@ public class Vuelta implements IRecibible {
 		this.setCartaGanadora(carta.ganador(this.getCartaGanadora()));
 		this.getCartas().push(carta);
 	}
+
 }

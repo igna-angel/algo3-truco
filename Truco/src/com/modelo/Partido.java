@@ -176,7 +176,7 @@ public class Partido {
 	}
 	
 	private int puntajeFaltanteSegunMalasOBuenas(int puntaje){
-		if(puntaje < 15){
+		if(puntaje < (PUNTAJE_MAXIMO_JUEGO / 2)){
 			return this.PUNTAJE_MAXIMO_JUEGO;
 		} else {
 			return (this.PUNTAJE_MAXIMO_JUEGO - puntaje);

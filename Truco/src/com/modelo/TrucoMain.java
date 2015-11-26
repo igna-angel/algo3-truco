@@ -30,6 +30,22 @@ public class TrucoMain {
 		
 		partido.getRondaActual().seCantoTruco();
 		
+		partido.getRondaActual().nuevaVuelta();
+	
+		partido.getRondaActual().seCantoReTruco();
+		
+		partido.getRondaActual().nuevaVuelta();
+		
+		partido.getRondaActual().seCantoValeCuatro();
+		
+		partido.getRondaActual().agregarPuntaje();
+		//para el puntaje hay que fijarse quien es el ganador, esta por
+		//defecto el equipo uno
+		
+		System.out.println(partido.getPuntosPrimerEquipo());
+		
+		System.out.println(partido.getPuntosUltimoEquipo());
+		
 	}
 
 }
