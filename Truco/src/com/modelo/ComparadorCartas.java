@@ -1,5 +1,8 @@
 package com.modelo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.exceptions.NumeroCartasACompararIncorrectoException;
 import com.modelo.cartas.Carta;
 
@@ -37,5 +40,22 @@ public class ComparadorCartas {
 		}
 		
 		return cartaGanadora;
+	}
+
+	public List<Carta> getCartasMasAltasQueUnaDada(Carta masAltaJugada, List<Carta> cartasAComparar) {
+		List<Carta> cartasQueGanan = new ArrayList<Carta>();
+		ComparadorCartas comparador = new ComparadorCartas();
+		for (Carta cartaAVerificar : cartasAComparar) {
+			if (comparador.compararCartas(masAltaJugada, cartaAVerificar) == cartaAVerificar) {
+				cartasQueGanan.add(cartaAVerificar);
+			}
+		}
+		
+		return cartasQueGanan;
+	}
+
+	public Carta getCartaMasBaja(Carta... cartas) {
+		// Tengo que ver como armar esto
+		return null;
 	}
 }

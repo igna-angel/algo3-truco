@@ -21,7 +21,7 @@ public class Vuelta implements IRecibible {
 		this._ronda = ronda;
 	}
 
-	private Stack<Carta> getCartas(){
+	public Stack<Carta> getCartas(){
 		return this._cartas;
 	}
 	
@@ -33,7 +33,8 @@ public class Vuelta implements IRecibible {
 		this._cartaGanadora = carta;
 	}
 	
-	private Ronda getRonda(){
+	// Lo cambio para usar en la IA de la maquina - Ignacio (private a public)
+	public Ronda getRonda(){
 		return this._ronda;
 	}
 	
