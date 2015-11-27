@@ -57,12 +57,25 @@ public abstract class Ronda {
 	}
 	
 	public void seCantoTruco(){
-		AccionTruco trucoCantado = new Truco();
-		Accion truco = this._partido.getManejadorDeRonda().cantarTruco(trucoCantado,this._partido);
-		this.getVueltas().peek().getAccionesTruco().add(truco);
+		if (this.trucoNoCantadoPreviamente()){
+			AccionTruco trucoCantado = new Truco();
+			Accion truco = this._partido.getManejadorDeRonda().cantarTruco(trucoCantado,this._partido);
+			this.getVueltas().peek().getAccionesTruco().add(truco);
+		} else {
+			throw new TrucoYaCantadoException();
+		}
 		//verificar si es no querido y finalizar ronda
 	}	
 	
+	private boolean trucoNoCantadoPreviamente() {
+		
+		if(this._vueltas.peek().getAccionesTruco().isEmpty()){
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public void seCantoReTruco(){
 		if (this.ReTrucoNoCantadoPreviamente()){
 			ReTruco reTrucoCantado = new ReTruco(this.getTruco());
@@ -117,7 +130,7 @@ public abstract class Ronda {
 			if (this._vueltas.peek().getAccionesTruco().get(0).cantar() == 3){
 				return (AccionTruco) this._vueltas.peek().getAccionesTruco().get(0);
 			} else {
-				throw new ReTrucoNoCantadoException();
+				throw new ValeCuatroYaCantadoException();
 			}
 		}
 	}

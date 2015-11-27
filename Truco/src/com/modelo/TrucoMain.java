@@ -32,6 +32,8 @@ public class TrucoMain {
 		
 		partido.getRondaActual().seCantoTruco();
 		
+		partido.getRondaActual().seCantoTruco();
+		
 		partido.getRondaActual().nuevaVuelta();
 	
 		partido.getRondaActual().seCantoReTruco();
