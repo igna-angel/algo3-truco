@@ -231,6 +231,10 @@ public abstract class Ronda {
 		
 		this._partido.agregarPuntos(puntajeFinal, puntajeNulo);
 	}
+
+	public void seCantoFlor() {
+		// GENERAR		
+	}
 	
 //	public void finalizarRonda(){
 //	}

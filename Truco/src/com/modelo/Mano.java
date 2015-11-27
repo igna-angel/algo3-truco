@@ -1,6 +1,8 @@
 package com.modelo;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
@@ -56,6 +58,38 @@ public class Mano implements IRecibible{
 		}
 		
 		return comparador.getCartaMasBaja(cartasQueGananALaMasAlta.toArray(new Carta[this._cartas.size()]));
+	}
+	
+	public int getTantoEnMano() {
+		int tantoCarta1 = this._cartas.get(0).getNumero();
+		int tantoCarta2 = this._cartas.get(1).getNumero();
+		int tantoCarta3 = this._cartas.get(2).getNumero();
+		int tantoParcial = 0;
+		if (this._cartas.get(0).getPalo() == this._cartas.get(1).getPalo()) {
+			tantoParcial += 20 + tantoCarta1 + tantoCarta2;
+		}
+		
+		else if (this._cartas.get(0).getPalo() == this._cartas.get(2).getPalo()) {
+			tantoParcial += 20 + tantoCarta1 + tantoCarta3;
+		}
+		
+		else if (this._cartas.get(1).getPalo() == this._cartas.get(2).getPalo()) {
+			tantoParcial += 20 + tantoCarta2 + tantoCarta3;
+		}
+		
+		else if (this._cartas.get(0).getPalo() == this._cartas.get(1).getPalo() && this._cartas.get(1).getPalo() == this._cartas.get(2).getPalo()) {
+			tantoParcial += 20 + tantoCarta1 + tantoCarta2 + tantoCarta3;
+		}
+		
+		else {
+			tantoParcial = Collections.max(Arrays.asList(tantoCarta1, tantoCarta2, tantoCarta3));
+		}
+		
+		return tantoParcial;
+	}
+
+	public boolean florEnMano() {
+		return this._cartas.get(0).getPalo() == this._cartas.get(1).getPalo() && this._cartas.get(1).getPalo() == this._cartas.get(2).getPalo();
 	}
 
 }

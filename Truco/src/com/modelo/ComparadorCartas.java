@@ -12,23 +12,24 @@ public class ComparadorCartas {
 		
 		int cantidadDeCartas = cartas.length;
 		
-		this.verificarNumeroCartasCorrecto(cantidadDeCartas);
+		// Me parece innecesaria esta validacion, en que cambia comparar 1 o 300 cartas?
+		// this.verificarNumeroCartasCorrecto(cantidadDeCartas);
 		
 		return compararCartas(cantidadDeCartas,cartas);
 	}
 	
-	private void verificarNumeroCartasCorrecto(int cantidadDeCartas) {
+	/*private void verificarNumeroCartasCorrecto(int cantidadDeCartas) {
 		
 		if (cantidadDeCartasCorrecto(cantidadDeCartas)){
 			return;
 		} else {
 			throw  new NumeroCartasACompararIncorrectoException();
 		}
-	}
+	}*/
 	
-	private boolean cantidadDeCartasCorrecto(int cantidad){
+	/*private boolean cantidadDeCartasCorrecto(int cantidad){
 		return (cantidad == 2 || cantidad == 4 || cantidad == 6);
-	}
+	}*/
 
 	private Carta compararCartas(int cantidadDeCartas,Carta... cartas){
 		
@@ -55,7 +56,14 @@ public class ComparadorCartas {
 	}
 
 	public Carta getCartaMasBaja(Carta... cartas) {
-		// Tengo que ver como armar esto
-		return null;
+		// Comparo 1 a 1 las cartas recibidas y me quedo con la más baja
+		Carta masBaja = cartas[0];
+		Carta auxiliar = null;
+		for (int i=1; i < cartas.length ; i++){
+			auxiliar = masBaja.ganador(cartas[i]);
+			masBaja = (auxiliar == masBaja) ? cartas[i] : masBaja;
+		}
+		
+		return masBaja;
 	}
 }

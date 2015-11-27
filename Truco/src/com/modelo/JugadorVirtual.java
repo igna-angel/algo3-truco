@@ -25,4 +25,25 @@ public class JugadorVirtual extends Jugador {
 		
 		this.bajarCarta(vuelta, cartaAJugar);
 	}
+	
+	public void cantarTantoOFlorSiCorresponde (Ronda ronda) {
+		int tantoEnMano = this._mano.getTantoEnMano();
+		if (this._mano.florEnMano()) {
+			ronda.seCantoFlor();
+		}
+		
+		else if (tantoEnMano >= MIN_TANTO_FALTA_ENVIDO) {
+			ronda.seCantoFaltaEnvido();
+		}
+		
+		else if (tantoEnMano >= MIN_TANTO_REAL_ENVIDO) {
+			ronda.seCantoRealEnvido();
+		}
+		
+		else if (tantoEnMano >= MIN_TANTO_ENVIDO) {
+			ronda.seCantoEnvido();
+		}
+	}
+	
+	// VER COMO HACER PARA ACEPTAR EL TANTO
 }
