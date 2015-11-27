@@ -58,33 +58,35 @@ public abstract class Ronda {
 	}
 	
 	public void seCantoTruco(){
-		if (this.trucoNoCantadoPreviamente()){
-			AccionTruco trucoCantado = new Truco();
-			Accion truco = this._partido.getManejadorDeRonda().cantarTruco(trucoCantado,this._partido);
-			this.getVueltas().peek().getAccionesTruco().add(truco);
-		} else {
-			throw new TrucoYaCantadoException();
-		}
+		this.trucoNoCantadoPreviamente();
+		AccionTruco trucoCantado = new Truco();
+		Accion truco = this._partido.getManejadorDeRonda().cantarTruco(trucoCantado,this._partido);
+		this.getVueltas().peek().getAccionesTruco().add(truco);
 		//verificar si es no querido y finalizar ronda
 	}	
 	
-	private boolean trucoNoCantadoPreviamente() {
-		
+	private void trucoNoCantadoPreviamente() {
 		if(this._vueltas.peek().getAccionesTruco().isEmpty()){
-			return true;
+			return;
 		} else {
-			return false;
+			throw new TrucoYaCantadoException();
+		}
+	}
+	
+	private void ReTrucoNoCantadoPreviamente() {
+		if (this.getTruco().cantar() == 3
+		 || this.getTruco().cantar() == 4){
+			throw new ReTrucoYaCantadoException();
+		} else {
+			return;
 		}
 	}
 
 	public void seCantoReTruco(){
-		if (this.ReTrucoNoCantadoPreviamente()){
-			ReTruco reTrucoCantado = new ReTruco(this.getTruco());
-			Accion reTruco = this._partido.getManejadorDeRonda().cantarReTruco(reTrucoCantado, this._partido);
-			this.getVueltas().peek().getAccionesTruco().add(reTruco);
-		} else {
-			throw new ReTrucoYaCantadoException();
-		}
+		this.ReTrucoNoCantadoPreviamente();
+		ReTruco reTrucoCantado = new ReTruco(this.getTruco());
+		Accion reTruco = this._partido.getManejadorDeRonda().cantarReTruco(reTrucoCantado, this._partido);
+		this.getVueltas().peek().getAccionesTruco().add(reTruco);
 		//verificar si es no querido y finalizar ronda
 	}
 	
@@ -98,15 +100,6 @@ public abstract class Ronda {
 			}
 		} catch (EmptyStackException e){
 			throw new TrucoNoCantadoException();
-		}
-	}
-	
-	private boolean ReTrucoNoCantadoPreviamente() {
-		if (this.getTruco().cantar() == 3
-		 || this.getTruco().cantar() == 4){
-			return false;
-		} else {
-			return true;
 		}
 	}
 

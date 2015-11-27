@@ -28,9 +28,13 @@ public class TrucoMain {
 		
 		partido.getRondaActual().nuevaVuelta();
 		
-		partido.getRondaActual().seCantoEnvido();
+//		partido.getRondaActual().seCantoEnvido();
 
-//		partido.getRondaActual().seCantoTruco();
+		partido.getRondaActual().seCantoTruco();
+		
+		partido.getRondaActual().nuevaVuelta();
+		
+		partido.getRondaActual().seCantoReTruco();
 //		
 //		partido.getRondaActual().nuevaVuelta();
 //	
@@ -40,9 +44,9 @@ public class TrucoMain {
 //		
 //		partido.getRondaActual().seCantoValeCuatro();
 //		
-//		partido.getRondaActual().agregarPuntajeDeTruco();
+		partido.getRondaActual().agregarPuntajeDeTruco();
 		
-		partido.getRondaActual().agregarPuntajeDeEnvido();
+//		partido.getRondaActual().agregarPuntajeDeEnvido();
 		//para el puntaje hay que fijarse quien es el ganador, esta por
 		//defecto el equipo uno
 		

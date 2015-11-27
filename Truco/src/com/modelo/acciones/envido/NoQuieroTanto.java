@@ -7,28 +7,69 @@ public class NoQuieroTanto extends EnvidoDecorator {
 	}
 	
 	public int cantar(){
-		if (this.accionADecorar.cantar() == 2){
-			return this.accionADecorar.cantar() - 1;
-		} else if (this.accionADecorar.cantar() == 3){
-			return this.accionADecorar.cantar() - 2;
-		} else if ((this.accionADecorar.cantar() == 4)){
-			return this.accionADecorar.cantar() - 2;
-		} else if ((this.accionADecorar.cantar() == 5)){
-			return this.accionADecorar.cantar() - 3;
-		} else if ((this.accionADecorar.cantar() == 7)){
-			return this.accionADecorar.cantar() - 4;
-		} else if ((this.accionADecorar.cantar() == 32)){
-			return this.accionADecorar.cantar() - 30;
-		} else if ((this.accionADecorar.cantar() == 33)){
-			return this.accionADecorar.cantar() - 31;
-		} else if ((this.accionADecorar.cantar() == 34)){
-			return this.accionADecorar.cantar() - 31;
-		} else if ((this.accionADecorar.cantar() == 35)){
-			return this.accionADecorar.cantar() - 32;
-		} else if ((this.accionADecorar.cantar() == 37)){
-			return this.accionADecorar.cantar() - 33;
-		} else {
-			return this.accionADecorar.cantar() - 29;
+		if (esEnvidoComun()){
+			return super.cantar() - 1;
+		} else if (esRealEnvido()){
+			return super.cantar() - 2;
+		} else if (esEnvidoEnvido()){
+			return super.cantar() - 2;
+		} else if (esEnvidoRealEnvido()){
+			return super.cantar() - 3;
+		} else if (esEnvidoEnvidoRealEnvido()){
+			return super.cantar() - 4;
+		} else if (esEnvidoFaltaEnvido()){
+			return super.cantar() - 30;
+		} else if (esRealEnvidoFaltaEnvido()){
+			return super.cantar() - 31;
+		} else if (esEnvidoEnvidoFaltaEnvido()){
+			return super.cantar() - 31;
+		} else if (esEnvidoRealEnvidoFaltaEnvido()){
+			return super.cantar() - 32;
+		} else if (esEnvidoEnvidoRealEnvidoFaltaEnvido()){
+			return super.cantar() - 33;
+		} else /*esFaltaEnvidoComun*/{
+			return super.cantar() - 29;
 		}
 	}
+	
+	private boolean esEnvidoComun(){
+		return super.cantar() == 2;
+	}
+	
+	private boolean esRealEnvido(){
+		return super.cantar() == 3;
+	}
+	
+	private boolean esEnvidoEnvido(){
+		return super.cantar() == 4;
+	}
+	
+	private boolean esEnvidoRealEnvido(){
+		return super.cantar() == 5;
+	}
+	
+	private boolean esEnvidoEnvidoRealEnvido(){
+		return super.cantar() == 7;
+	}
+	
+	private boolean esEnvidoFaltaEnvido(){
+		return super.cantar() == 32;
+	}
+	
+	private boolean esRealEnvidoFaltaEnvido(){
+		return super.cantar() == 33;
+	}
+	
+	private boolean esEnvidoEnvidoFaltaEnvido(){
+		return super.cantar() == 34;
+	}
+	
+	private boolean esEnvidoRealEnvidoFaltaEnvido(){
+		return super.cantar() == 35;
+	}
+	
+	private boolean esEnvidoEnvidoRealEnvidoFaltaEnvido(){
+		return super.cantar() == 37;
+	}
+	
 }

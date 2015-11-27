@@ -7,7 +7,7 @@ public class QuieroTanto extends EnvidoDecorator {
 	}
 	
 	public int cantar(){
-		return this.accionADecorar.cantar();
+		return super.cantar();
 	}
 
 }
