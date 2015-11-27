@@ -3,6 +3,7 @@ package com.modelo;
 import java.util.Scanner;
 
 import com.exceptions.AccionNoPosibleException;
+import com.modelo.acciones.envido.*;
 import com.modelo.acciones.truco.*;
 import com.modelo.cartas.Carta;
 
@@ -59,7 +60,7 @@ public abstract class Jugador implements IRecibible{
 		} else 
 		
 		if (respuesta.equals("retruco")){
-			return manejadorDeRonda.cantarReTruco(true,partido);
+			return manejadorDeRonda.cantarReTruco(new ReTruco(accion),partido);
 		} else {
 			throw new AccionNoPosibleException();
 		}
@@ -81,7 +82,7 @@ public abstract class Jugador implements IRecibible{
 		} else 
 		
 		if (respuesta.equals(("valecuatro"))){
-			return manejadorDeRonda.cantarValeCuatro(true,partido);
+			return manejadorDeRonda.cantarValeCuatro(new ValeCuatro(accion),partido);
 		} else {
 			throw new AccionNoPosibleException();
 		}
@@ -102,6 +103,63 @@ public abstract class Jugador implements IRecibible{
 			return new NoQuiero(accion);
 		} else {
 			throw new AccionNoPosibleException();
+		}
+	}
+
+	public Accion responderA(Envido accion, ManejadorDeRonda manejadorDeRonda, Partido partido) {
+		System.out.print("Quiere Envido: ");
+		
+		Scanner scan = new Scanner(System.in);
+		String respuesta = scan.next().toLowerCase();
+		
+		if (respuesta.equals("quiero")){
+			return new QuieroTanto(accion);
+		} else
+		
+		if (respuesta.equals("noquiero")){
+			return new NoQuieroTanto(accion);
+		} else 
+		
+		if (respuesta.equals(("envido"))){
+			return manejadorDeRonda.cantarEnvido(new Envido(accion),partido);
+		} else if (respuesta.equals(("realenvido"))){
+			return manejadorDeRonda.cantarRealEnvido(new RealEnvido(accion),partido);
+		} else if (respuesta.equals(("faltaenvido"))){
+			return manejadorDeRonda.cantarFaltaEnvido(partido);
+		} else {
+			throw new AccionNoPosibleException();
+		}
+	}
+
+	public Accion responderA(RealEnvido accion, ManejadorDeRonda manejadorDeRonda, Partido partido) {
+		System.out.print("Quiere RealEnvido: ");
+		
+		Scanner scan = new Scanner(System.in);
+		String respuesta = scan.next().toLowerCase();
+		
+		if (respuesta.equals("quiero")){
+			return new QuieroTanto(accion);
+		} else
+		
+		if (respuesta.equals("noquiero")){
+			return new NoQuieroTanto(accion);
+		} else if (respuesta.equals(("faltaEnvido"))){
+			return manejadorDeRonda.cantarFaltaEnvido(partido);
+		} else {
+			throw new AccionNoPosibleException();
+		}
+	}
+
+	public Accion responderA(FaltaEnvido accion) {
+		System.out.print("Quiere FaltaEnvido: ");
+		
+		Scanner scan = new Scanner(System.in);
+		String respuesta = scan.next().toLowerCase();
+		
+		if (respuesta.equals("quiero")){
+			return new QuieroTanto(accion);
+		} else {
+			return new NoQuieroTanto(accion);
 		}
 	}	
 }

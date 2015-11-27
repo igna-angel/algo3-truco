@@ -7,6 +7,6 @@ public class NoQuiero extends TrucoDecorator{
 	}
 	
 	public int cantar(){
-		return this.accionADecorar.cantar();
+		return this.accionADecorar.cantar() - 1;
 	}
 }

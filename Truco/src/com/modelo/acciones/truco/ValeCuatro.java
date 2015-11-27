@@ -2,7 +2,7 @@ package com.modelo.acciones.truco;
 
 public class ValeCuatro extends ReTruco {
 
-	public ValeCuatro(ReTruco accionDecorar) {
+	public ValeCuatro(AccionTruco accionDecorar) {
 		super(accionDecorar);
 	}
 	

@@ -1,19 +1,21 @@
 package com.modelo;
 
+import java.util.EmptyStackException;
 import java.util.List;
 import java.util.Stack;
 
+import com.exceptions.ReTrucoNoCantadoException;
 import com.exceptions.ReTrucoYaCantadoException;
+import com.exceptions.TrucoNoCantadoException;
 import com.exceptions.TrucoYaCantadoException;
 import com.exceptions.ValeCuatroYaCantadoException;
+import com.modelo.acciones.envido.*;
+import com.modelo.acciones.truco.*;
 
 public abstract class Ronda {
 
 	private Partido _partido;
 	private Jugador _repartio;	
-	private boolean trucoCantado;
-	private boolean reTrucoCantado;
-	private boolean valeCuatroCantado;
 	
 	private Stack<Vuelta> _vueltas; // IMPLEMENTAR VUELTAS
 	
@@ -21,9 +23,6 @@ public abstract class Ronda {
 		this._partido = partido;
 		this._repartio = reparte;
 		this._vueltas = new Stack<Vuelta>();
-		this.trucoCantado = false;
-		this.reTrucoCantado = false;
-		this.valeCuatroCantado = false;
 	}
 	
 	public abstract Ronda getRondaSiguiente(boolean esPicaPica);
@@ -58,62 +57,126 @@ public abstract class Ronda {
 	}
 	
 	public void seCantoTruco(){
-		if (!trucoCantado){
-			Accion truco = this._partido.getManejadorDeRonda().cantarTruco(this._partido);
-			this.getVueltas().peek().getAccionesTruco().add(truco);
-			this.trucoCantado = true;
-		} else {
-			throw new TrucoYaCantadoException();
-		}
+		AccionTruco trucoCantado = new Truco();
+		Accion truco = this._partido.getManejadorDeRonda().cantarTruco(trucoCantado,this._partido);
+		this.getVueltas().peek().getAccionesTruco().add(truco);
+		//verificar si es no querido y finalizar ronda
 	}	
 	
 	public void seCantoReTruco(){
-		if (!reTrucoCantado){
-			Accion reTruco = this._partido.getManejadorDeRonda().cantarReTruco(trucoCantado, this._partido);
+		if (this.ReTrucoNoCantadoPreviamente()){
+			ReTruco reTrucoCantado = new ReTruco(this.getTruco());
+			Accion reTruco = this._partido.getManejadorDeRonda().cantarReTruco(reTrucoCantado, this._partido);
 			this.getVueltas().peek().getAccionesTruco().add(reTruco);
-			this.reTrucoCantado = true;
 		} else {
 			throw new ReTrucoYaCantadoException();
 		}
+		//verificar si es no querido y finalizar ronda
 	}
 	
-	public void elReTrucoFueCantado(){
-		reTrucoCantado = true;
-	}
-	
-	public void elValeCuatroFueCantado(){
-		valeCuatroCantado = true;
-	}
-	
-	public void seCantoValeCuatro(){
-		if (!valeCuatroCantado){
-			Accion valeCuatro = this._partido.getManejadorDeRonda().cantarValeCuatro(reTrucoCantado, this._partido);
-			this.getVueltas().peek().getAccionesTruco().add(valeCuatro);
-			this.valeCuatroCantado = true;
-		} else {
-			throw new ValeCuatroYaCantadoException();
+	private AccionTruco getTruco() {
+		try{
+			if (!this._vueltas.peek().getAccionesTruco().isEmpty()){
+				return (AccionTruco) this._vueltas.peek().getAccionesTruco().get(0);
+			} else {
+				this._vueltas.pop();
+				return this.getTruco();
+			}
+		} catch (EmptyStackException e){
+			throw new TrucoNoCantadoException();
 		}
 	}
 	
-	public void agregarPuntaje(){
+	private boolean ReTrucoNoCantadoPreviamente() {
+		if (this.getTruco().cantar() == 3
+		 || this.getTruco().cantar() == 4){
+			return false;
+		} else {
+			return true;
+		}
+	}
 
-		int posAccionFinal = this.getAccionFinal().size();
+	public void seCantoValeCuatro(){
+		ValeCuatro valeCuatroCantado = new ValeCuatro(this.getReTruco());
+		Accion valeCuatro = this._partido.getManejadorDeRonda().cantarValeCuatro(valeCuatroCantado, this._partido);
+		this.getVueltas().peek().getAccionesTruco().add(valeCuatro);
+		//verificar si es no querido y finalizar ronda
+	}
+	
+	private AccionTruco getReTruco() {
+		try{
+			if (!this._vueltas.peek().getAccionesTruco().isEmpty()){
+				return (AccionTruco) this._vueltas.peek().getAccionesTruco().get(1);
+			} else {
+				this._vueltas.pop();
+				return this.getReTruco();
+			}
+		}catch (EmptyStackException e){
+			throw new ReTrucoNoCantadoException();
+		}catch (IndexOutOfBoundsException e){
+			if (this._vueltas.peek().getAccionesTruco().get(0).cantar() == 3){
+				return (AccionTruco) this._vueltas.peek().getAccionesTruco().get(0);
+			} else {
+				throw new ReTrucoNoCantadoException();
+			}
+		}
+	}
+
+	public void agregarPuntajeDeTruco(){
+		int posAccionFinal = this.getPosAccionFinalTruco();
 		
 		Accion accionFinal = this._vueltas.peek().getAccionesTruco().get(posAccionFinal-1);
 		
 		int puntajeFinal = accionFinal.cantar();
 		int puntajeNulo = 0;
-		
+	
 		this._partido.agregarPuntos(puntajeFinal, puntajeNulo);
 	}
 	
-	private List<Accion> getAccionFinal() {
-		if (!this._vueltas.peek().getAccionesTruco().isEmpty()){
-			return this._vueltas.peek().getAccionesTruco();
+	private int getPosAccionFinalTruco() {
+		if (!(this._vueltas.peek().getAccionesTruco().isEmpty())){
+			return this._vueltas.peek().getAccionesTruco().size();
 		} else {
 			this._vueltas.pop();
-			return this.getAccionFinal();
+			return this.getPosAccionFinalTruco();
 		}
+	}
+	
+	private List<Accion> getAccionFinalEnvido() {
+		if (!this._vueltas.peek().getAcciones().isEmpty()){
+			return this._vueltas.peek().getAcciones();
+		} else {
+			this._vueltas.pop();
+			return this.getAccionFinalEnvido();
+		}
+	}
+	
+	public void seCantoEnvido(){
+		Envido envidoCantado = new Envido(new Tanto());
+		Accion envido = this._partido.getManejadorDeRonda().cantarEnvido(envidoCantado,this._partido);
+		this.getVueltas().peek().getAcciones().add(envido);
+	}
+	
+	public void seCantoRealEnvido(){
+		RealEnvido realEnvidoCantado = new RealEnvido(new Tanto());
+		Accion envido = this._partido.getManejadorDeRonda().cantarRealEnvido(realEnvidoCantado,this._partido);
+		this.getVueltas().peek().getAcciones().add(envido);
+	}
+	
+	public void seCantoFaltaEnvido(){
+		Accion envido = this._partido.getManejadorDeRonda().cantarFaltaEnvido(this._partido);
+		this.getVueltas().peek().getAcciones().add(envido);
+	}
+
+	public void agregarPuntajeDeEnvido() {
+		int posAccionFinal = this.getAccionFinalEnvido().size();
+		
+		Accion accionFinal = this._vueltas.peek().getAcciones().get(posAccionFinal-1);
+		
+		int puntajeFinal = accionFinal.cantar();
+		int puntajeNulo = 0;
+		
+		this._partido.agregarPuntos(puntajeFinal, puntajeNulo);
 	}
 	
 //	public void finalizarRonda(){

@@ -9,7 +9,7 @@ public class FaltaEnvido extends EnvidoDecorator{
 	}
 	
 	public int cantar(Partido partido){
-		return this.accionADecorar.cantar() + partido.getcantidadDePuntosFaltantes();
+		return this.accionADecorar.cantar() + 30; /*partido.getcantidadDePuntosFaltantes()*/
 	}
 
 }

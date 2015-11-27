@@ -7,7 +7,7 @@ public class Quiero extends TrucoDecorator{
 	}
 	
 	public int cantar(){
-		return this.accionADecorar.cantar() + 1;
+		return this.accionADecorar.cantar();
 	}
 
 }

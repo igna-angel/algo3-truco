@@ -7,7 +7,13 @@ public class Envido extends EnvidoDecorator {
 	}
 	
 	public int cantar(){
-		return super.cantar() + 1;
+		if (super.cantar() == 0) {
+			return super.cantar() + 1;
+		} else if (super.cantar() == 1){
+			return super.cantar() + 2;
+		} else {
+			return super.cantar() +3;
+		}
 	}
 
 }
