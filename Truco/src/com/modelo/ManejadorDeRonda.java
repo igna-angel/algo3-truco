@@ -1,6 +1,7 @@
 package com.modelo;
 
 import com.modelo.acciones.envido.*;
+import com.modelo.acciones.flor.AccionFlor;
 import com.modelo.acciones.truco.*;
 
 public class ManejadorDeRonda {
@@ -45,5 +46,12 @@ public class ManejadorDeRonda {
 		Accion faltaEnvidoAceptado = this.getJugadorQueDebeAceptar(partido).responderA(faltaEnvidoCantado);
 		partido.volverJugadorQueCantoPreviamente();
 		return faltaEnvidoAceptado;
+	}
+
+	public Accion cantarFlor(AccionFlor florCantada, Partido partido) {
+		//verificacion que antes haya alguien con flor de los demas jugadores
+		Accion florAceptado = this.getJugadorQueDebeAceptar(partido).responderA(florCantada,this,partido);
+		partido.volverJugadorQueCantoPreviamente();
+		return florAceptado;
 	}
 }

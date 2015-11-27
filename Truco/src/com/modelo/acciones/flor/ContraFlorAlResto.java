@@ -7,6 +7,6 @@ public class ContraFlorAlResto extends FlorDecorator{
 	}
 
 	public int cantar(){
-		return this.accionADecorar.cantar() + 2;
+		return this.accionADecorar.cantar() + 30;
 	}
 }

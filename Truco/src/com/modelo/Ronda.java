@@ -3,7 +3,7 @@ package com.modelo;
 import java.util.EmptyStackException;
 import java.util.Stack;
 
-import com.exceptions.EnvidoYaCantadoException;
+import com.exceptions.TantoYaCantadoException;
 import com.exceptions.ReTrucoNoCantadoException;
 import com.exceptions.ReTrucoYaCantadoException;
 import com.exceptions.TrucoNoCantadoException;
@@ -11,6 +11,8 @@ import com.exceptions.TrucoYaCantadoException;
 import com.exceptions.ValeCuatroYaCantadoException;
 import com.exceptions.VueltaParaCantarTantoNoPosibleException;
 import com.modelo.acciones.envido.*;
+import com.modelo.acciones.flor.AccionFlor;
+import com.modelo.acciones.flor.Flor;
 import com.modelo.acciones.truco.*;
 
 public abstract class Ronda {
@@ -128,11 +130,21 @@ public abstract class Ronda {
 			}
 		}
 	}
+	
+	private Accion getAccionFinalTruco(){
+		try{
+			int posAccionFinal = this.getPosAccionFinalTruco();
+			Accion accionFinal = this._vueltas.peek().getAccionesTruco().get(posAccionFinal-1);
+			return accionFinal;
+		} catch (EmptyStackException e){
+			Accion accionFinal = new NoQuiero(new Truco());
+			return accionFinal;
+		}
+	}
 
-	public void agregarPuntajeDeTruco(){
-		int posAccionFinal = this.getPosAccionFinalTruco();
-		
-		Accion accionFinal = this._vueltas.peek().getAccionesTruco().get(posAccionFinal-1);
+	private void agregarPuntajeDeTruco(){
+
+		Accion accionFinal = this.getAccionFinalTruco();
 		
 		int puntajeFinal = accionFinal.cantar();
 		int puntajeNulo = 0;
@@ -177,7 +189,7 @@ public abstract class Ronda {
 		if (this._vueltas.peek().getAccionesEnvido().isEmpty()){
 			return;
 		} else {
-			throw new EnvidoYaCantadoException();
+			throw new TantoYaCantadoException();
 		}
 	}
 
@@ -198,7 +210,7 @@ public abstract class Ronda {
 		}
 	}
 	
-	private void agregarPuntajeDeEnvidoNormal(Accion accionFinal) {
+	private void agregarPuntajeDeTantoNormal(Accion accionFinal) {
 		
 		int puntajeFinal = accionFinal.cantar();
 		int puntajeNulo = 0;
@@ -206,18 +218,29 @@ public abstract class Ronda {
 		this._partido.agregarPuntos(puntajeFinal, puntajeNulo);
 	}
 	
-	public void agregarPuntajeDeEnvido(){
-		int posAccionFinal = this.getPosAccionFinalEnvido();
-		Accion accionFinal = this._vueltas.peek().getAccionesEnvido().get(posAccionFinal-1);
+	private Accion getAccionFinalEnvido(){
+		try {
+			int posAccionFinal = this.getPosAccionFinalEnvido();
+			Accion accionFinal = this._vueltas.peek().getAccionesEnvido().get(posAccionFinal-1);
+			return accionFinal;
+		} catch (EmptyStackException e) {
+			Accion accionFinal = new Tanto();
+			return accionFinal;
+		}
+	}
 	
+	private void agregarPuntajeDeTanto(){
+		
+		Accion accionFinal = this.getAccionFinalEnvido();
+
 		if (accionFinal.cantar() < 30){
-			this.agregarPuntajeDeEnvidoNormal(accionFinal);
+			this.agregarPuntajeDeTantoNormal(accionFinal);
 		} else {
-			this.agregarPuntajeDeEnvidoEspecial();
+			this.agregarPuntajeDeTantoEspecial();
 		}
 	}
 
-	private void agregarPuntajeDeEnvidoEspecial() {
+	private void agregarPuntajeDeTantoEspecial() {
 		
 		int puntajeFinal = this._partido.getcantidadDePuntosFaltantes();
 		int puntajeNulo = 0;
@@ -227,6 +250,20 @@ public abstract class Ronda {
 
 	public void seCantoFlor() {
 		// GENERAR		
+	}
+	
+	public void seCantoFlor(){
+		this.verificarQueSeaLaPrimeraVuelta();
+		this.verificarQueNoSeHayaCantadoPreviamente();
+		//verificar que en la mano se tengan tres cartas del mismo palo
+		AccionFlor florCantada = new Flor();
+		Accion flor = this._partido.getManejadorDeRonda().cantarFlor(florCantada,this._partido);
+		this.getVueltas().peek().getAccionesEnvido().add(flor);
+	}
+	
+	public void agregarPuntajes(){
+		this.agregarPuntajeDeTanto();
+		this.agregarPuntajeDeTruco();
 	}
 	
 //	public void finalizarRonda(){

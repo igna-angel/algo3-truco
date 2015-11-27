@@ -11,20 +11,20 @@ public class Vuelta implements IRecibible {
 	
 	private Stack<Carta> _cartas = null;
 	private Carta _cartaGanadora = null;
-	private List<Accion> _accionesEnvido = null;
+	private List<Accion> _accionesTanto = null;
 	private List<Accion> _accionesTruco = null;
 	private Ronda _ronda;
 	
 	public Vuelta(Ronda ronda, List<Accion> acciones) {
 		this._cartas = new Stack<Carta>();
-		this._accionesEnvido = acciones;
+		this._accionesTanto = acciones;
 		this._cartaGanadora = new CartaInvalida();
 		this._ronda = ronda;
 	}
 	
 	public Vuelta(Ronda ronda) {
 		this._cartas = new Stack<Carta>();
-		this._accionesEnvido = new ArrayList<Accion>(); 
+		this._accionesTanto = new ArrayList<Accion>(); 
 		this._accionesTruco = new ArrayList<Accion>();
 		this._cartaGanadora = new CartaInvalida();
 		this._ronda = ronda;
@@ -47,7 +47,7 @@ public class Vuelta implements IRecibible {
 	}
 	
 	public List<Accion> getAccionesEnvido(){
-		return this._accionesEnvido;
+		return this._accionesTanto;
 	}
 	
 	public List<Accion> getAccionesTruco(){

@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import com.exceptions.AccionNoPosibleException;
 import com.modelo.acciones.envido.*;
+import com.modelo.acciones.flor.*;
 import com.modelo.acciones.truco.*;
 import com.modelo.cartas.Carta;
 
@@ -165,8 +166,25 @@ public abstract class Jugador implements IRecibible{
 		
 		if (respuesta.equals("quiero")){
 			return new QuieroTanto(accion);
-		} else {
+		} else if (respuesta.equals("noquiero")){
 			return new NoQuieroTanto(accion);
+		} else {
+			throw new AccionNoPosibleException();
+		}
+	}
+
+	public Accion responderA(AccionFlor accion, ManejadorDeRonda manejadorDeRonda, Partido partido) {
+		System.out.print("Respuesta Flor: ");
+		
+		Scanner scan = new Scanner(System.in);
+		String respuesta = scan.next().toLowerCase();
+		
+		if (respuesta.equals("contraflor")){
+			return new ContraFlor(accion);
+		} else if (respuesta.equals("contrafloralresto")){
+			return new ContraFlorAlResto(accion);
+		} else {
+			throw new AccionNoPosibleException();
 		}
 	}	
 }
