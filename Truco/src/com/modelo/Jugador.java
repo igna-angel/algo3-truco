@@ -120,14 +120,22 @@ public abstract class Jugador implements IRecibible{
 			return new NoQuieroTanto(accion);
 		} else 
 		
-		if (respuesta.equals(("envido"))){
-			return manejadorDeRonda.cantarEnvido(new Envido(accion),partido);
+		if ((respuesta.equals("envido")) && (this.accionEnvidoValida(accion))){
+			return manejadorDeRonda.cantarEnvido((new Envido(new QuieroTanto(accion))),partido);
 		} else if (respuesta.equals(("realenvido"))){
 			return manejadorDeRonda.cantarRealEnvido(new RealEnvido(accion),partido);
 		} else if (respuesta.equals(("faltaenvido"))){
-			return manejadorDeRonda.cantarFaltaEnvido(partido);
+			return manejadorDeRonda.cantarFaltaEnvido(new FaltaEnvido(accion),partido);
 		} else {
 			throw new AccionNoPosibleException();
+		}
+	}
+
+	private boolean accionEnvidoValida(Envido accion) {
+		if (accion.cantar() < 3){
+			return true;
+		} else {
+			return false;
 		}
 	}
 
@@ -140,11 +148,10 @@ public abstract class Jugador implements IRecibible{
 		if (respuesta.equals("quiero")){
 			return new QuieroTanto(accion);
 		} else
-		
 		if (respuesta.equals("noquiero")){
 			return new NoQuieroTanto(accion);
-		} else if (respuesta.equals(("faltaEnvido"))){
-			return manejadorDeRonda.cantarFaltaEnvido(partido);
+		} else if (respuesta.equals(("faltaenvido"))){
+			return manejadorDeRonda.cantarFaltaEnvido(new FaltaEnvido(accion),partido);
 		} else {
 			throw new AccionNoPosibleException();
 		}

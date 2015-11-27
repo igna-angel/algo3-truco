@@ -7,10 +7,6 @@ public class RealEnvido extends EnvidoDecorator {
 	}
 
 	public int cantar(){
-		if (this.accionADecorar.cantar() == 0){
-			return this.accionADecorar.cantar() + 2;
-		} else {
-			return this.accionADecorar.cantar() + 3;
-		}
+		return super.cantar() + 3;
 	}
 }

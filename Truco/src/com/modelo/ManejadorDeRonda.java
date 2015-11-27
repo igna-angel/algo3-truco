@@ -1,7 +1,5 @@
 package com.modelo;
 
-import com.exceptions.ReTrucoNoCantadoException;
-import com.exceptions.TrucoNoCantadoException;
 import com.modelo.acciones.envido.*;
 import com.modelo.acciones.truco.*;
 
@@ -14,7 +12,6 @@ public class ManejadorDeRonda {
 	}
 	
 	private Jugador getJugadorQueDebeAceptar(Partido partidoActual){
-		
 		Jugador jugadorAAceptarAccion;
 		jugadorAAceptarAccion = partidoActual.getJugadorSiguienteAlActual();
 		return jugadorAAceptarAccion;
@@ -44,18 +41,7 @@ public class ManejadorDeRonda {
 		return realEnvidoAceptado;
 	}
 	
-//	private RealEnvido envidoCantadoPreviamente (boolean envidoCantadoPreviamente){
-//		
-//		if (envidoCantadoPreviamente){
-//			return (new RealEnvido(new Envido(new Tanto())));
-//		} else {
-//			return (new RealEnvido(new Tanto()));
-//		}
-//	}
-	
-	public Accion cantarFaltaEnvido(Partido partido){
-		
-		FaltaEnvido faltaEnvidoCantado = new FaltaEnvido(new Tanto());
+	public Accion cantarFaltaEnvido(FaltaEnvido faltaEnvidoCantado, Partido partido){
 		Accion faltaEnvidoAceptado = this.getJugadorQueDebeAceptar(partido).responderA(faltaEnvidoCantado);
 		partido.volverJugadorQueCantoPreviamente();
 		return faltaEnvidoAceptado;

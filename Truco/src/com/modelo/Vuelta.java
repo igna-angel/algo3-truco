@@ -11,21 +11,20 @@ public class Vuelta implements IRecibible {
 	
 	private Stack<Carta> _cartas = null;
 	private Carta _cartaGanadora = null;
-	private List<Accion> _acciones = null;
+	private List<Accion> _accionesEnvido = null;
 	private List<Accion> _accionesTruco = null;
 	private Ronda _ronda;
 	
 	public Vuelta(Ronda ronda, List<Accion> acciones) {
 		this._cartas = new Stack<Carta>();
-		this._acciones = acciones;
+		this._accionesEnvido = acciones;
 		this._cartaGanadora = new CartaInvalida();
 		this._ronda = ronda;
 	}
 	
 	public Vuelta(Ronda ronda) {
 		this._cartas = new Stack<Carta>();
-		this._acciones = new ArrayList<Accion>(); //me va a servir separarlas me parece 
-												//por eso hice unas para el truco (Fabrizio)
+		this._accionesEnvido = new ArrayList<Accion>(); 
 		this._accionesTruco = new ArrayList<Accion>();
 		this._cartaGanadora = new CartaInvalida();
 		this._ronda = ronda;
@@ -47,8 +46,8 @@ public class Vuelta implements IRecibible {
 		return this._ronda;
 	}
 	
-	public List<Accion> getAcciones(){
-		return this._acciones;
+	public List<Accion> getAccionesEnvido(){
+		return this._accionesEnvido;
 	}
 	
 	public List<Accion> getAccionesTruco(){

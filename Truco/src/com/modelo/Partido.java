@@ -163,12 +163,11 @@ public class Partido {
 		
 		puntajeA = this._equipos.getFirst().getPuntaje();
 		puntajeB = this._equipos.getLast().getPuntaje();
-		
 		return puntajeFaltanteParaGanarEntreDosEquipos(puntajeA,puntajeB);
 	}
 	
 	private int puntajeFaltanteParaGanarEntreDosEquipos(int puntajeA, int puntajeB){
-		if (puntajeA > puntajeB){
+		if (puntajeA >= puntajeB){
 			return puntajeFaltanteSegunMalasOBuenas(puntajeA);
 		} else {
 			return puntajeFaltanteSegunMalasOBuenas(puntajeB);
@@ -176,7 +175,9 @@ public class Partido {
 	}
 	
 	private int puntajeFaltanteSegunMalasOBuenas(int puntaje){
-		if(puntaje < (PUNTAJE_MAXIMO_JUEGO / 2)){
+		int malas = (PUNTAJE_MAXIMO_JUEGO / 2);
+		
+		if(puntaje < malas){
 			return this.PUNTAJE_MAXIMO_JUEGO;
 		} else {
 			return (this.PUNTAJE_MAXIMO_JUEGO - puntaje);
