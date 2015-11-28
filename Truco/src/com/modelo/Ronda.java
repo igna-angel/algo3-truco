@@ -18,55 +18,55 @@ import com.modelo.acciones.truco.*;
 public abstract class Ronda {
 
 	private Partido _partido;
-	private Jugador _repartio;	
-	
+	private Jugador _repartio;
+
 	private Stack<Vuelta> _vueltas;
-	
+
 	public Ronda(Partido partido, Jugador reparte){
 		this._partido = partido;
 		this._repartio = reparte;
 		this._vueltas = new Stack<Vuelta>();
 	}
-	
+
 	public abstract Ronda getRondaSiguiente(boolean esPicaPica);
-	
+
 	public void asignarPuntos(int puntajeA, int puntajeB){
 		this.getPartido().agregarPuntos(puntajeA, puntajeB);
 	}
-	
+
 	protected Partido getPartido(){
 		return this._partido;
 	}
-	
+
 	public Jugador getRepartio(){
 		return this._repartio;
 	}
-	
+
 	protected Stack<Vuelta> getVueltas(){
 		return this._vueltas;
 	}
-	
+
 //	public void nuevaVuelta(List<Accion> acciones){
 //		this.getVueltas().push(new Vuelta(this, acciones));
 //	}
-	
+
 	public int getCantidadDeJugadoresTotales(){
 		return this.getPartido().getCantidadDeJugadoresTotales();
 	}
-	
+
 
 	public void nuevaVuelta() {
 		this.getVueltas().push(new Vuelta(this));
 	}
-	
+
 	public void seCantoTruco(){
 		this.trucoNoCantadoPreviamente();
 		AccionTruco trucoCantado = new Truco();
 		Accion truco = this._partido.getManejadorDeRonda().cantarTruco(trucoCantado,this._partido);
 		this.getVueltas().peek().getAccionesTruco().add(truco);
 		//verificar si es no querido y finalizar ronda
-	}	
-	
+	}
+
 	private void trucoNoCantadoPreviamente() {
 		if(this._vueltas.peek().getAccionesTruco().isEmpty()){
 			return;
@@ -74,7 +74,7 @@ public abstract class Ronda {
 			throw new TrucoYaCantadoException();
 		}
 	}
-	
+
 	private void ReTrucoNoCantadoPreviamente() {
 		if (this.getTruco().cantar() == 3
 		 || this.getTruco().cantar() == 4){
@@ -91,7 +91,7 @@ public abstract class Ronda {
 		this.getVueltas().peek().getAccionesTruco().add(reTruco);
 		//verificar si es no querido y finalizar ronda
 	}
-	
+
 	private AccionTruco getTruco() {
 		try{
 			if (!this._vueltas.peek().getAccionesTruco().isEmpty()){
@@ -111,7 +111,7 @@ public abstract class Ronda {
 		this.getVueltas().peek().getAccionesTruco().add(valeCuatro);
 		//verificar si es no querido y finalizar ronda
 	}
-	
+
 	private AccionTruco getReTruco() {
 		try{
 			if (!this._vueltas.peek().getAccionesTruco().isEmpty()){
@@ -130,7 +130,7 @@ public abstract class Ronda {
 			}
 		}
 	}
-	
+
 	private Accion getAccionFinalTruco(){
 		try{
 			int posAccionFinal = this.getPosAccionFinalTruco();
@@ -145,13 +145,13 @@ public abstract class Ronda {
 	private void agregarPuntajeDeTruco(){
 
 		Accion accionFinal = this.getAccionFinalTruco();
-		
+
 		int puntajeFinal = accionFinal.cantar();
 		int puntajeNulo = 0;
-	
+
 		this._partido.agregarPuntos(puntajeFinal, puntajeNulo);
 	}
-	
+
 	private int getPosAccionFinalTruco() {
 		if (!(this._vueltas.peek().getAccionesTruco().isEmpty())){
 			return this._vueltas.peek().getAccionesTruco().size();
@@ -160,7 +160,7 @@ public abstract class Ronda {
 			return this.getPosAccionFinalTruco();
 		}
 	}
-	
+
 	public void seCantoEnvido(){
 		this.verificarQueSeaLaPrimeraVuelta();
 		this.verificarQueNoSeHayaCantadoPreviamente();
@@ -168,7 +168,7 @@ public abstract class Ronda {
 		Accion envido = this._partido.getManejadorDeRonda().cantarEnvido(envidoCantado,this._partido);
 		this.getVueltas().peek().getAccionesEnvido().add(envido);
 	}
-	
+
 	private void verificarQueSeaLaPrimeraVuelta() {
 		if (this._vueltas.size() == 1){
 			return;
@@ -184,7 +184,7 @@ public abstract class Ronda {
 		Accion realEnvido = this._partido.getManejadorDeRonda().cantarRealEnvido(realEnvidoCantado,this._partido);
 		this.getVueltas().peek().getAccionesEnvido().add(realEnvido);
 	}
-	
+
 	private void verificarQueNoSeHayaCantadoPreviamente() {
 		if (this._vueltas.peek().getAccionesEnvido().isEmpty()){
 			return;
@@ -200,7 +200,7 @@ public abstract class Ronda {
 		Accion faltaEnvido = this._partido.getManejadorDeRonda().cantarFaltaEnvido(faltaEnvidoCantado,this._partido);
 		this.getVueltas().peek().getAccionesEnvido().add(faltaEnvido);
 	}
-	
+
 	private int getPosAccionFinalEnvido() {
 		if (!this._vueltas.peek().getAccionesEnvido().isEmpty()){
 			return this._vueltas.peek().getAccionesEnvido().size();
@@ -209,15 +209,15 @@ public abstract class Ronda {
 			return this.getPosAccionFinalEnvido();
 		}
 	}
-	
+
 	private void agregarPuntajeDeTantoNormal(Accion accionFinal) {
-		
+
 		int puntajeFinal = accionFinal.cantar();
 		int puntajeNulo = 0;
-		
+
 		this._partido.agregarPuntos(puntajeFinal, puntajeNulo);
 	}
-	
+
 	private Accion getAccionFinalEnvido(){
 		try {
 			int posAccionFinal = this.getPosAccionFinalEnvido();
@@ -228,9 +228,9 @@ public abstract class Ronda {
 			return accionFinal;
 		}
 	}
-	
+
 	private void agregarPuntajeDeTanto(){
-		
+
 		Accion accionFinal = this.getAccionFinalEnvido();
 
 		if (accionFinal.cantar() < 30){
@@ -241,17 +241,13 @@ public abstract class Ronda {
 	}
 
 	private void agregarPuntajeDeTantoEspecial() {
-		
+
 		int puntajeFinal = this._partido.getcantidadDePuntosFaltantes();
 		int puntajeNulo = 0;
-		
+
 		this._partido.agregarPuntos(puntajeFinal, puntajeNulo);
 	}
 
-	public void seCantoFlor() {
-		// GENERAR		
-	}
-	
 	public void seCantoFlor(){
 		this.verificarQueSeaLaPrimeraVuelta();
 		this.verificarQueNoSeHayaCantadoPreviamente();
@@ -260,12 +256,12 @@ public abstract class Ronda {
 		Accion flor = this._partido.getManejadorDeRonda().cantarFlor(florCantada,this._partido);
 		this.getVueltas().peek().getAccionesEnvido().add(flor);
 	}
-	
+
 	public void agregarPuntajes(){
 		this.agregarPuntajeDeTanto();
 		this.agregarPuntajeDeTruco();
 	}
-	
+
 //	public void finalizarRonda(){
 //	}
 
