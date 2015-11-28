@@ -258,8 +258,8 @@ public abstract class Ronda {
 	}
 
 	public void agregarPuntajes(){
+	    this.agregarPuntajeDeTruco();
 		this.agregarPuntajeDeTanto();
-		this.agregarPuntajeDeTruco();
 	}
 
 //	public void finalizarRonda(){
