@@ -75,4 +75,9 @@ public class CartaTres extends Carta{
 	public Carta ganador(CartaPardaTres pardaTres) {
 		return pardaTres;
 	}
+
+	@Override
+	public int getPuntosEnvido() {
+		return this.getNumero();
+	}
 }

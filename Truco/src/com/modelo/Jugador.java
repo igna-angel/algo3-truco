@@ -3,10 +3,21 @@ package com.modelo;
 import java.util.Scanner;
 
 import com.exceptions.AccionNoPosibleException;
-import com.modelo.acciones.envido.*;
-import com.modelo.acciones.flor.*;
-import com.modelo.acciones.truco.*;
+import com.modelo.acciones.envido.Envido;
+import com.modelo.acciones.envido.FaltaEnvido;
+import com.modelo.acciones.envido.NoQuieroTanto;
+import com.modelo.acciones.envido.QuieroTanto;
+import com.modelo.acciones.envido.RealEnvido;
+import com.modelo.acciones.flor.AccionFlor;
+import com.modelo.acciones.flor.ContraFlor;
+import com.modelo.acciones.flor.ContraFlorAlResto;
+import com.modelo.acciones.truco.AccionTruco;
+import com.modelo.acciones.truco.NoQuiero;
+import com.modelo.acciones.truco.Quiero;
+import com.modelo.acciones.truco.ReTruco;
+import com.modelo.acciones.truco.ValeCuatro;
 import com.modelo.cartas.Carta;
+
 
 public abstract class Jugador implements IRecibible{
 	
@@ -51,6 +62,8 @@ public abstract class Jugador implements IRecibible{
 		
 		Scanner scan = new Scanner(System.in);
 		String respuesta = scan.next().toLowerCase();
+		scan.close();
+
 		
 		if (respuesta.equals("quiero")){
 			return new Quiero(accion);
@@ -61,7 +74,7 @@ public abstract class Jugador implements IRecibible{
 		} else 
 		
 		if (respuesta.equals("retruco")){
-			return manejadorDeRonda.cantarReTruco(new ReTruco(accion),partido);
+			return manejadorDeRonda.cantarReTruco(new ReTruco(accion));
 		} else {
 			throw new AccionNoPosibleException();
 		}
@@ -73,6 +86,8 @@ public abstract class Jugador implements IRecibible{
 		
 		Scanner scan = new Scanner(System.in);
 		String respuesta = scan.next().toLowerCase();
+		scan.close();
+
 		
 		if (respuesta.equals("quiero")){
 			return new Quiero(accion);
@@ -83,7 +98,8 @@ public abstract class Jugador implements IRecibible{
 		} else 
 		
 		if (respuesta.equals(("valecuatro"))){
-			return manejadorDeRonda.cantarValeCuatro(new ValeCuatro(accion),partido);
+			return manejadorDeRonda.cantarValeCuatro(new ValeCuatro(accion));
+
 		} else {
 			throw new AccionNoPosibleException();
 		}
@@ -95,6 +111,7 @@ public abstract class Jugador implements IRecibible{
 		
 		Scanner scan = new Scanner(System.in);
 		String respuesta = scan.next().toLowerCase();
+		scan.close();
 		
 		if (respuesta.equals("quiero")){
 			return new Quiero(accion);
@@ -112,6 +129,7 @@ public abstract class Jugador implements IRecibible{
 		
 		Scanner scan = new Scanner(System.in);
 		String respuesta = scan.next().toLowerCase();
+		scan.close();
 		
 		if (respuesta.equals("quiero")){
 			return new QuieroTanto(accion);
@@ -122,11 +140,11 @@ public abstract class Jugador implements IRecibible{
 		} else 
 		
 		if ((respuesta.equals("envido")) && (this.accionEnvidoValida(accion))){
-			return manejadorDeRonda.cantarEnvido((new Envido(new QuieroTanto(accion))),partido);
+			return manejadorDeRonda.cantarEnvido((new Envido(new QuieroTanto(accion))));
 		} else if (respuesta.equals(("realenvido"))){
-			return manejadorDeRonda.cantarRealEnvido(new RealEnvido(accion),partido);
+			return manejadorDeRonda.cantarRealEnvido(new RealEnvido(accion));
 		} else if (respuesta.equals(("faltaenvido"))){
-			return manejadorDeRonda.cantarFaltaEnvido(new FaltaEnvido(accion),partido);
+			return manejadorDeRonda.cantarFaltaEnvido(new FaltaEnvido(accion));
 		} else {
 			throw new AccionNoPosibleException();
 		}
@@ -145,6 +163,7 @@ public abstract class Jugador implements IRecibible{
 		
 		Scanner scan = new Scanner(System.in);
 		String respuesta = scan.next().toLowerCase();
+		scan.close();
 		
 		if (respuesta.equals("quiero")){
 			return new QuieroTanto(accion);
@@ -152,7 +171,7 @@ public abstract class Jugador implements IRecibible{
 		if (respuesta.equals("noquiero")){
 			return new NoQuieroTanto(accion);
 		} else if (respuesta.equals(("faltaenvido"))){
-			return manejadorDeRonda.cantarFaltaEnvido(new FaltaEnvido(accion),partido);
+			return manejadorDeRonda.cantarFaltaEnvido(new FaltaEnvido(accion));
 		} else {
 			throw new AccionNoPosibleException();
 		}
@@ -163,6 +182,7 @@ public abstract class Jugador implements IRecibible{
 		
 		Scanner scan = new Scanner(System.in);
 		String respuesta = scan.next().toLowerCase();
+		scan.close();
 		
 		if (respuesta.equals("quiero")){
 			return new QuieroTanto(accion);
@@ -178,6 +198,7 @@ public abstract class Jugador implements IRecibible{
 		
 		Scanner scan = new Scanner(System.in);
 		String respuesta = scan.next().toLowerCase();
+		scan.close();
 		
 		if (respuesta.equals("contraflor")){
 			return new ContraFlor(accion);
@@ -186,5 +207,7 @@ public abstract class Jugador implements IRecibible{
 		} else {
 			throw new AccionNoPosibleException();
 		}
-	}	
+	}
+
+	public abstract void jugar(Vuelta vuelta);
 }

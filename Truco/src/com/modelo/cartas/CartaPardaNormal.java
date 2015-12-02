@@ -77,5 +77,9 @@ public class CartaPardaNormal extends Carta{
 	public Carta ganador(CartaPardaTres pardaTres) {
 		throw new PardaInvalidaException();
 	}
-
+	
+	@Override
+	public int getPuntosEnvido() {
+		return Carta.PUNTOS_CARTA_SIN_PUNTOS;
+	}
 }

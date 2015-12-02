@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import com.modelo.Jugador;
 import com.modelo.JugadorHumano;
+import com.modelo.RondaRedonda;
 import com.modelo.Vuelta;
 import com.modelo.cartas.Carta;
 import com.modelo.cartas.CartaNormal;
@@ -47,7 +48,8 @@ public class JugadorTest {
 	
 	@Test
 	public void testSeBajaUnaCarta(){
-		Vuelta vuelta = new Vuelta(null, null);
+
+		Vuelta vuelta = new Vuelta(new RondaRedonda(null, null), new JugadorHumano());
 		
 		Carta cartaTest = new CartaNormal();
 		

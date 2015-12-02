@@ -71,4 +71,9 @@ public class CartaInvalida extends Carta {
 	public Carta ganador(CartaPardaTres pardaTres) {
 		return pardaTres;
 	}
+	
+	@Override
+	public int getPuntosEnvido() {
+		return Carta.PUNTOS_CARTA_SIN_PUNTOS;
+	}
 }

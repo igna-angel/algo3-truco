@@ -1,8 +1,8 @@
-package com.modelo;
+package com.modelo.cartas;
 
 import com.exceptions.NumeroFueraDeRangoException;
 
-public class Carta {
+public abstract class Carta implements IPeleable {
 
 	public enum Palo{
 		Indefinido(0), Espada(1), Basto(2), Oro(3), Copa(4);

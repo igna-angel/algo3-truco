@@ -4,16 +4,26 @@ import java.util.EmptyStackException;
 import java.util.Stack;
 
 import com.exceptions.TantoYaCantadoException;
+import com.exceptions.NoHayVueltasException;
+
 import com.exceptions.ReTrucoNoCantadoException;
 import com.exceptions.ReTrucoYaCantadoException;
 import com.exceptions.TrucoNoCantadoException;
 import com.exceptions.TrucoYaCantadoException;
 import com.exceptions.ValeCuatroYaCantadoException;
 import com.exceptions.VueltaParaCantarTantoNoPosibleException;
-import com.modelo.acciones.envido.*;
+import com.modelo.acciones.envido.Envido;
+import com.modelo.acciones.envido.FaltaEnvido;
+import com.modelo.acciones.envido.RealEnvido;
+import com.modelo.acciones.envido.Tanto;
 import com.modelo.acciones.flor.AccionFlor;
 import com.modelo.acciones.flor.Flor;
-import com.modelo.acciones.truco.*;
+import com.modelo.acciones.truco.AccionTruco;
+import com.modelo.acciones.truco.NoQuiero;
+import com.modelo.acciones.truco.ReTruco;
+import com.modelo.acciones.truco.Truco;
+import com.modelo.acciones.truco.ValeCuatro;
+
 
 public abstract class Ronda {
 
@@ -42,10 +52,19 @@ public abstract class Ronda {
 		return this._repartio;
 	}
 
+	public Jugador getJugadorSiguienteAlActual(){
+		return this.getPartido().getJugadorSiguienteAlActual();
+	}
+
 	protected Stack<Vuelta> getVueltas(){
 		return this._vueltas;
 	}
 
+	protected Vuelta getVueltaActual(){
+		if(this.getVueltas().isEmpty()) throw new NoHayVueltasException();
+		return this.getVueltas().peek();
+	}
+	
 //	public void nuevaVuelta(List<Accion> acciones){
 //		this.getVueltas().push(new Vuelta(this, acciones));
 //	}
@@ -54,15 +73,16 @@ public abstract class Ronda {
 		return this.getPartido().getCantidadDeJugadoresTotales();
 	}
 
-
 	public void nuevaVuelta() {
-		this.getVueltas().push(new Vuelta(this));
+		this.getVueltas().push(new Vuelta(this, this.getPartido().getJugadorSiguienteA(this.getRepartio())));
 	}
 
 	public void seCantoTruco(){
 		this.trucoNoCantadoPreviamente();
 		AccionTruco trucoCantado = new Truco();
-		Accion truco = this._partido.getManejadorDeRonda().cantarTruco(trucoCantado,this._partido);
+
+		Accion truco = this._partido.getManejadorDeRonda().cantarTruco(trucoCantado);
+
 		this.getVueltas().peek().getAccionesTruco().add(truco);
 		//verificar si es no querido y finalizar ronda
 	}
@@ -87,7 +107,9 @@ public abstract class Ronda {
 	public void seCantoReTruco(){
 		this.ReTrucoNoCantadoPreviamente();
 		ReTruco reTrucoCantado = new ReTruco(this.getTruco());
-		Accion reTruco = this._partido.getManejadorDeRonda().cantarReTruco(reTrucoCantado, this._partido);
+
+		Accion reTruco = this._partido.getManejadorDeRonda().cantarReTruco(reTrucoCantado);
+
 		this.getVueltas().peek().getAccionesTruco().add(reTruco);
 		//verificar si es no querido y finalizar ronda
 	}
@@ -107,7 +129,8 @@ public abstract class Ronda {
 
 	public void seCantoValeCuatro(){
 		ValeCuatro valeCuatroCantado = new ValeCuatro(this.getReTruco());
-		Accion valeCuatro = this._partido.getManejadorDeRonda().cantarValeCuatro(valeCuatroCantado, this._partido);
+		Accion valeCuatro = this._partido.getManejadorDeRonda().cantarValeCuatro(valeCuatroCantado);
+
 		this.getVueltas().peek().getAccionesTruco().add(valeCuatro);
 		//verificar si es no querido y finalizar ronda
 	}
@@ -162,43 +185,38 @@ public abstract class Ronda {
 	}
 
 	public void seCantoEnvido(){
-		this.verificarQueSeaLaPrimeraVuelta();
-		this.verificarQueNoSeHayaCantadoPreviamente();
+		if(!this.esPrimeraVuelta()) throw new VueltaParaCantarTantoNoPosibleException();
+		if(this.yaSeCantoEnvido()) throw new TantoYaCantadoException();
 		Envido envidoCantado = new Envido(new Tanto());
-		Accion envido = this._partido.getManejadorDeRonda().cantarEnvido(envidoCantado,this._partido);
+		Accion envido = this.getPartido().getManejadorDeRonda().cantarEnvido(envidoCantado);
 		this.getVueltas().peek().getAccionesEnvido().add(envido);
 	}
 
-	private void verificarQueSeaLaPrimeraVuelta() {
-		if (this._vueltas.size() == 1){
-			return;
-		} else {
-			throw new VueltaParaCantarTantoNoPosibleException();
-		}
+	private boolean esPrimeraVuelta() {
+		return this.getVueltas().size() == 1;
 	}
 
 	public void seCantoRealEnvido(){
-		this.verificarQueSeaLaPrimeraVuelta();
-		this.verificarQueNoSeHayaCantadoPreviamente();
+		if(!this.esPrimeraVuelta()) throw new VueltaParaCantarTantoNoPosibleException();
+		if(this.yaSeCantoEnvido()) throw new TantoYaCantadoException();
 		RealEnvido realEnvidoCantado = new RealEnvido(new Tanto());
-		Accion realEnvido = this._partido.getManejadorDeRonda().cantarRealEnvido(realEnvidoCantado,this._partido);
+		Accion realEnvido = this.getPartido().getManejadorDeRonda().cantarRealEnvido(realEnvidoCantado);
 		this.getVueltas().peek().getAccionesEnvido().add(realEnvido);
 	}
 
-	private void verificarQueNoSeHayaCantadoPreviamente() {
-		if (this._vueltas.peek().getAccionesEnvido().isEmpty()){
-			return;
-		} else {
-			throw new TantoYaCantadoException();
-		}
+	private boolean yaSeCantoEnvido() {
+		return !this.getVueltaActual().getAccionesEnvido().isEmpty();
 	}
 
 	public void seCantoFaltaEnvido(){
-		this.verificarQueSeaLaPrimeraVuelta();
-		this.verificarQueNoSeHayaCantadoPreviamente();
+		if(!this.esPrimeraVuelta()) throw new VueltaParaCantarTantoNoPosibleException();
+		if(this.yaSeCantoEnvido()) throw new TantoYaCantadoException();
 		FaltaEnvido faltaEnvidoCantado = new FaltaEnvido(new Tanto());
-		Accion faltaEnvido = this._partido.getManejadorDeRonda().cantarFaltaEnvido(faltaEnvidoCantado,this._partido);
-		this.getVueltas().peek().getAccionesEnvido().add(faltaEnvido);
+		Accion faltaEnvido = this.getPartido().getManejadorDeRonda().cantarFaltaEnvido(faltaEnvidoCantado);
+
+		Envido envidoCantado = new Envido(new Tanto());
+		Accion envido = this._partido.getManejadorDeRonda().cantarEnvido(envidoCantado);
+		this.getVueltas().peek().getAccionesEnvido().add(envido);
 	}
 
 	private int getPosAccionFinalEnvido() {
@@ -249,11 +267,12 @@ public abstract class Ronda {
 	}
 
 	public void seCantoFlor(){
-		this.verificarQueSeaLaPrimeraVuelta();
-		this.verificarQueNoSeHayaCantadoPreviamente();
+		if(!this.esPrimeraVuelta()) throw new VueltaParaCantarTantoNoPosibleException();
+		if(this.yaSeCantoEnvido()) throw new TantoYaCantadoException();
 		//verificar que en la mano se tengan tres cartas del mismo palo
 		AccionFlor florCantada = new Flor();
-		Accion flor = this._partido.getManejadorDeRonda().cantarFlor(florCantada,this._partido);
+		Accion flor = this._partido.getManejadorDeRonda().cantarFlor(florCantada);
+
 		this.getVueltas().peek().getAccionesEnvido().add(flor);
 	}
 
@@ -261,6 +280,11 @@ public abstract class Ronda {
 	    this.agregarPuntajeDeTruco();
 		this.agregarPuntajeDeTanto();
 	}
+
+	public Jugador getJugadorActual() {
+		return this.getVueltaActual().getJugadorActual();
+	}
+
 
 //	public void finalizarRonda(){
 //	}

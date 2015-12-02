@@ -15,21 +15,58 @@ public class Vuelta implements IRecibible {
 	private List<Accion> _accionesTruco = null;
 	private Ronda _ronda;
 	
+	private Jugador _jugadorInicial = null;
+	private Jugador _jugadorActual = null;
+
 	public Vuelta(Ronda ronda, List<Accion> acciones) {
 		this._cartas = new Stack<Carta>();
 		this._accionesTanto = acciones;
 		this._cartaGanadora = new CartaInvalida();
 		this._ronda = ronda;
 	}
-	
-	public Vuelta(Ronda ronda) {
+
+	public Vuelta(Ronda ronda, Jugador jugadorInicial) {
 		this._cartas = new Stack<Carta>();
 		this._accionesTanto = new ArrayList<Accion>(); 
 		this._accionesTruco = new ArrayList<Accion>();
 		this._cartaGanadora = new CartaInvalida();
 		this._ronda = ronda;
+
+		this.asignarJugadorInicial(jugadorInicial);
+		this.asignarJugadorActual(this.getJugadorInicial());
+	}
+	
+	public void asignarJugadorInicial(Jugador jugadorInicial){
+		this._jugadorInicial = jugadorInicial;
+	}
+	
+	public Jugador getJugadorInicial(){
+		return this._jugadorInicial;
+	}
+	
+	public Jugador getJugadorActual(){
+		return this.getJugadorActual();
+	}
+	
+	private void procesarTurnoJugadorActual(){
+		this.getJugadorActual().jugar(this);		
+	}
+	
+	private void asignarJugadorActual(Jugador jugadorActual){
+		this._jugadorActual = jugadorActual;
+	}
+	
+	private void asignarJugadorSiguiente(){
+		this.asignarJugadorActual(this.getRonda().getJugadorSiguienteAlActual());
 	}
 
+	public void jugarVuelta(){
+		while(!this.esFinDeVuelta()){
+			this.procesarTurnoJugadorActual();
+			this.asignarJugadorSiguiente();
+		}
+	}
+	
 	public Stack<Carta> getCartas(){
 		return this._cartas;
 	}
@@ -67,5 +104,4 @@ public class Vuelta implements IRecibible {
 		this.setCartaGanadora(carta.ganador(this.getCartaGanadora()));
 		this.getCartas().push(carta);
 	}
-
 }

@@ -23,7 +23,7 @@ public class Partido {
 	public Partido(){
 		this._rondas = new Stack<Ronda>();
 		this._equipos = new CircularList<Equipo>();
-		this._manejadorDeRonda = new ManejadorDeRonda();
+		this._manejadorDeRonda = new ManejadorDeRonda(this);
 		this._mazo = new Mazo();
 		this.getMazo().crear();
 	}
@@ -140,20 +140,20 @@ public class Partido {
 	}	
 	
 	public Jugador getProximoEnRepartir(){
-		this.getOrdenJugadores().resetToFirst();
-		int posicionAMover = this.getOrdenJugadores().getIndexOf(this.getRepartidorActual());
-		this.getOrdenJugadores().moveCursorTo(posicionAMover);
-		this.getOrdenJugadores().advanceCursor();
-		return this.getOrdenJugadores().getCurrent();
+		return this.getJugadorSiguienteA(this.getRepartidorActual());
 	}
 	
 	public Jugador getRepartidorActual(){
 		return this.getRondaActual().getRepartio();
 	}
 	
+
+	public Jugador getJugadorActual(){
+		return this.getRondaActual().getJugadorActual();
+	}
+	
 	public Jugador getJugadorSiguienteAlActual(){
-		this.getOrdenJugadores().advanceCursor();
-		return this.getOrdenJugadores().getCurrent();
+		return this.getJugadorSiguienteA(this.getJugadorActual());
 	}
 
 	public int getcantidadDePuntosFaltantes() {
@@ -184,8 +184,11 @@ public class Partido {
 		}
 	}
 
-	public void volverJugadorQueCantoPreviamente() {
-		this.getOrdenJugadores().turnBackCursor();
+	public Jugador getJugadorSiguienteA(Jugador jugadorActual) {
+		this.getOrdenJugadores().resetToFirst();
+		this.getOrdenJugadores().moveCursorTo(this.getOrdenJugadores().getIndexOf(jugadorActual));
+		this._ordenJugadores.advanceCursor();
+		return this._ordenJugadores.getCurrent();
 	}
 
 }

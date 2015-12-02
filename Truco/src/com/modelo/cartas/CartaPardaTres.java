@@ -74,4 +74,8 @@ public class CartaPardaTres extends Carta {
 		throw new PardaInvalidaException();
 	}
 
+	@Override
+	public int getPuntosEnvido() {
+		return Carta.PUNTOS_CARTA_SIN_PUNTOS;
+	}
 }

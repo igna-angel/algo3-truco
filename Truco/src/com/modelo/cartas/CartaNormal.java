@@ -82,4 +82,9 @@ public class CartaNormal extends Carta{
 	public Carta ganador(CartaPardaTres pardaTres) {
 		throw new PardaInvalidaException();
 	}
+
+	@Override
+	public int getPuntosEnvido() {
+		return this.getNumero() >= 10? CartaNormal.PUNTOS_CARTA_SIN_PUNTOS : this.getNumero();
+	}
 }

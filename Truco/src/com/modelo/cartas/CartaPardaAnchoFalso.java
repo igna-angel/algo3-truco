@@ -73,4 +73,9 @@ public class CartaPardaAnchoFalso extends Carta{
 	public Carta ganador(CartaPardaTres pardaTres) {
 		throw new PardaInvalidaException();
 	}
+	
+	@Override
+	public int getPuntosEnvido() {
+		return this.getNumero();
+	}
 }

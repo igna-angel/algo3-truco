@@ -75,4 +75,9 @@ public class CartaSieteEspada extends Carta{
 	public Carta ganador(CartaPardaTres pardaTres) {
 		return this;
 	}
+	
+	@Override
+	public int getPuntosEnvido() {
+		return this.getNumero();
+	}
 }

@@ -1,3 +1,34 @@
+
+package com.interfazgrafica;
+
+import com.modelo.Partido;
+
+
+public class Boton2JugadoresEventHandler implements EventHandler<ActionEvent>{
+
+	private Partido partido;
+	private Stage stage;
+	private Scene scene;
+	
+	public Boton2JugadoresEventHandler (Stage stage){
+		this.stage = stage;
+		this.partido = new Partido();
+		Label nuevaLabel = new Label();
+		nuevaLabel.setText("Estan por jugar 2 jugadores");
+		HBox contenedorHorizontal = new HBox (nuevaLabel);
+		contenedorHorizontal.setBackground(new Background(new BackgroundFill(Color.DARKGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
+		contenedorHorizontal.setAlignment(Pos.CENTER);
+		this.scene = new Scene(contenedorHorizontal,700,600);
+	}
+	
+	@Override
+	public void handle(ActionEvent actionEvent){
+		this.stage.setScene (scene);
+		this.stage.show();
+	}
+	
+}
+=======
 package com.interfazgrafica;
 
 import com.modelo.Partido;

@@ -3,7 +3,6 @@ package com.modelo;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.exceptions.NumeroCartasACompararIncorrectoException;
 import com.modelo.cartas.Carta;
 
 public class ComparadorCartas {

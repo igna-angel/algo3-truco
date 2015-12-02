@@ -1,5 +1,6 @@
 package com.modelo;
 
+import com.exceptions.EmptyListException;
 import com.modelo.cartas.Carta;
 
 public class JugadorVirtual extends Jugador {
@@ -12,15 +13,12 @@ public class JugadorVirtual extends Jugador {
 	}
 	
 	public void elegirCartaABajarYBajarla (Vuelta vuelta) {
-		Carta cartaAJugar = null;
-		// Si abro la vuelta, bajo la carta mas alta
-		if (vuelta.getCantidadDeCartasEnVuelta() == 0) {
-			cartaAJugar = this._mano.devolverCartaMasAlta();
-		}
+		Carta cartaAJugar;
 		
-		// Sino me fijo las cartas en mesa, si puedo ganar, juego a ganar con lo justo, sino tiro la mas baja
-		else {
-			cartaAJugar = this._mano.buscarCartaQueGane(vuelta.getCartas());
+		try{
+			cartaAJugar = this.getMano().getCartaGanadoraMinimaA(vuelta.getCartaGanadora());
+		}catch (EmptyListException e){
+			cartaAJugar = this.getMano().getCartaMasBaja();
 		}
 		
 		this.bajarCarta(vuelta, cartaAJugar);
@@ -43,6 +41,11 @@ public class JugadorVirtual extends Jugador {
 		else if (tantoEnMano >= MIN_TANTO_ENVIDO) {
 			ronda.seCantoEnvido();
 		}
+	}
+
+	@Override
+	public void jugar(Vuelta vuelta) {
+		// TODO Auto-generated method stub
 	}
 	
 	// VER COMO HACER PARA ACEPTAR EL TANTO
