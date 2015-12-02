@@ -41,7 +41,7 @@ public class TableroMesa extends Application {
 		
         Image imagenTruco = new Image("file:C:\\Users\\Ska-Ska-Ska\\Desktop\\Cartas Españolas\\truco.png");
         ImageView imagenInicio = new ImageView (imagenTruco);
-        imagenInicio.setFitWidth(150);
+        imagenInicio.setFitWidth(120);
         imagenInicio.setPreserveRatio(true);
         imagenInicio.setSmooth(true);
         imagenInicio.setCache(true);
@@ -156,4 +156,5 @@ public class TableroMesa extends Application {
 		
         //Boton6JugadoresEventHandler boton6JugadoresEventHandler = new Boton6JugadoresEventHandler();
     }
+
 }
