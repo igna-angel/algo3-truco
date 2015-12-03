@@ -1,0 +1,72 @@
+package com.interfazgrafica;
+
+import com.modelo.cartas.Carta;
+
+import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.TextAlignment;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.stage.Stage;
+
+public class GeneradoresVisuales {
+	
+	public ImageView generarVisionCartaDorso (){
+		Image dorsoAzul = new Image("file:C:\\Users\\Ska-Ska-Ska\\Desktop\\Cartas Españolas\\CartaDorsoAzul.png");
+		ImageView cartaDorsoAzul = new ImageView (dorsoAzul);
+        cartaDorsoAzul.setFitWidth(70);
+        cartaDorsoAzul.setPreserveRatio(true);
+        cartaDorsoAzul.setSmooth(true);
+        cartaDorsoAzul.setCache(true);
+        return cartaDorsoAzul;
+	}
+	
+	public HBox generarCartasComienzoDeJugador (){
+		ImageView cartaDorso1 = this.generarVisionCartaDorso();
+        ImageView cartaDorso2 = this.generarVisionCartaDorso();
+        ImageView cartaDorso3 = this.generarVisionCartaDorso();
+		HBox cartasJugador = new HBox (cartaDorso1, cartaDorso2, cartaDorso3);
+		cartasJugador.setSpacing(5);
+		cartasJugador.setPadding(new Insets(15));
+		cartasJugador.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+		return cartasJugador;
+	}
+	
+	public HBox generarEspacioVacioVertical (){
+		
+		Image imagenEspacioVacio = new Image("file:C:\\Users\\Ska-Ska-Ska\\Desktop\\Cartas Españolas\\espacioCarta.png");
+		ImageView espacioVacioCarta = new ImageView (imagenEspacioVacio);
+		espacioVacioCarta.setFitWidth(70);
+		espacioVacioCarta.setPreserveRatio(true);
+		espacioVacioCarta.setSmooth(true);
+		espacioVacioCarta.setCache(true);
+		HBox espacioVacio = new HBox (espacioVacioCarta);
+		espacioVacio.setSpacing(5);
+		espacioVacio.setPadding(new Insets(15));
+		espacioVacio.setBackground(new Background(new BackgroundFill(Color.DARKGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
+		return espacioVacio;
+	}
+	
+	public ImageView generadorDeVisualDeCarta (Carta unaCarta){
+		Image imagenDeUnaCarta = new Image ("file:C:\\Users\\Ska-Ska-Ska\\Desktop\\Cartas Españolas\\"+unaCarta.getPalo().toString()+"\\"+Integer.toString(unaCarta.getNumero())+".jpg");
+		ImageView visualDeUnaCarta = new ImageView (imagenDeUnaCarta);
+		visualDeUnaCarta.setFitWidth(70);
+		visualDeUnaCarta.setPreserveRatio(true);
+		visualDeUnaCarta.setSmooth(true);
+		visualDeUnaCarta.setCache(true);
+		return visualDeUnaCarta;
+	}
+}
