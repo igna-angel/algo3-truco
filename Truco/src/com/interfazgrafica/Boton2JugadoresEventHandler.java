@@ -78,7 +78,7 @@ public class Boton2JugadoresEventHandler implements EventHandler<ActionEvent>{
 		partido.getMazo().repartir(partido.getOrdenJugadores(), partido.getRepartidorActual(), 3);
 		
 				
-		HBox esElTurnoDe = new HBox (turnoDe, new Label (turnoJugador.getCurrent().toString()), new Label (partido.getMazo().getCarta(1).getPalo().toString()), new Label (Integer.toString(partido.getMazo().getCarta(1).getNumero())));
+		HBox esElTurnoDe = new HBox (turnoDe, new Label (turnoJugador.getCurrent().toString()));
 		esElTurnoDe.setPadding(new Insets(20));
 		Button botonEstoyListo = new Button ("Estoy Listo");
 		VBox controles = new VBox (esElTurnoDe, botonEstoyListo);
