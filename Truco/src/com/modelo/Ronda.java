@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Stack;
 
 import com.exceptions.TantoYaCantadoException;
+import com.exceptions.AccionNoPosibleException;
 import com.exceptions.NoHayVueltasException;
 
 import com.exceptions.ReTrucoNoCantadoException;
@@ -14,21 +15,25 @@ import com.exceptions.TrucoNoCantadoException;
 import com.exceptions.TrucoYaCantadoException;
 import com.exceptions.ValeCuatroYaCantadoException;
 import com.exceptions.VueltaParaCantarTantoNoPosibleException;
+import com.modelo.acciones.envido.AccionTanto;
 import com.modelo.acciones.envido.Envido;
-import com.modelo.acciones.envido.EnvidoDecorator;
+import com.modelo.acciones.envido.TantoDecorator;
 import com.modelo.acciones.envido.FaltaEnvido;
+import com.modelo.acciones.envido.Flor;
 import com.modelo.acciones.envido.NoQuieroTanto;
 import com.modelo.acciones.envido.QuieroTanto;
 import com.modelo.acciones.envido.RealEnvido;
 import com.modelo.acciones.envido.Tanto;
-import com.modelo.acciones.flor.AccionFlor;
-import com.modelo.acciones.flor.Flor;
 import com.modelo.acciones.truco.AccionTruco;
 import com.modelo.acciones.truco.NoQuiero;
 import com.modelo.acciones.truco.ReTruco;
 import com.modelo.acciones.truco.Truco;
 import com.modelo.acciones.truco.ValeCuatro;
 import com.modelo.cartas.Carta;
+import com.modelo.cartas.Carta.Palo;
+import com.modelo.cartas.CartaAnchoEspada;
+import com.modelo.cartas.CartaSieteEspada;
+import com.modelo.cartas.CartaTres;
 
 
 public abstract class Ronda {
@@ -202,7 +207,7 @@ public abstract class Ronda {
 		if(this.yaSeCantoEnvido()) throw new TantoYaCantadoException();
 		
 		Envido envidoCantado = new Envido(new Tanto(), jugadorOrigen, this.getPartido().getJugadorSiguienteA(jugadorOrigen));
-		EnvidoDecorator desicion = this.getPartido().getManejadorDeRonda().cantarEnvido(envidoCantado);
+		TantoDecorator desicion = this.getPartido().getManejadorDeRonda().cantarEnvido(envidoCantado);
 		Accion envido = (Accion)desicion;
 		this.getVueltaActual().getAccionesEnvido().add(envido);
 //		this.getPartido().getManejadorDeRonda().ejecutarRespuestaTanto(desicion);
@@ -282,14 +287,32 @@ public abstract class Ronda {
 		this._partido.agregarPuntos(puntajeFinal, puntajeNulo);
 	}
 
-	public void seCantoFlor(){
+	public void seCantoFlor(Jugador jugadorOrigen){
 		if(!this.esPrimeraVuelta()) throw new VueltaParaCantarTantoNoPosibleException();
 		if(this.yaSeCantoEnvido()) throw new TantoYaCantadoException();
-		//verificar que en la mano se tengan tres cartas del mismo palo
-		AccionFlor florCantada = new Flor();
-		Accion flor = this._partido.getManejadorDeRonda().cantarFlor(florCantada);
-
-		this.getVueltas().peek().getAccionesEnvido().add(flor);
+		
+//		Jugador jugadorAuxiliar2 = jugadorOrigen;
+//		
+//		Jugador jugadorAuxiliar = new JugadorHumano();
+//		jugadorAuxiliar.recibirCarta(new CartaAnchoEspada());
+//		jugadorAuxiliar.recibirCarta(new CartaSieteEspada());
+//		jugadorAuxiliar.recibirCarta(new CartaTres(Palo.Espada));
+//		
+//		jugadorOrigen = jugadorAuxiliar;
+		
+		if(this.jugadorNoTieneFlor(jugadorOrigen)) throw new AccionNoPosibleException();
+		
+		Flor florCantada = new Flor(new Tanto(),jugadorOrigen, this.getPartido().getJugadorSiguienteA(jugadorOrigen));
+		
+//		jugadorContrarioConFlor = this.buscarJugadorConFlor();
+		
+		TantoDecorator desicion = this.getPartido().getManejadorDeRonda().cantarFlor(florCantada);
+		Accion flor = (Accion)desicion;
+		this.getVueltaActual().getAccionesEnvido().add(flor);
+	}
+	
+	private boolean jugadorNoTieneFlor(Jugador jugador){
+		return (!jugador.getMano().florEnMano());
 	}
 
 	public void agregarPuntajes(){

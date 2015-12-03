@@ -4,15 +4,7 @@ import java.util.Scanner;
 
 import com.exceptions.AccionNoPosibleException;
 import com.exceptions.NoContieneCartaException;
-import com.modelo.acciones.envido.Envido;
-import com.modelo.acciones.envido.EnvidoDecorator;
-import com.modelo.acciones.envido.FaltaEnvido;
-import com.modelo.acciones.envido.NoQuieroTanto;
-import com.modelo.acciones.envido.QuieroTanto;
-import com.modelo.acciones.envido.RealEnvido;
-import com.modelo.acciones.flor.AccionFlor;
-import com.modelo.acciones.flor.ContraFlor;
-import com.modelo.acciones.flor.ContraFlorAlResto;
+import com.modelo.acciones.envido.*;
 import com.modelo.acciones.truco.AccionTruco;
 import com.modelo.acciones.truco.NoQuiero;
 import com.modelo.acciones.truco.Quiero;
@@ -134,7 +126,7 @@ public abstract class Jugador implements IRecibible{
 		}
 	}
 
-	public EnvidoDecorator responderA(Envido accion, ManejadorDeRonda manejadorDeRonda, Partido partido) {
+	public TantoDecorator responderA(Envido accion, ManejadorDeRonda manejadorDeRonda, Partido partido) {
 		System.out.print("Quiere Envido: ");
 		
 		Scanner scan = new Scanner(System.in);
@@ -180,7 +172,7 @@ public abstract class Jugador implements IRecibible{
 		}
 	}
 
-	public EnvidoDecorator responderA(RealEnvido accion, ManejadorDeRonda manejadorDeRonda, Partido partido) {
+	public TantoDecorator responderA(RealEnvido accion, ManejadorDeRonda manejadorDeRonda, Partido partido) {
 		System.out.print("Quiere RealEnvido: ");
 		
 		Scanner scan = new Scanner(System.in);
@@ -205,9 +197,9 @@ public abstract class Jugador implements IRecibible{
 		throw new AccionNoPosibleException();
 	}
 
-	public EnvidoDecorator responderA(FaltaEnvido accion, ManejadorDeRonda manejadorDeRonda) {
+	public TantoDecorator responderA(FaltaEnvido accion, ManejadorDeRonda manejadorDeRonda) {
 		System.out.print("Quiere FaltaEnvido: ");
-		
+
 		Scanner scan = new Scanner(System.in);
 		String respuesta = scan.next().toLowerCase();
 		
@@ -224,23 +216,76 @@ public abstract class Jugador implements IRecibible{
 		
 		throw new AccionNoPosibleException();
 	}
-
-	public Accion responderA(AccionFlor accion, ManejadorDeRonda manejadorDeRonda, Partido partido) {
-		System.out.print("Respuesta Flor: ");
+	
+	private void mostrarOpcionSegunFlorOContraFlor(Flor accion){
+		if (accion.cantar() == 3){
+			System.out.print("Respuesta Flor: ");
+		} else {
+			System.out.print("Respuesta ContraFlor: ");
+		}
+	}
+	
+	public TantoDecorator responderA(Flor accion, ManejadorDeRonda manejadorDeRonda, Partido partido) {
+		this.mostrarOpcionSegunFlorOContraFlor(accion);
 		
 		Scanner scan = new Scanner(System.in);
 		String respuesta = scan.next().toLowerCase();
-		scan.close();
-		
-		if (respuesta.equals("contraflor")){
-			return new ContraFlor(accion);
+//		scan.close();
+
+		if (respuesta.equals("conflormeachico")){
+			FlorMeAchico florMeAchico = new FlorMeAchico(accion, this, accion.getOrigen());
+			manejadorDeRonda.ejecutarRespuestaTanto(florMeAchico);
+			return florMeAchico;
+			
+		} else if (respuesta.equals("conflorquiero")){
+			FlorQuiero quiero = new FlorQuiero(accion,this,accion.getOrigen());
+			manejadorDeRonda.ejecutarRespuestaTanto(quiero);
+			return quiero;
+			
+		} else if (respuesta.equals("contraflor") && (this.accionContraFlorValida(accion))){
+			
+			Flor contraFlor = new Flor(accion, this, accion.getOrigen());
+			manejadorDeRonda.ejecutarRespuestaTanto(contraFlor);
+			return contraFlor;
+			
 		} else if (respuesta.equals("contrafloralresto")){
-			return new ContraFlorAlResto(accion);
+			ContraFlorAlResto contraFlorAlResto = new ContraFlorAlResto(accion, this, accion.getOrigen());
+			manejadorDeRonda.ejecutarRespuestaTanto(contraFlorAlResto);
+			return contraFlorAlResto;
+			
 		} else {
 			throw new AccionNoPosibleException();
 		}
 	}
 	
+	private boolean accionContraFlorValida(Flor accion) {
+		if (accion.cantar() < 6){
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public TantoDecorator responderA(ContraFlorAlResto accion, ManejadorDeRonda manejadorDeRonda) {
+		System.out.print("Respuesta ContraFlorAlResto: ");
+		
+		Scanner scan = new Scanner(System.in);
+		String respuesta = scan.next().toLowerCase();
+		
+		if (respuesta.equals("conflorquiero")){
+			FlorQuiero quiero = new FlorQuiero(accion, this, accion.getOrigen());
+			manejadorDeRonda.ejecutarRespuestaTanto(quiero);
+			return quiero;
+			
+		} else if (respuesta.equals("conflornoquiero")){
+			FlorMeAchico noquiero = new FlorMeAchico(accion, this, accion.getOrigen());
+			manejadorDeRonda.ejecutarRespuestaTanto(noquiero);
+			return noquiero;
+		}
+		
+		throw new AccionNoPosibleException();
+	}
+
 	public int getTantoEnMano(){
 		return this.getMano().getMaximosPuntosEnvido();
 	}

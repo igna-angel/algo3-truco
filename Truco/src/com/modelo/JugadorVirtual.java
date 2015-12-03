@@ -4,17 +4,18 @@ import java.util.Scanner;
 
 import com.exceptions.AccionNoPosibleException;
 import com.exceptions.EmptyListException;
+import com.modelo.acciones.envido.AccionTanto;
+import com.modelo.acciones.envido.ContraFlor;
+import com.modelo.acciones.envido.ContraFlorAlResto;
 import com.modelo.acciones.envido.Envido;
-import com.modelo.acciones.envido.EnvidoDecorator;
+import com.modelo.acciones.envido.TantoDecorator;
 import com.modelo.acciones.envido.FaltaEnvido;
+import com.modelo.acciones.envido.Flor;
+import com.modelo.acciones.envido.FlorMeAchico;
+import com.modelo.acciones.envido.FlorQuiero;
 import com.modelo.acciones.envido.NoQuieroTanto;
 import com.modelo.acciones.envido.QuieroTanto;
 import com.modelo.acciones.envido.RealEnvido;
-import com.modelo.acciones.flor.AccionFlor;
-import com.modelo.acciones.flor.ContraFlor;
-import com.modelo.acciones.flor.ContraFlorAlResto;
-import com.modelo.acciones.flor.FlorNoQuiero;
-import com.modelo.acciones.flor.FlorQuiero;
 import com.modelo.acciones.truco.AccionTruco;
 import com.modelo.acciones.truco.NoQuiero;
 import com.modelo.acciones.truco.Quiero;
@@ -46,7 +47,7 @@ public class JugadorVirtual extends Jugador {
 	public void cantarTantoOFlorSiCorresponde (Ronda ronda) {
 		int tantoEnMano = this._mano.getTantoEnMano();
 		if (this._mano.florEnMano()) {
-			ronda.seCantoFlor();
+			ronda.seCantoFlor(this);
 		}
 		
 		else if (tantoEnMano >= MIN_TANTO_FALTA_ENVIDO) {
@@ -96,7 +97,7 @@ public class JugadorVirtual extends Jugador {
 		return new Quiero(accion);
 	}
 
-	public EnvidoDecorator responderA(Envido accion, ManejadorDeRonda manejadorDeRonda, Partido partido) {
+	public TantoDecorator responderA(Envido accion, ManejadorDeRonda manejadorDeRonda, Partido partido) {
 		int tantoEnMano = this._mano.getTantoEnMano();
 		
 		if (tantoEnMano < MIN_TANTO_ENVIDO){
@@ -114,7 +115,7 @@ public class JugadorVirtual extends Jugador {
 		}
 	}
 
-	public EnvidoDecorator responderA(RealEnvido accion, ManejadorDeRonda manejadorDeRonda, Partido partido) {
+	public TantoDecorator responderA(RealEnvido accion, ManejadorDeRonda manejadorDeRonda, Partido partido) {
 		int tantoEnMano = this._mano.getTantoEnMano();
 		
 		if (tantoEnMano < MIN_TANTO_REAL_ENVIDO){
@@ -132,7 +133,7 @@ public class JugadorVirtual extends Jugador {
 		}
 	}
 
-	public EnvidoDecorator responderA(FaltaEnvido accion) {
+	public TantoDecorator responderA(FaltaEnvido accion) {
 		int tantoEnMano = this._mano.getTantoEnMano();
 		
 		if (tantoEnMano < MIN_TANTO_FALTA_ENVIDO){
@@ -146,13 +147,13 @@ public class JugadorVirtual extends Jugador {
 		}
 	}
 
-	public Accion responderA(AccionFlor accion, ManejadorDeRonda manejadorDeRonda, Partido partido) {
+	public TantoDecorator responderA(Flor accion, ManejadorDeRonda manejadorDeRonda, Partido partido) {
 		// Para hacerlo básico, la flor la queremos siempre (solo querer)
 		if (this._mano.florEnMano()) {
-			return new FlorQuiero(accion);
+			return new FlorQuiero(accion,this,accion.getOrigen());
 		}
 		
-		return new FlorNoQuiero(accion);
+		return new FlorMeAchico(accion,this,accion.getOrigen());
 		
 	}
 

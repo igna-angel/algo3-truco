@@ -1,7 +1,6 @@
 package com.modelo;
 
 import com.modelo.acciones.envido.*;
-import com.modelo.acciones.flor.AccionFlor;
 import com.modelo.acciones.truco.*;
 
 public class ManejadorDeRonda {
@@ -32,21 +31,25 @@ public class ManejadorDeRonda {
 		return this.getJugadorQueDebeAceptar().responderA(valeCuatro);
 	}
 	
-	public EnvidoDecorator cantarEnvido(Envido envidoCantado){
+	public TantoDecorator cantarEnvido(Envido envidoCantado){
 		return envidoCantado.getDestino().responderA(envidoCantado, this, this.getPartido());
 	}
 	
-	public EnvidoDecorator cantarRealEnvido(RealEnvido realEnvidoCantado){
+	public TantoDecorator cantarRealEnvido(RealEnvido realEnvidoCantado){
 		return this.getJugadorQueDebeAceptar().responderA(realEnvidoCantado, this, this.getPartido());
 	}
 	
-	public EnvidoDecorator cantarFaltaEnvido(FaltaEnvido faltaEnvidoCantado){
+	public TantoDecorator cantarFaltaEnvido(FaltaEnvido faltaEnvidoCantado){
 		return this.getJugadorQueDebeAceptar().responderA(faltaEnvidoCantado, this);
 	}
 
-	public Accion cantarFlor(AccionFlor florCantada) {
+	public TantoDecorator cantarFlor(Flor florCantada) {
 		//verificacion que antes haya alguien con flor de los demas jugadores
 		return this.getJugadorQueDebeAceptar().responderA(florCantada, this, this.getPartido());
+	}
+	
+	public TantoDecorator cantarContraFlorAlResto(ContraFlorAlResto contraFlorAlRestoCantada){
+		return this.getJugadorQueDebeAceptar().responderA(contraFlorAlRestoCantada, this);
 	}
 	
 	public void ejecutarRespuestaTanto(QuieroTanto accion){
@@ -57,8 +60,28 @@ public class ManejadorDeRonda {
 		}
 	}
 	
+	public void ejecutarRespuestaTanto(FlorQuiero accion){
+		if(accion.getOrigen().getTantoEnMano() > accion.getDestino().getTantoEnMano()){
+			this.getPartido().agregarPuntosAlEquipo(this.getPartido().getEquipoDeJugador(accion.getOrigen()), accion.cantar());
+		} else {
+			this.getPartido().agregarPuntosAlEquipo(this.getPartido().getEquipoDeJugador(accion.getDestino()), accion.cantar());
+		}
+	}
+	
+	public void ejecutarRespuestaTanto(FlorMeAchico accion) {
+		this.getPartido().agregarPuntosAlEquipo(this.getPartido().getEquipoDeJugador(accion.getOrigen()), accion.cantar());
+	}
+	
 	public void ejecutarRespuestaTanto(NoQuieroTanto accion){
 		this.getPartido().agregarPuntosAlEquipo(this.getPartido().getEquipoDeJugador(accion.getOrigen()), accion.cantar());
+	}
+
+	public void ejecutarRespuestaTanto(Flor accion){
+		this.cantarFlor(accion);
+	}
+
+	public void ejecutarRespuestaTanto(ContraFlorAlResto accion) {
+		this.cantarContraFlorAlResto(accion);
 	}
 
 	public void ejecutarRespuestaTanto(Envido accion){
@@ -72,4 +95,8 @@ public class ManejadorDeRonda {
 	public void ejecutarRespuestaTanto(FaltaEnvido accion){
 		this.cantarFaltaEnvido(accion);
 	}
+
+
+
+
 }

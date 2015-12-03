@@ -18,11 +18,20 @@ public class Vuelta implements IRecibible {
 	private Jugador _jugadorInicial = null;
 	private Jugador _jugadorActual = null;
 
-	public Vuelta(Ronda ronda, List<Accion> acciones) {
+	public Vuelta(Ronda ronda, List<Accion> acciones, Jugador jugadorInicial) {
+//		this._cartas = new Stack<Carta>();
+//		this._accionesTanto = acciones;
+//		this._cartaGanadora = new CartaInvalida();
+//		this._ronda = ronda;
+		
 		this._cartas = new Stack<Carta>();
-		this._accionesTanto = acciones;
+		this._accionesTanto = new ArrayList<Accion>(); 
+		this._accionesTruco = acciones;
 		this._cartaGanadora = new CartaInvalida();
 		this._ronda = ronda;
+
+		this.asignarJugadorInicial(jugadorInicial);
+		this.asignarJugadorActual(this.getJugadorInicial());
 	}
 
 	public Vuelta(Ronda ronda, Jugador jugadorInicial) {

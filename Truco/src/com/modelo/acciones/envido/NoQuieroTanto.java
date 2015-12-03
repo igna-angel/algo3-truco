@@ -2,9 +2,9 @@ package com.modelo.acciones.envido;
 
 import com.modelo.Jugador;
 
-public class NoQuieroTanto extends EnvidoDecorator {
+public class NoQuieroTanto extends TantoDecorator {
 
-	public NoQuieroTanto(AccionEnvido accionDecorar, Jugador origen, Jugador destino) {
+	public NoQuieroTanto(AccionTanto accionDecorar, Jugador origen, Jugador destino) {
 		super(accionDecorar, origen, destino);
 	}
 	

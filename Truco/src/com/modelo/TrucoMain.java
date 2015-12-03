@@ -31,7 +31,9 @@ public class TrucoMain {
 
 		partido.getRondaActual().nuevaVuelta();
 		
-		partido.getRondaActual().seCantoEnvido(partido.getJugadorActual());
+//		partido.getRondaActual().seCantoEnvido(partido.getJugadorActual());
+		
+		partido.getRondaActual().seCantoFlor(partido.getJugadorActual());
 
 		System.out.println("Equipo A: " + partido.getPuntosPrimerEquipo());
 		System.out.println("Equipo B: " + partido.getPuntosUltimoEquipo());

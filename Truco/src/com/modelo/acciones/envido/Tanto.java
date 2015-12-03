@@ -1,6 +1,6 @@
 package com.modelo.acciones.envido;
 
-public class Tanto implements AccionEnvido {
+public class Tanto implements AccionTanto {
 	
 	@Override
 	public int cantar() {
