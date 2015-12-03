@@ -22,6 +22,7 @@ public class RondaPicaPicaTest {
 		partido.agregarJugadorAEquipo(new JugadorHumano(), 1);
 		
 		partido.crearPartido();
+		partido.nuevaRonda();
 		
 		this._ronda = partido.getRondaActual().getRondaSiguiente(true);
 	}

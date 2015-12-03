@@ -32,6 +32,7 @@ public abstract class Carta implements IPeleable {
 	
 	private Palo _palo = Palo.Indefinido;
 	private int _numero = 0; 
+	private boolean _enMano = false;
 	
 	public Carta(Palo palo, int numero){
 		this.setCarta(palo, numero);
@@ -46,6 +47,18 @@ public abstract class Carta implements IPeleable {
 		
 		this._palo = palo;
 		this._numero = numero;
+	}
+	
+	public void cartaEnMano(){
+		this._enMano = true;
+	}
+	
+	public void cartaJugada(){
+		this._enMano = false;
+	}
+	
+	public boolean estaCartaEnMano(){
+		return this._enMano;
 	}
 	
 	public Palo getPalo(){

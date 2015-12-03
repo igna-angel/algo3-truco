@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.exceptions.EmptyListException;
+import com.exceptions.NoContieneCartaException;
 import com.modelo.cartas.Carta;
 import com.modelo.cartas.CartaInvalida;
 import java.util.Stack;
@@ -25,11 +26,23 @@ public class Mano implements IRecibible{
 	
 	@Override
 	public void recibirCarta(Carta carta) {
+		carta.cartaEnMano();
 		this.getCartas().add(carta);
 	}
 	
 	public int getCantidadCartas(){
 		return this.getCartas().size();
+	}
+	
+	public int getCartasEnMano(){
+		int cartasEnMano = 0;
+		for(Carta carta : this.getCartas()){
+			if(carta.estaCartaEnMano()){
+				cartasEnMano++;
+			}
+		}
+		
+		return cartasEnMano;
 	}
 	
 	public boolean contiene(Carta carta){
@@ -42,6 +55,12 @@ public class Mano implements IRecibible{
 
 	public void devolverCartas() {
 		this.getCartas().clear();
+	}
+	
+	public void bajarCarta(Carta carta){
+		if(!this.contiene(carta)) throw new NoContieneCartaException();
+		if(!carta.estaCartaEnMano()) throw new NoContieneCartaException();
+		carta.cartaJugada();
 	}
 	
 	public Carta devolverCartaMasAlta() {

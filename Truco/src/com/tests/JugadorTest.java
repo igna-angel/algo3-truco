@@ -52,15 +52,15 @@ public class JugadorTest {
 		Vuelta vuelta = new Vuelta(new RondaRedonda(null, null), new JugadorHumano());
 		
 		Carta cartaTest = new CartaNormal();
-		
+
 		Assert.assertEquals(0, this._jugador.getCantidadCartas());
 
 		this._jugador.recibirCarta(cartaTest);
 
-		Assert.assertEquals(1, this._jugador.getCantidadCartas());
+		Assert.assertEquals(1, this._jugador.getCartasEnMano());
 		
 		this._jugador.bajarCarta(vuelta, cartaTest);
-		
-		Assert.assertEquals(0, this._jugador.getCantidadCartas());	
+
+		Assert.assertEquals(0, this._jugador.getCartasEnMano());	
 	}
 }

@@ -45,7 +45,7 @@ public class Vuelta implements IRecibible {
 	}
 	
 	public Jugador getJugadorActual(){
-		return this.getJugadorActual();
+		return this._jugadorActual;
 	}
 	
 	private void procesarTurnoJugadorActual(){
@@ -59,8 +59,12 @@ public class Vuelta implements IRecibible {
 	private void asignarJugadorSiguiente(){
 		this.asignarJugadorActual(this.getRonda().getJugadorSiguienteAlActual());
 	}
+	
+	public Jugador getJugadorConCartaGanadora(){
+		return this.getRonda().getJugadorConCartaGanadora(this.getCartaGanadora());
+	}
 
-	public void jugarVuelta(){
+	public void jugar(){
 		while(!this.esFinDeVuelta()){
 			this.procesarTurnoJugadorActual();
 			this.asignarJugadorSiguiente();

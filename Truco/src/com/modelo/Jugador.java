@@ -3,7 +3,9 @@ package com.modelo;
 import java.util.Scanner;
 
 import com.exceptions.AccionNoPosibleException;
+import com.exceptions.NoContieneCartaException;
 import com.modelo.acciones.envido.Envido;
+import com.modelo.acciones.envido.EnvidoDecorator;
 import com.modelo.acciones.envido.FaltaEnvido;
 import com.modelo.acciones.envido.NoQuieroTanto;
 import com.modelo.acciones.envido.QuieroTanto;
@@ -39,6 +41,10 @@ public abstract class Jugador implements IRecibible{
 		return this.getMano().getCantidadCartas();
 	}
 	
+	public int getCartasEnMano(){
+		return this.getMano().getCartasEnMano();
+	}
+	
 	public void imprimirCartas(){
 		this.getMano().getCartas().forEach(carta ->
 			{
@@ -48,8 +54,12 @@ public abstract class Jugador implements IRecibible{
 	}
 	
 	public void bajarCarta(Vuelta vuelta, Carta carta){
-		this.getMano().quitarCarta(carta);
-		vuelta.recibirCarta(carta);
+		try{
+			this.getMano().bajarCarta(carta);
+			vuelta.recibirCarta(carta);
+		}catch(NoContieneCartaException e){
+			// relanzar exception o dejarla pasar y catchear en otro lado
+		}
 	}
 		
 	public void devolverCartas(){
@@ -124,30 +134,42 @@ public abstract class Jugador implements IRecibible{
 		}
 	}
 
-	public Accion responderA(Envido accion, ManejadorDeRonda manejadorDeRonda, Partido partido) {
+	public EnvidoDecorator responderA(Envido accion, ManejadorDeRonda manejadorDeRonda, Partido partido) {
 		System.out.print("Quiere Envido: ");
 		
 		Scanner scan = new Scanner(System.in);
+		
 		String respuesta = scan.next().toLowerCase();
-		scan.close();
+		//scan.close();
 		
 		if (respuesta.equals("quiero")){
-			return new QuieroTanto(accion);
-		} else
-		
-		if (respuesta.equals("noquiero")){
-			return new NoQuieroTanto(accion);
-		} else 
-		
-		if ((respuesta.equals("envido")) && (this.accionEnvidoValida(accion))){
-			return manejadorDeRonda.cantarEnvido((new Envido(new QuieroTanto(accion))));
+			QuieroTanto quiero = new QuieroTanto(accion, this, accion.getOrigen());
+			manejadorDeRonda.ejecutarRespuestaTanto(quiero);
+			return quiero;
+			
+		} else if (respuesta.equals("noquiero")){
+			NoQuieroTanto noquiero = new NoQuieroTanto(accion, this, accion.getOrigen());
+			manejadorDeRonda.ejecutarRespuestaTanto(noquiero);
+			return noquiero;
+			
+		} else if ((respuesta.equals("envido")) && (this.accionEnvidoValida(accion))){
+			Envido nuevoEnvido = new Envido(new QuieroTanto(accion, this, accion.getOrigen()), this, accion.getOrigen());
+			manejadorDeRonda.ejecutarRespuestaTanto(nuevoEnvido);
+			return nuevoEnvido;
+			
 		} else if (respuesta.equals(("realenvido"))){
-			return manejadorDeRonda.cantarRealEnvido(new RealEnvido(accion));
+			RealEnvido realEnvido = new RealEnvido(accion, this, accion.getOrigen());
+			manejadorDeRonda.ejecutarRespuestaTanto(realEnvido);
+			return realEnvido;
+			
 		} else if (respuesta.equals(("faltaenvido"))){
-			return manejadorDeRonda.cantarFaltaEnvido(new FaltaEnvido(accion));
-		} else {
-			throw new AccionNoPosibleException();
+			FaltaEnvido faltaEnvido = new FaltaEnvido(accion, this, accion.getOrigen());
+			manejadorDeRonda.ejecutarRespuestaTanto(faltaEnvido);
+			return faltaEnvido;
 		}
+
+		
+		throw new AccionNoPosibleException();
 	}
 
 	private boolean accionEnvidoValida(Envido accion) {
@@ -158,39 +180,49 @@ public abstract class Jugador implements IRecibible{
 		}
 	}
 
-	public Accion responderA(RealEnvido accion, ManejadorDeRonda manejadorDeRonda, Partido partido) {
+	public EnvidoDecorator responderA(RealEnvido accion, ManejadorDeRonda manejadorDeRonda, Partido partido) {
 		System.out.print("Quiere RealEnvido: ");
 		
 		Scanner scan = new Scanner(System.in);
 		String respuesta = scan.next().toLowerCase();
-		scan.close();
 		
 		if (respuesta.equals("quiero")){
-			return new QuieroTanto(accion);
-		} else
-		if (respuesta.equals("noquiero")){
-			return new NoQuieroTanto(accion);
+			QuieroTanto quiero = new QuieroTanto(accion, this, accion.getOrigen());
+			manejadorDeRonda.ejecutarRespuestaTanto(quiero);
+			return quiero;
+			
+		} else if (respuesta.equals("noquiero")){
+			NoQuieroTanto noquiero = new NoQuieroTanto(accion, this, accion.getOrigen());
+			manejadorDeRonda.ejecutarRespuestaTanto(noquiero); 
+			return noquiero;
+			
 		} else if (respuesta.equals(("faltaenvido"))){
-			return manejadorDeRonda.cantarFaltaEnvido(new FaltaEnvido(accion));
-		} else {
-			throw new AccionNoPosibleException();
+			FaltaEnvido faltaEnvido = new FaltaEnvido(accion, this, accion.getOrigen());
+			manejadorDeRonda.ejecutarRespuestaTanto(faltaEnvido);
+			return faltaEnvido;
 		}
+		
+		throw new AccionNoPosibleException();
 	}
 
-	public Accion responderA(FaltaEnvido accion) {
+	public EnvidoDecorator responderA(FaltaEnvido accion, ManejadorDeRonda manejadorDeRonda) {
 		System.out.print("Quiere FaltaEnvido: ");
 		
 		Scanner scan = new Scanner(System.in);
 		String respuesta = scan.next().toLowerCase();
-		scan.close();
 		
 		if (respuesta.equals("quiero")){
-			return new QuieroTanto(accion);
+			QuieroTanto quiero = new QuieroTanto(accion, this, accion.getOrigen());
+			manejadorDeRonda.ejecutarRespuestaTanto(quiero);
+			return quiero;
+			
 		} else if (respuesta.equals("noquiero")){
-			return new NoQuieroTanto(accion);
-		} else {
-			throw new AccionNoPosibleException();
+			NoQuieroTanto noquiero = new NoQuieroTanto(accion, this, accion.getOrigen());
+			manejadorDeRonda.ejecutarRespuestaTanto(noquiero);
+			return noquiero;
 		}
+		
+		throw new AccionNoPosibleException();
 	}
 
 	public Accion responderA(AccionFlor accion, ManejadorDeRonda manejadorDeRonda, Partido partido) {
@@ -208,6 +240,34 @@ public abstract class Jugador implements IRecibible{
 			throw new AccionNoPosibleException();
 		}
 	}
+	
+	public int getTantoEnMano(){
+		return this.getMano().getMaximosPuntosEnvido();
+	}
 
+	public void cantarEnvido(){
+		
+	}
+	
+	public void cantarFaltaEnvido(){
+		
+	}
+	
+	public void cantarFlor(){
+		
+	}
+	
+	public void cantarTruco(){
+		
+	}
+	
+	private void cantar(Accion accion){
+		
+	}
+	
 	public abstract void jugar(Vuelta vuelta);
+
+	public boolean tieneCarta(Carta cartaGanadora) {
+		return this.getMano().contiene(cartaGanadora);
+	}
 }
