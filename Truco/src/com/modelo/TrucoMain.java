@@ -26,13 +26,19 @@ public class TrucoMain {
 			partido.getOrdenJugadores().advanceCursor();
 		}
 		
-		partido.getRondaActual().nuevaVuelta();
-		
-		partido.getRondaActual().seCantoEnvido();
+//		partido.jugar();
+		partido.nuevaRonda();
 
-		partido.getRondaActual().seCantoTruco();
-		
 		partido.getRondaActual().nuevaVuelta();
+		
+		partido.getRondaActual().seCantoEnvido(partido.getJugadorActual());
+
+		System.out.println("Equipo A: " + partido.getPuntosPrimerEquipo());
+		System.out.println("Equipo B: " + partido.getPuntosUltimoEquipo());
+		
+//		partido.getRondaActual().seCantoTruco();
+		
+//		partido.getRondaActual().nuevaVuelta();
 		
 //		partido.getRondaActual().seCantoReTruco();
 //		
@@ -40,18 +46,13 @@ public class TrucoMain {
 //	
 //		partido.getRondaActual().seCantoReTruco();
 //		
-		partido.getRondaActual().nuevaVuelta();
+//		partido.getRondaActual().nuevaVuelta();
 //		
 //		partido.getRondaActual().seCantoValeCuatro();
 //		
-		partido.getRondaActual().agregarPuntajes();
+//		partido.getRondaActual().agregarPuntajes();
 		//para el puntaje hay que fijarse quien es el ganador, esta por
 		//defecto el equipo uno
-		
-		System.out.println(partido.getPuntosPrimerEquipo());
-		
-		System.out.println(partido.getPuntosUltimoEquipo());
-		
 	}
 
 }

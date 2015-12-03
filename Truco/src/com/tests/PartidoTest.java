@@ -71,6 +71,7 @@ public class PartidoTest {
 		this._partido.agregarJugadorAEquipo(new JugadorHumano(), 1);
 		
 		this._partido.crearPartido();
+		this._partido.nuevaRonda();
 		
 		this._partido.getRondaActual().asignarPuntos(3, 4);
 		this._partido.nuevaRonda();
@@ -125,6 +126,7 @@ public class PartidoTest {
 		this._partido.agregarJugadorAEquipo(new JugadorHumano(), 1);
 		
 		this._partido.crearPartido();
+		this._partido.nuevaRonda();
 		
 		Assert.assertFalse(this._partido.esPicaPica());
 		
@@ -146,6 +148,7 @@ public class PartidoTest {
 		this._partido.agregarJugadorAEquipo(new JugadorHumano(), 1);
 		
 		this._partido.crearPartido();
+		this._partido.nuevaRonda();
 		
 		Assert.assertFalse(this._partido.esPicaPica());
 		
@@ -163,7 +166,7 @@ public class PartidoTest {
 		this._partido.agregarJugadorAEquipo(new JugadorHumano(), 1);
 		
 		this._partido.crearPartido();
-		
+		this._partido.nuevaRonda();		
 		
 		this._partido.getRondaActual().asignarPuntos(2, 5);
 		this._partido.getRondaActual().asignarPuntos(8, 1);
@@ -185,6 +188,7 @@ public class PartidoTest {
 		this._partido.agregarJugadorAEquipo(new JugadorHumano(), 1);
 		
 		this._partido.crearPartido();
+		this._partido.nuevaRonda();
 		
 		this._partido.getOrdenJugadores().resetToFirst();
 		do{

@@ -22,6 +22,7 @@ public class RondaRedondaTest {
 		partido.agregarJugadorAEquipo(new JugadorHumano(), 1);
 		
 		partido.crearPartido();
+		partido.nuevaRonda();
 		
 		this._ronda = partido.getRondaActual();
 	}

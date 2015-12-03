@@ -32,20 +32,44 @@ public class ManejadorDeRonda {
 		return this.getJugadorQueDebeAceptar().responderA(valeCuatro);
 	}
 	
-	public Accion cantarEnvido(Envido envidoCantado){
-		return this.getJugadorQueDebeAceptar().responderA(envidoCantado, this, this.getPartido());
+	public EnvidoDecorator cantarEnvido(Envido envidoCantado){
+		return envidoCantado.getDestino().responderA(envidoCantado, this, this.getPartido());
 	}
 	
-	public Accion cantarRealEnvido(RealEnvido realEnvidoCantado){
+	public EnvidoDecorator cantarRealEnvido(RealEnvido realEnvidoCantado){
 		return this.getJugadorQueDebeAceptar().responderA(realEnvidoCantado, this, this.getPartido());
 	}
 	
-	public Accion cantarFaltaEnvido(FaltaEnvido faltaEnvidoCantado){
-		return this.getJugadorQueDebeAceptar().responderA(faltaEnvidoCantado);
+	public EnvidoDecorator cantarFaltaEnvido(FaltaEnvido faltaEnvidoCantado){
+		return this.getJugadorQueDebeAceptar().responderA(faltaEnvidoCantado, this);
 	}
 
 	public Accion cantarFlor(AccionFlor florCantada) {
 		//verificacion que antes haya alguien con flor de los demas jugadores
 		return this.getJugadorQueDebeAceptar().responderA(florCantada, this, this.getPartido());
+	}
+	
+	public void ejecutarRespuestaTanto(QuieroTanto accion){
+		if(accion.getOrigen().getTantoEnMano() > accion.getDestino().getTantoEnMano()){
+			this.getPartido().agregarPuntosAlEquipo(this.getPartido().getEquipoDeJugador(accion.getOrigen()), accion.cantar());
+		} else {
+			this.getPartido().agregarPuntosAlEquipo(this.getPartido().getEquipoDeJugador(accion.getDestino()), accion.cantar());
+		}
+	}
+	
+	public void ejecutarRespuestaTanto(NoQuieroTanto accion){
+		this.getPartido().agregarPuntosAlEquipo(this.getPartido().getEquipoDeJugador(accion.getOrigen()), accion.cantar());
+	}
+
+	public void ejecutarRespuestaTanto(Envido accion){
+		this.cantarEnvido(accion);
+	}
+	
+	public void ejecutarRespuestaTanto(RealEnvido accion){
+		this.cantarRealEnvido(accion);
+	}
+	
+	public void ejecutarRespuestaTanto(FaltaEnvido accion){
+		this.cantarFaltaEnvido(accion);
 	}
 }

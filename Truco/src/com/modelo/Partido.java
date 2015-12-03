@@ -3,7 +3,9 @@ package com.modelo;
 
 import java.util.Stack;
 
+import com.exceptions.NoContieneCartaException;
 import com.exceptions.NoHayEquiposException;
+import com.modelo.cartas.Carta;
 
 public class Partido {
 
@@ -117,9 +119,13 @@ public class Partido {
 		return (this.getEquipos().getFirst().getPuntaje() > this.getEquipos().getLast().getPuntaje()) ? this.getEquipos().getFirst().getPuntaje() : this.getEquipos().getLast().getPuntaje();
 	}
 
+	public void agregarPuntosAlEquipo(Equipo equipo, int puntos){
+		equipo.agregarPuntos(puntos);
+	}
+	
 	public void agregarPuntos(int puntajeA, int puntajeB) {
-		this.getEquipos().getFirst().agregarPuntos(puntajeA);
-		this.getEquipos().getLast().agregarPuntos(puntajeB);
+		this.agregarPuntosAlEquipo(this.getEquipos().getFirst(), puntajeA);
+		this.agregarPuntosAlEquipo(this.getEquipos().getLast(), puntajeB);
 	}
 	
 	public int getPuntosPrimerEquipo(){
@@ -130,14 +136,7 @@ public class Partido {
 		return this.getEquipos().getLast().getPuntaje();
 	}
 
-	public void crearPartido(){
-		this.crearOrdenJugadores();
-		
-		this.getMazo().mezclar();
-		this.getMazo().repartir(this.getOrdenJugadores(), this.getOrdenJugadores().getFirst(), this.CARTAS_POR_JUGADOR);
 	
-		this.nuevaRonda();
-	}	
 	
 	public Jugador getProximoEnRepartir(){
 		return this.getJugadorSiguienteA(this.getRepartidorActual());
@@ -145,8 +144,7 @@ public class Partido {
 	
 	public Jugador getRepartidorActual(){
 		return this.getRondaActual().getRepartio();
-	}
-	
+	}	
 
 	public Jugador getJugadorActual(){
 		return this.getRondaActual().getJugadorActual();
@@ -157,23 +155,9 @@ public class Partido {
 	}
 
 	public int getcantidadDePuntosFaltantes() {
-		
-		int puntajeA;
-		int puntajeB;
-		
-		puntajeA = this._equipos.getFirst().getPuntaje();
-		puntajeB = this._equipos.getLast().getPuntaje();
-		return puntajeFaltanteParaGanarEntreDosEquipos(puntajeA,puntajeB);
+		return this.puntajeFaltanteSegunMalasOBuenas(this.getMaximoPuntaje());
 	}
-	
-	private int puntajeFaltanteParaGanarEntreDosEquipos(int puntajeA, int puntajeB){
-		if (puntajeA >= puntajeB){
-			return puntajeFaltanteSegunMalasOBuenas(puntajeA);
-		} else {
-			return puntajeFaltanteSegunMalasOBuenas(puntajeB);
-		}	
-	}
-	
+
 	private int puntajeFaltanteSegunMalasOBuenas(int puntaje){
 		int malas = (PUNTAJE_MAXIMO_JUEGO / 2);
 		
@@ -190,5 +174,35 @@ public class Partido {
 		this._ordenJugadores.advanceCursor();
 		return this._ordenJugadores.getCurrent();
 	}
+	
+	public void crearPartido(){
+		this.crearOrdenJugadores();
+		
+		this.getMazo().mezclar();
+		this.getMazo().repartir(this.getOrdenJugadores(), this.getOrdenJugadores().getFirst(), this.CARTAS_POR_JUGADOR);
+	}	
+	
+	public void jugar(){
+		while(!this.esFinDePartido()){
+			this.nuevaRonda();
+			this.getRondaActual().jugar();
+		}
+	}
+	
+	private boolean esFinDePartido(){
+		return this.getcantidadDePuntosFaltantes() == 0;
+	}
 
+	public Jugador getJugadorConCartaGanadora(Carta cartaGanadora) {
+		for(int i = 0; i < this.getOrdenJugadores().getSize(); i++){
+			if(this.getOrdenJugadores().getAt(i).tieneCarta(cartaGanadora))
+				return this.getOrdenJugadores().getAt(i);
+		}
+		
+		throw new NoContieneCartaException();
+	}
+
+	public Equipo getEquipoDeJugador(Jugador jugador){
+		return this.getEquipos().getFirst().contiene(jugador)? this.getEquipos().getFirst() : this.getEquipos().getLast();
+	}
 }

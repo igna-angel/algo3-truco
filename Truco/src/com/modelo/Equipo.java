@@ -1,5 +1,7 @@
 package com.modelo;
 
+import com.exceptions.ValueNotFoundException;
+
 public class Equipo {
 
 	private CircularList<Jugador> _jugadores = null;
@@ -27,6 +29,15 @@ public class Equipo {
 	
 	public int getCantidadJugadores(){
 		return this.getJugadores().getSize();
+	}
+	
+	public boolean contiene(Jugador jugador){
+		try{
+			this.getJugadores().getIndexOf(jugador);
+			return true;
+		}catch(ValueNotFoundException e){
+			return false;
+		}
 	}
 	
 }

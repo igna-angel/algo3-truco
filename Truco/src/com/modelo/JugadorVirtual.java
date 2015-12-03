@@ -5,6 +5,7 @@ import java.util.Scanner;
 import com.exceptions.AccionNoPosibleException;
 import com.exceptions.EmptyListException;
 import com.modelo.acciones.envido.Envido;
+import com.modelo.acciones.envido.EnvidoDecorator;
 import com.modelo.acciones.envido.FaltaEnvido;
 import com.modelo.acciones.envido.NoQuieroTanto;
 import com.modelo.acciones.envido.QuieroTanto;
@@ -49,15 +50,15 @@ public class JugadorVirtual extends Jugador {
 		}
 		
 		else if (tantoEnMano >= MIN_TANTO_FALTA_ENVIDO) {
-			ronda.seCantoFaltaEnvido();
+			ronda.seCantoFaltaEnvido(this);
 		}
 		
 		else if (tantoEnMano >= MIN_TANTO_REAL_ENVIDO) {
-			ronda.seCantoRealEnvido();
+			ronda.seCantoRealEnvido(this);
 		}
 		
 		else if (tantoEnMano >= MIN_TANTO_ENVIDO) {
-			ronda.seCantoEnvido();
+			ronda.seCantoEnvido(this);
 		}
 	}
 	
@@ -95,51 +96,51 @@ public class JugadorVirtual extends Jugador {
 		return new Quiero(accion);
 	}
 
-	public Accion responderA(Envido accion, ManejadorDeRonda manejadorDeRonda, Partido partido) {
+	public EnvidoDecorator responderA(Envido accion, ManejadorDeRonda manejadorDeRonda, Partido partido) {
 		int tantoEnMano = this._mano.getTantoEnMano();
 		
 		if (tantoEnMano < MIN_TANTO_ENVIDO){
-			return new NoQuieroTanto(accion);
+			return new NoQuieroTanto(accion, this, accion.getOrigen());
 		} else
 		
 		if (tantoEnMano >= MIN_TANTO_ENVIDO && tantoEnMano < MIN_TANTO_REAL_ENVIDO){
-			return new QuieroTanto(accion);
+			return new QuieroTanto(accion, this, accion.getOrigen());
 		} else if (tantoEnMano >= MIN_TANTO_REAL_ENVIDO && tantoEnMano < MIN_TANTO_FALTA_ENVIDO){
-			return manejadorDeRonda.cantarRealEnvido(new RealEnvido(accion));
+			return manejadorDeRonda.cantarRealEnvido(new RealEnvido(accion, this, accion.getOrigen()));
 		} else if (tantoEnMano >= MIN_TANTO_FALTA_ENVIDO){
-			return manejadorDeRonda.cantarFaltaEnvido(new FaltaEnvido(accion));
+			return manejadorDeRonda.cantarFaltaEnvido(new FaltaEnvido(accion, this, accion.getOrigen()));
 		} else {
 			throw new AccionNoPosibleException();
 		}
 	}
 
-	public Accion responderA(RealEnvido accion, ManejadorDeRonda manejadorDeRonda, Partido partido) {
+	public EnvidoDecorator responderA(RealEnvido accion, ManejadorDeRonda manejadorDeRonda, Partido partido) {
 		int tantoEnMano = this._mano.getTantoEnMano();
 		
 		if (tantoEnMano < MIN_TANTO_REAL_ENVIDO){
-			return new NoQuieroTanto(accion);
+			return new NoQuieroTanto(accion, this, accion.getOrigen());
 		} else
 		
 		if (tantoEnMano >= MIN_TANTO_REAL_ENVIDO && tantoEnMano < MIN_TANTO_FALTA_ENVIDO){
-			return new QuieroTanto(accion);
+			return new QuieroTanto(accion, this, partido.getJugadorSiguienteA(this));
 		} else 
 			
 		if (tantoEnMano >= MIN_TANTO_FALTA_ENVIDO){
-			return manejadorDeRonda.cantarFaltaEnvido(new FaltaEnvido(accion));
+			return manejadorDeRonda.cantarFaltaEnvido(new FaltaEnvido(accion, this, accion.getOrigen()));
 		} else {
 			throw new AccionNoPosibleException();
 		}
 	}
 
-	public Accion responderA(FaltaEnvido accion) {
+	public EnvidoDecorator responderA(FaltaEnvido accion) {
 		int tantoEnMano = this._mano.getTantoEnMano();
 		
 		if (tantoEnMano < MIN_TANTO_FALTA_ENVIDO){
-			return new NoQuieroTanto(accion);
+			return new NoQuieroTanto(accion, this, accion.getOrigen());
 		} else
 		
 		if (tantoEnMano >= MIN_TANTO_FALTA_ENVIDO){
-			return new QuieroTanto(accion);
+			return new QuieroTanto(accion, this, accion.getOrigen());
 		} else {
 			throw new AccionNoPosibleException();
 		}
