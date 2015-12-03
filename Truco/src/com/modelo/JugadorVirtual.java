@@ -5,7 +5,6 @@ import java.util.Scanner;
 import com.exceptions.AccionNoPosibleException;
 import com.exceptions.EmptyListException;
 import com.modelo.acciones.envido.AccionTanto;
-import com.modelo.acciones.envido.ContraFlor;
 import com.modelo.acciones.envido.ContraFlorAlResto;
 import com.modelo.acciones.envido.Envido;
 import com.modelo.acciones.envido.TantoDecorator;
