@@ -1,11 +1,15 @@
 package com.interfazgrafica;
 
 import com.modelo.CircularList;
+import com.modelo.Jugador;
 import com.modelo.JugadorHumano;
 import com.modelo.Mazo;
 import com.modelo.Partido;
 import com.modelo.Ronda;
 import com.modelo.cartas.Carta;
+
+import java.util.List;
+
 import com.interfazgrafica.GeneradoresVisuales;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -74,14 +78,18 @@ public class Boton2JugadoresEventHandler implements EventHandler<ActionEvent>{
 
 		partido.nuevaRonda();
 		Ronda rondaActual = partido.getRondaActual();
+		rondaActual.nuevaVuelta();
 		partido.getMazo().mezclar();
 		partido.getMazo().repartir(partido.getOrdenJugadores(), partido.getRepartidorActual(), 3);
+		//List <Carta> listaDeCartasEnManoJugador2 =
 		
 				
-		HBox esElTurnoDe = new HBox (turnoDe, new Label (turnoJugador.getCurrent().toString()));
+		HBox esElTurnoDe = new HBox (turnoDe, new Label (turnoJugador.getCurrent().toString())/*, new Label (Integer.toString(partido.getOrdenJugadores().getFirst().getCantidadCartas()))*/);
 		esElTurnoDe.setPadding(new Insets(20));
 		Button botonEstoyListo = new Button ("Estoy Listo");
-		VBox controles = new VBox (esElTurnoDe, botonEstoyListo);
+		VBox botonera = new VBox (botonEstoyListo);
+		botonera.setAlignment(Pos.TOP_CENTER);
+		VBox controles = new VBox (esElTurnoDe, botonera);
 		controles.setAlignment(Pos.TOP_CENTER);
 		
 		
@@ -89,7 +97,9 @@ public class Boton2JugadoresEventHandler implements EventHandler<ActionEvent>{
 		HBox pantalla = new HBox (ambosPuntajes, campoDeJuego, controles);
 		this.scene = new Scene(pantalla, 700,600);
 		
-		BotonEstoyListoEventHandler botonEstoyListoEventHandler = new BotonEstoyListoEventHandler (this.stage, this.partido, pantalla);
+		Jugador jugadorActual1 = this.partido.getJugadorActual();
+		Jugador jugadorActual2 = this.partido.getJugadorSiguienteAlActual();
+		BotonEstoyListoEventHandler botonEstoyListoEventHandler = new BotonEstoyListoEventHandler (this.scene, this.stage, this.partido, botonera, jugadorActual1, jugadorActual2, cartasJugador1EnMano, cartasJugador2EnMano);
 		botonEstoyListo.setOnAction(botonEstoyListoEventHandler);
 	}
 	
