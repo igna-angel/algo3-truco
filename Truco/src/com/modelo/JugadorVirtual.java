@@ -12,6 +12,7 @@ import com.modelo.acciones.envido.RealEnvido;
 import com.modelo.acciones.flor.AccionFlor;
 import com.modelo.acciones.flor.ContraFlor;
 import com.modelo.acciones.flor.ContraFlorAlResto;
+import com.modelo.acciones.flor.FlorNoQuiero;
 import com.modelo.acciones.flor.FlorQuiero;
 import com.modelo.acciones.truco.AccionTruco;
 import com.modelo.acciones.truco.NoQuiero;
@@ -87,46 +88,11 @@ public class JugadorVirtual extends Jugador {
 	
 	public Accion responderA(ReTruco accion, ManejadorDeRonda manejadorDeRonda,Partido partido) {
 		return new Quiero(accion);
-		/*System.out.print("Quiere ReTruco: ");
-		
-		Scanner scan = new Scanner(System.in);
-		String respuesta = scan.next().toLowerCase();
-		scan.close();
 
-		
-		if (respuesta.equals("quiero")){
-			return new Quiero(accion);
-		} else
-		
-		if (respuesta.equals("noquiero")){
-			return new NoQuiero(accion);
-		} else 
-		
-		if (respuesta.equals(("valecuatro"))){
-			return manejadorDeRonda.cantarValeCuatro(new ValeCuatro(accion));
-
-		} else {
-			throw new AccionNoPosibleException();
-		}*/
 	}	
 	
 	public Accion responderA(ValeCuatro accion) {
 		return new Quiero(accion);
-		/*System.out.print("Quiere ValeCuatro: ");
-		
-		Scanner scan = new Scanner(System.in);
-		String respuesta = scan.next().toLowerCase();
-		scan.close();
-		
-		if (respuesta.equals("quiero")){
-			return new Quiero(accion);
-		} else
-		
-		if (respuesta.equals("noquiero")){
-			return new NoQuiero(accion);
-		} else {
-			throw new AccionNoPosibleException();
-		}*/
 	}
 
 	public Accion responderA(Envido accion, ManejadorDeRonda manejadorDeRonda, Partido partido) {
@@ -181,7 +147,12 @@ public class JugadorVirtual extends Jugador {
 
 	public Accion responderA(AccionFlor accion, ManejadorDeRonda manejadorDeRonda, Partido partido) {
 		// Para hacerlo básico, la flor la queremos siempre (solo querer)
-		return new FlorQuiero(accion);
+		if (this._mano.florEnMano()) {
+			return new FlorQuiero(accion);
+		}
+		
+		return new FlorNoQuiero(accion);
+		
 	}
 
 
