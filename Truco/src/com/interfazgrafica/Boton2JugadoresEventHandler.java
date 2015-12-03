@@ -46,6 +46,11 @@ public class Boton2JugadoresEventHandler implements EventHandler<ActionEvent>{
 		partido.agregarJugadorAEquipo(new JugadorHumano(), 0);
 		partido.agregarJugadorAEquipo(new JugadorHumano(), 1);
 		partido.crearPartido();
+		partido.getMazo().mezclar();
+		partido.getOrdenJugadores().resetToFirst();
+		partido.getMazo().repartir(partido.getOrdenJugadores(), partido.getOrdenJugadores().getFirst(), 3);
+		partido.nuevaRonda();
+		partido.getRondaActual().nuevaVuelta();
 		
 		VBox puntajeJugador1 = new VBox (new Label ("EQUIPO 1"), new Label (Integer.toString(partido.getPuntosPrimerEquipo())));
 		puntajeJugador1.setAlignment(Pos.TOP_CENTER);
@@ -75,12 +80,8 @@ public class Boton2JugadoresEventHandler implements EventHandler<ActionEvent>{
 		turnoJugador.resetToFirst();
 		Label turnoDe = new Label ("Turno de: JUGADOR ");
 		
-
-		partido.nuevaRonda();
-		Ronda rondaActual = partido.getRondaActual();
-		rondaActual.nuevaVuelta();
-		partido.getMazo().mezclar();
-		partido.getMazo().repartir(partido.getOrdenJugadores(), partido.getRepartidorActual(), 3);
+		
+		
 		//List <Carta> listaDeCartasEnManoJugador2 =
 		
 				

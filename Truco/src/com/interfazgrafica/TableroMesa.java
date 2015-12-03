@@ -76,4 +76,5 @@ public class TableroMesa extends Application {
 		
         //Boton6JugadoresEventHandler boton6JugadoresEventHandler = new Boton6JugadoresEventHandler();
     }
+
 }
