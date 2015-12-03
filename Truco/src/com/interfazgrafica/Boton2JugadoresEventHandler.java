@@ -1,11 +1,18 @@
 package com.interfazgrafica;
 
+import com.modelo.CircularList;
+import com.modelo.JugadorHumano;
+import com.modelo.Mazo;
 import com.modelo.Partido;
+import com.modelo.Ronda;
+import com.modelo.cartas.Carta;
+import com.interfazgrafica.GeneradoresVisuales;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -20,72 +27,77 @@ import javafx.stage.Stage;
 
 public class Boton2JugadoresEventHandler implements EventHandler<ActionEvent>{
 
+	private GeneradoresVisuales generador = new GeneradoresVisuales ();
 	private Partido partido;
 	private Stage stage;
 	private Scene scene;
 	
-	public ImageView generarVisionCartaDorso (){
-		Image dorsoAzul = new Image("file:C:\\Users\\Ska-Ska-Ska\\Desktop\\Cartas Españolas\\CartaDorsoAzul.png");
-		ImageView cartaDorsoAzul = new ImageView (dorsoAzul);
-        cartaDorsoAzul.setFitWidth(70);
-        cartaDorsoAzul.setPreserveRatio(true);
-        cartaDorsoAzul.setSmooth(true);
-        cartaDorsoAzul.setCache(true);
-        return cartaDorsoAzul;
-	}
-	
-	public HBox generarCartasComienzoDeJugador (){
-		ImageView cartaDorso1 = this.generarVisionCartaDorso();
-        ImageView cartaDorso2 = this.generarVisionCartaDorso();
-        ImageView cartaDorso3 = this.generarVisionCartaDorso();
-		HBox cartasJugador = new HBox (cartaDorso1, cartaDorso2, cartaDorso3);
-		cartasJugador.setSpacing(5);
-		cartasJugador.setPadding(new Insets(15));
-		cartasJugador.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
-		return cartasJugador;
-	}
-	
-	public HBox generarEspacioVacioVertical (){
-		
-		Image imagenEspacioVacio = new Image("file:C:\\Users\\Ska-Ska-Ska\\Desktop\\Cartas Españolas\\espacioCarta.png");
-		ImageView espacioVacioCarta = new ImageView (imagenEspacioVacio);
-		espacioVacioCarta.setFitWidth(70);
-		espacioVacioCarta.setPreserveRatio(true);
-		espacioVacioCarta.setSmooth(true);
-		espacioVacioCarta.setCache(true);
-		HBox espacioVacio = new HBox (espacioVacioCarta);
-		espacioVacio.setSpacing(5);
-		espacioVacio.setPadding(new Insets(15));
-		espacioVacio.setBackground(new Background(new BackgroundFill(Color.DARKGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
-		return espacioVacio;
-	}
+
 	
 	public Boton2JugadoresEventHandler (Stage stage){
 		this.stage = stage;
 		this.partido = new Partido();
+		partido.agregarEquipo();
+		partido.agregarEquipo();
+		partido.agregarJugadorAEquipo(new JugadorHumano(), 0);
+		partido.agregarJugadorAEquipo(new JugadorHumano(), 1);
+		partido.crearPartido();
 		
-		HBox tituloPuntajes = new HBox (new Label ("P1"), new Label ("P2"));
-		HBox puntajeJugador1 = new HBox (2);
-		//HBox puntajeJugador2 = new HBox (this.partido.getPuntosUltimoEquipo());
-		//HBox ambosPuntajes = new HBox (puntajeJugador1, puntajeJugador2);
-		//VBox puntajes = new VBox (tituloPuntajes, ambosPuntajes);
-        HBox cartasJugador1EnMano = this.generarCartasComienzoDeJugador();
-        HBox cartasJugador2EnMano = this.generarCartasComienzoDeJugador();
-        HBox cartasJugador1Jugadas = this.generarEspacioVacioVertical();
-        HBox cartasJugador2Jugadas = this.generarEspacioVacioVertical();
-		cartasJugador1EnMano.setAlignment(Pos.TOP_CENTER);
+		VBox puntajeJugador1 = new VBox (new Label ("EQUIPO 1"), new Label (Integer.toString(partido.getPuntosPrimerEquipo())));
+		puntajeJugador1.setAlignment(Pos.TOP_CENTER);
+		puntajeJugador1.setSpacing(10);
+		VBox puntajeJugador2 = new VBox (new Label ("EQUIPO 2"), new Label (Integer.toString(partido.getPuntosUltimoEquipo())));
+		puntajeJugador2.setAlignment(Pos.TOP_CENTER);
+		puntajeJugador2.setSpacing(10);
+		HBox ambosPuntajes = new HBox (puntajeJugador1, puntajeJugador2);
+		ambosPuntajes.setSpacing(15);
+		ambosPuntajes.setPadding(new Insets(20));
+		
+        HBox cartasJugador1Jugadas = generador.generarEspacioVacioVertical();
+        HBox cartasJugador2Jugadas = generador.generarEspacioVacioVertical();
+        
+        HBox cartasJugador1EnMano = generador.generarCartasComienzoDeJugador();
+        HBox cartasJugador2EnMano = generador.generarCartasComienzoDeJugador();
+        cartasJugador1EnMano.setAlignment(Pos.TOP_CENTER);
 		cartasJugador2EnMano.setAlignment(Pos.BOTTOM_CENTER);
-		//puntajes.setAlignment(Pos.CENTER_LEFT);
+		
 		
 		VBox campoDeJuego = new VBox (cartasJugador1EnMano, cartasJugador1Jugadas, cartasJugador2Jugadas, cartasJugador2EnMano);
+		campoDeJuego.setPadding(new Insets (20));
 		
-		this.scene = new Scene(campoDeJuego, 700,600);
+		CircularList<Integer> turnoJugador = new CircularList<Integer>();
+		turnoJugador.add(1);
+		turnoJugador.add(2);
+		turnoJugador.resetToFirst();
+		Label turnoDe = new Label ("Turno de: JUGADOR ");
+		
+
+		partido.nuevaRonda();
+		Ronda rondaActual = partido.getRondaActual();
+		partido.getMazo().mezclar();
+		partido.getMazo().repartir(partido.getOrdenJugadores(), partido.getRepartidorActual(), 3);
+		
+				
+		HBox esElTurnoDe = new HBox (turnoDe, new Label (turnoJugador.getCurrent().toString()), new Label (partido.getMazo().getCarta(1).getPalo().toString()), new Label (Integer.toString(partido.getMazo().getCarta(1).getNumero())));
+		esElTurnoDe.setPadding(new Insets(20));
+		Button botonEstoyListo = new Button ("Estoy Listo");
+		VBox controles = new VBox (esElTurnoDe, botonEstoyListo);
+		controles.setAlignment(Pos.TOP_CENTER);
+		
+		
+
+		HBox pantalla = new HBox (ambosPuntajes, campoDeJuego, controles);
+		this.scene = new Scene(pantalla, 700,600);
+		
+		BotonEstoyListoEventHandler botonEstoyListoEventHandler = new BotonEstoyListoEventHandler (this.stage, this.partido, pantalla);
+		botonEstoyListo.setOnAction(botonEstoyListoEventHandler);
 	}
 	
 	@Override
 	public void handle(ActionEvent actionEvent){
 		this.stage.setScene (scene);
 		this.stage.show();
+		
 	}
 	
 }
