@@ -11,7 +11,7 @@ public class ManejadorDeRonda {
 		this._partido = partido;
 	}
 
-	private Partido getPartido(){
+	public Partido getPartido(){
 		return this._partido;
 	}
 	

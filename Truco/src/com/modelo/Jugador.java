@@ -135,27 +135,27 @@ public abstract class Jugador implements IRecibible{
 		//scan.close();
 		
 		if (respuesta.equals("quiero")){
-			QuieroTanto quiero = new QuieroTanto(accion, this, accion.getOrigen());
+			QuieroTanto quiero = new QuieroTanto(accion, this, accion.getOrigen(), partido.getRondaActual());
 			manejadorDeRonda.ejecutarRespuestaTanto(quiero);
 			return quiero;
 			
 		} else if (respuesta.equals("noquiero")){
-			NoQuieroTanto noquiero = new NoQuieroTanto(accion, this, accion.getOrigen());
+			NoQuieroTanto noquiero = new NoQuieroTanto(accion, this, accion.getOrigen(), partido.getRondaActual());
 			manejadorDeRonda.ejecutarRespuestaTanto(noquiero);
 			return noquiero;
 			
 		} else if ((respuesta.equals("envido")) && (this.accionEnvidoValida(accion))){
-			Envido nuevoEnvido = new Envido(new QuieroTanto(accion, this, accion.getOrigen()), this, accion.getOrigen());
+			Envido nuevoEnvido = new Envido(new QuieroTanto(accion, this, accion.getOrigen(), partido.getRondaActual()), this, accion.getOrigen(), partido.getRondaActual());
 			manejadorDeRonda.ejecutarRespuestaTanto(nuevoEnvido);
 			return nuevoEnvido;
 			
 		} else if (respuesta.equals(("realenvido"))){
-			RealEnvido realEnvido = new RealEnvido(accion, this, accion.getOrigen());
+			RealEnvido realEnvido = new RealEnvido(accion, this, accion.getOrigen(), partido.getRondaActual());
 			manejadorDeRonda.ejecutarRespuestaTanto(realEnvido);
 			return realEnvido;
 			
 		} else if (respuesta.equals(("faltaenvido"))){
-			FaltaEnvido faltaEnvido = new FaltaEnvido(accion, this, accion.getOrigen());
+			FaltaEnvido faltaEnvido = new FaltaEnvido(accion, this, accion.getOrigen(), partido.getRondaActual());
 			manejadorDeRonda.ejecutarRespuestaTanto(faltaEnvido);
 			return faltaEnvido;
 		}
@@ -179,17 +179,17 @@ public abstract class Jugador implements IRecibible{
 		String respuesta = scan.next().toLowerCase();
 		
 		if (respuesta.equals("quiero")){
-			QuieroTanto quiero = new QuieroTanto(accion, this, accion.getOrigen());
+			QuieroTanto quiero = new QuieroTanto(accion, this, accion.getOrigen(), partido.getRondaActual());
 			manejadorDeRonda.ejecutarRespuestaTanto(quiero);
 			return quiero;
 			
 		} else if (respuesta.equals("noquiero")){
-			NoQuieroTanto noquiero = new NoQuieroTanto(accion, this, accion.getOrigen());
+			NoQuieroTanto noquiero = new NoQuieroTanto(accion, this, accion.getOrigen(), partido.getRondaActual());
 			manejadorDeRonda.ejecutarRespuestaTanto(noquiero); 
 			return noquiero;
 			
 		} else if (respuesta.equals(("faltaenvido"))){
-			FaltaEnvido faltaEnvido = new FaltaEnvido(accion, this, accion.getOrigen());
+			FaltaEnvido faltaEnvido = new FaltaEnvido(accion, this, accion.getOrigen(), partido.getRondaActual());
 			manejadorDeRonda.ejecutarRespuestaTanto(faltaEnvido);
 			return faltaEnvido;
 		}
@@ -204,12 +204,12 @@ public abstract class Jugador implements IRecibible{
 		String respuesta = scan.next().toLowerCase();
 		
 		if (respuesta.equals("quiero")){
-			QuieroTanto quiero = new QuieroTanto(accion, this, accion.getOrigen());
+			QuieroTanto quiero = new QuieroTanto(accion, this, accion.getOrigen(), manejadorDeRonda.getPartido().getRondaActual());
 			manejadorDeRonda.ejecutarRespuestaTanto(quiero);
 			return quiero;
 			
 		} else if (respuesta.equals("noquiero")){
-			NoQuieroTanto noquiero = new NoQuieroTanto(accion, this, accion.getOrigen());
+			NoQuieroTanto noquiero = new NoQuieroTanto(accion, this, accion.getOrigen(), manejadorDeRonda.getPartido().getRondaActual());
 			manejadorDeRonda.ejecutarRespuestaTanto(noquiero);
 			return noquiero;
 		}

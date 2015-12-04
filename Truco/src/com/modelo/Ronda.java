@@ -1,6 +1,7 @@
 package com.modelo;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EmptyStackException;
 import java.util.List;
 import java.util.Stack;
@@ -45,12 +46,17 @@ public abstract class Ronda {
 
 	private Stack<Vuelta> _vueltas;
 	private List<Jugador> _ganadoresVueltas = null;
+	
+	private List<String> _accionesPosibles;
 
 	public Ronda(Partido partido, Jugador reparte){
 		this._partido = partido;
 		this._repartio = reparte;
 		this._ganadoresVueltas = new ArrayList<Jugador>();
 		this._vueltas = new Stack<Vuelta>();
+		
+		// Al comenzar, se puede cantar envido, real envido, falta envido, truco y flor (ver despues esto ultimo)
+		this._accionesPosibles = Arrays.asList("envido", "real envido", "falta envido", "truco", "flor");
 	}
 
 	public abstract Ronda getRondaSiguiente(boolean esPicaPica);
@@ -206,7 +212,7 @@ public abstract class Ronda {
 		if(!this.esPrimeraVuelta()) throw new VueltaParaCantarTantoNoPosibleException();
 		if(this.yaSeCantoEnvido()) throw new TantoYaCantadoException();
 		
-		Envido envidoCantado = new Envido(new Tanto(), jugadorOrigen, this.getPartido().getJugadorSiguienteA(jugadorOrigen));
+		Envido envidoCantado = new Envido(new Tanto(), jugadorOrigen, this.getPartido().getJugadorSiguienteA(jugadorOrigen), this);
 		TantoDecorator desicion = this.getPartido().getManejadorDeRonda().cantarEnvido(envidoCantado);
 		Accion envido = (Accion)desicion;
 		this.getVueltaActual().getAccionesEnvido().add(envido);
@@ -220,22 +226,22 @@ public abstract class Ronda {
 	public void seCantoRealEnvido(Jugador jugadorOrigen){
 		if(!this.esPrimeraVuelta()) throw new VueltaParaCantarTantoNoPosibleException();
 		if(this.yaSeCantoEnvido()) throw new TantoYaCantadoException();
-		RealEnvido realEnvidoCantado = new RealEnvido(new Tanto(), jugadorOrigen, this.getPartido().getJugadorSiguienteA(jugadorOrigen));
+		RealEnvido realEnvidoCantado = new RealEnvido(new Tanto(), jugadorOrigen, this.getPartido().getJugadorSiguienteA(jugadorOrigen), this);
 		Accion realEnvido = this.getPartido().getManejadorDeRonda().cantarRealEnvido(realEnvidoCantado);
 		this.getVueltas().peek().getAccionesEnvido().add(realEnvido);
 	}
 
-	private boolean yaSeCantoEnvido() {
+	public boolean yaSeCantoEnvido() {
 		return !this.getVueltaActual().getAccionesEnvido().isEmpty();
 	}
 
 	public void seCantoFaltaEnvido(Jugador jugadorOrigen){
 		if(!this.esPrimeraVuelta()) throw new VueltaParaCantarTantoNoPosibleException();
 		if(this.yaSeCantoEnvido()) throw new TantoYaCantadoException();
-		FaltaEnvido faltaEnvidoCantado = new FaltaEnvido(new Tanto(), jugadorOrigen, this.getPartido().getJugadorSiguienteA(jugadorOrigen));
+		FaltaEnvido faltaEnvidoCantado = new FaltaEnvido(new Tanto(), jugadorOrigen, this.getPartido().getJugadorSiguienteA(jugadorOrigen), this);
 		Accion faltaEnvido = this.getPartido().getManejadorDeRonda().cantarFaltaEnvido(faltaEnvidoCantado);
 
-		Envido envidoCantado = new Envido(new Tanto(), jugadorOrigen, this.getPartido().getJugadorSiguienteA(jugadorOrigen));
+		Envido envidoCantado = new Envido(new Tanto(), jugadorOrigen, this.getPartido().getJugadorSiguienteA(jugadorOrigen), this);
 		Accion envido = this._partido.getManejadorDeRonda().cantarEnvido(envidoCantado);
 		this.getVueltas().peek().getAccionesEnvido().add(envido);
 	}
@@ -351,6 +357,16 @@ public abstract class Ronda {
 	private boolean hayGanador() {
 		return this.getVueltas().size() >= 2 && (this.getPartido().getEquipoDeJugador(this.getGanadoresDeVueltas().get(0)) == this.getPartido().getEquipoDeJugador(this.getGanadoresDeVueltas().get(1)));
 	}
+	
+	public List<String> getAccionesPosiblesEnElMomento() {
+		return this._accionesPosibles;
+	}
+
+	
+	public void setAccionesPosibles (List<String> acciones) {
+		this._accionesPosibles = acciones;
+	}
+
 
 //	public void finalizarRonda(){
 //	}

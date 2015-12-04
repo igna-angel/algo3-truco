@@ -1,11 +1,20 @@
 package com.modelo.acciones.envido;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.modelo.Jugador;
+import com.modelo.Ronda;
 
 public class NoQuieroTanto extends TantoDecorator {
+	
+	private String _nombreAccion;
 
-	public NoQuieroTanto(AccionTanto accionDecorar, Jugador origen, Jugador destino) {
+	public NoQuieroTanto(AccionTanto accionDecorar, Jugador origen, Jugador destino, Ronda rondaActual) {
 		super(accionDecorar, origen, destino);
+		this._nombreAccion = "no quiero tanto";
+		List<String> acciones = Arrays.asList("truco");
+		rondaActual.setAccionesPosibles(acciones);
 	}
 	
 	public int cantar(){
@@ -72,6 +81,11 @@ public class NoQuieroTanto extends TantoDecorator {
 	
 	private boolean esEnvidoEnvidoRealEnvidoFaltaEnvido(){
 		return super.cantar() == 37;
+	}
+	
+	@Override
+	public String getNombreAccion() {
+		return this._nombreAccion;
 	}
 	
 }

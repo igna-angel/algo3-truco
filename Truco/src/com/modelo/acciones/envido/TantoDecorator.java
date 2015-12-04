@@ -1,6 +1,7 @@
 package com.modelo.acciones.envido;
 
 import com.modelo.Jugador;
+import com.modelo.Ronda;
 
 public class TantoDecorator implements AccionTanto {
 
@@ -30,5 +31,15 @@ public class TantoDecorator implements AccionTanto {
 	
 	public Jugador getDestino(){
 		return this._destino;
+	}
+	
+	@Override
+	public boolean accionEsPosible(Ronda rondaActual) {
+		return rondaActual.getAccionesPosiblesEnElMomento().contains(this.getNombreAccion());
+	}
+	
+	@Override
+	public String getNombreAccion() {
+		return accionADecorar.getNombreAccion();
 	}
 }

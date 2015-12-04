@@ -100,15 +100,15 @@ public class JugadorVirtual extends Jugador {
 		int tantoEnMano = this._mano.getTantoEnMano();
 		
 		if (tantoEnMano < MIN_TANTO_ENVIDO){
-			return new NoQuieroTanto(accion, this, accion.getOrigen());
+			return new NoQuieroTanto(accion, this, accion.getOrigen(), partido.getRondaActual());
 		} else
 		
 		if (tantoEnMano >= MIN_TANTO_ENVIDO && tantoEnMano < MIN_TANTO_REAL_ENVIDO){
-			return new QuieroTanto(accion, this, accion.getOrigen());
+			return new QuieroTanto(accion, this, accion.getOrigen(), partido.getRondaActual());
 		} else if (tantoEnMano >= MIN_TANTO_REAL_ENVIDO && tantoEnMano < MIN_TANTO_FALTA_ENVIDO){
-			return manejadorDeRonda.cantarRealEnvido(new RealEnvido(accion, this, accion.getOrigen()));
+			return manejadorDeRonda.cantarRealEnvido(new RealEnvido(accion, this, accion.getOrigen(), partido.getRondaActual()));
 		} else if (tantoEnMano >= MIN_TANTO_FALTA_ENVIDO){
-			return manejadorDeRonda.cantarFaltaEnvido(new FaltaEnvido(accion, this, accion.getOrigen()));
+			return manejadorDeRonda.cantarFaltaEnvido(new FaltaEnvido(accion, this, accion.getOrigen(), partido.getRondaActual()));
 		} else {
 			throw new AccionNoPosibleException();
 		}
@@ -118,29 +118,29 @@ public class JugadorVirtual extends Jugador {
 		int tantoEnMano = this._mano.getTantoEnMano();
 		
 		if (tantoEnMano < MIN_TANTO_REAL_ENVIDO){
-			return new NoQuieroTanto(accion, this, accion.getOrigen());
+			return new NoQuieroTanto(accion, this, accion.getOrigen(), partido.getRondaActual());
 		} else
 		
 		if (tantoEnMano >= MIN_TANTO_REAL_ENVIDO && tantoEnMano < MIN_TANTO_FALTA_ENVIDO){
-			return new QuieroTanto(accion, this, partido.getJugadorSiguienteA(this));
+			return new QuieroTanto(accion, this, partido.getJugadorSiguienteA(this), partido.getRondaActual());
 		} else 
 			
 		if (tantoEnMano >= MIN_TANTO_FALTA_ENVIDO){
-			return manejadorDeRonda.cantarFaltaEnvido(new FaltaEnvido(accion, this, accion.getOrigen()));
+			return manejadorDeRonda.cantarFaltaEnvido(new FaltaEnvido(accion, this, accion.getOrigen(), partido.getRondaActual()));
 		} else {
 			throw new AccionNoPosibleException();
 		}
 	}
 
-	public TantoDecorator responderA(FaltaEnvido accion) {
+	public TantoDecorator responderA(FaltaEnvido accion, ManejadorDeRonda manejadorDeRonda) {
 		int tantoEnMano = this._mano.getTantoEnMano();
 		
 		if (tantoEnMano < MIN_TANTO_FALTA_ENVIDO){
-			return new NoQuieroTanto(accion, this, accion.getOrigen());
+			return new NoQuieroTanto(accion, this, accion.getOrigen(), manejadorDeRonda.getPartido().getRondaActual());
 		} else
 		
 		if (tantoEnMano >= MIN_TANTO_FALTA_ENVIDO){
-			return new QuieroTanto(accion, this, accion.getOrigen());
+			return new QuieroTanto(accion, this, accion.getOrigen(), manejadorDeRonda.getPartido().getRondaActual());
 		} else {
 			throw new AccionNoPosibleException();
 		}
