@@ -30,7 +30,7 @@ public class BotonEstoyListoEventHandler implements EventHandler<ActionEvent>{
 		
 		this.cartasJugador1EnMano = cartasJugador1EnMano;
 		this.cartasJugador2EnMano = cartasJugador2EnMano;
-		this.listaDeCartasEnManoJugador1 = jugadorActual1.getListaDeCartasEnMano();
+		this.listaDeCartasEnManoJugador1 = jugadorActual1.;
 		this.listaDeCartasEnManoJugador2 = jugadorActual2.getListaDeCartasEnMano();
 		
 		this.scene = scene;

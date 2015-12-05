@@ -1,5 +1,6 @@
 package com.modelo;
 
+import java.util.List;
 import java.util.Scanner;
 
 import com.exceptions.AccionNoPosibleException;
@@ -35,6 +36,10 @@ public abstract class Jugador implements IRecibible{
 	
 	public int getCartasEnMano(){
 		return this.getMano().getCartasEnMano();
+	}
+	
+	public List<Carta> getListaDeCartasEnMano(){
+		return this.getMano().getCartas();
 	}
 	
 	public void imprimirCartas(){
