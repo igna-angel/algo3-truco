@@ -46,9 +46,9 @@ public class Boton2JugadoresEventHandler implements EventHandler<ActionEvent>{
 		partido.agregarJugadorAEquipo(new JugadorHumano(), 0);
 		partido.agregarJugadorAEquipo(new JugadorHumano(), 1);
 		partido.crearPartido();
-		partido.getMazo().mezclar();
-		partido.getOrdenJugadores().resetToFirst();
-		partido.getMazo().repartir(partido.getOrdenJugadores(), partido.getOrdenJugadores().getFirst(), 3);
+		//partido.getMazo().mezclar();
+		//partido.getOrdenJugadores().resetToFirst();
+		//partido.getMazo().repartir(partido.getOrdenJugadores(), partido.getOrdenJugadores().getFirst(), 3);
 		partido.nuevaRonda();
 		partido.getRondaActual().nuevaVuelta();
 		
