@@ -10,6 +10,7 @@ import com.modelo.acciones.truco.AccionTruco;
 import com.modelo.acciones.truco.NoQuiero;
 import com.modelo.acciones.truco.Quiero;
 import com.modelo.acciones.truco.ReTruco;
+import com.modelo.acciones.truco.TrucoDecorator;
 import com.modelo.acciones.truco.ValeCuatro;
 import com.modelo.cartas.Carta;
 
@@ -63,15 +64,12 @@ public abstract class Jugador implements IRecibible{
 		this.getMano().devolverCartas();
 	}
 
-	public Accion responderA(AccionTruco accion, ManejadorDeRonda manejadorDeRonda,Partido partido) {
+	public TrucoDecorator responderA(TrucoDecorator accion, ManejadorDeRonda manejadorDeRonda,Partido partido) {
 		
 		System.out.print("Quiere truco: ");
 		
-		Scanner scan = new Scanner(System.in);
-		String respuesta = scan.next().toLowerCase();
-		scan.close();
+		String respuesta = respuestaAQuerer();
 
-		
 		if (respuesta.equals("quiero")){
 			return new Quiero(accion);
 		} else
@@ -79,22 +77,26 @@ public abstract class Jugador implements IRecibible{
 		if (respuesta.equals("noquiero")){
 			return new NoQuiero(accion);
 		} else 
-		
+	
 		if (respuesta.equals("retruco")){
 			return manejadorDeRonda.cantarReTruco(new ReTruco(accion));
+			
 		} else {
 			throw new AccionNoPosibleException();
 		}
 	}	
 	
-	public Accion responderA(ReTruco accion, ManejadorDeRonda manejadorDeRonda,Partido partido) {
+	private String respuestaAQuerer(){
+		Scanner scan = new Scanner(System.in);
+		String respuesta = scan.next().toLowerCase();
+		return respuesta;
+	}
+	
+	public TrucoDecorator responderA(ReTruco accion, ManejadorDeRonda manejadorDeRonda,Partido partido) {
 		
 		System.out.print("Quiere ReTruco: ");
 		
-		Scanner scan = new Scanner(System.in);
-		String respuesta = scan.next().toLowerCase();
-		scan.close();
-
+		String respuesta = respuestaAQuerer();
 		
 		if (respuesta.equals("quiero")){
 			return new Quiero(accion);
@@ -112,13 +114,11 @@ public abstract class Jugador implements IRecibible{
 		}
 	}	
 	
-	public Accion responderA(ValeCuatro accion) {
+	public TrucoDecorator responderA(ValeCuatro accion) {
 		
 		System.out.print("Quiere ValeCuatro: ");
-		
-		Scanner scan = new Scanner(System.in);
-		String respuesta = scan.next().toLowerCase();
-		scan.close();
+	
+		String respuesta = respuestaAQuerer();
 		
 		if (respuesta.equals("quiero")){
 			return new Quiero(accion);
@@ -129,13 +129,13 @@ public abstract class Jugador implements IRecibible{
 		} else {
 			throw new AccionNoPosibleException();
 		}
+		
 	}
 
 	public TantoDecorator responderA(Envido accion, ManejadorDeRonda manejadorDeRonda, Partido partido) {
 		System.out.print("Quiere Envido: ");
 		
 		Scanner scan = new Scanner(System.in);
-		
 		String respuesta = scan.next().toLowerCase();
 		//scan.close();
 		

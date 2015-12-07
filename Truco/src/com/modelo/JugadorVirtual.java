@@ -19,6 +19,7 @@ import com.modelo.acciones.truco.AccionTruco;
 import com.modelo.acciones.truco.NoQuiero;
 import com.modelo.acciones.truco.Quiero;
 import com.modelo.acciones.truco.ReTruco;
+import com.modelo.acciones.truco.TrucoDecorator;
 import com.modelo.acciones.truco.ValeCuatro;
 import com.modelo.cartas.Carta;
 
@@ -87,12 +88,12 @@ public class JugadorVirtual extends Jugador {
 		}*/
 	}	
 	
-	public Accion responderA(ReTruco accion, ManejadorDeRonda manejadorDeRonda,Partido partido) {
+	public TrucoDecorator responderA(ReTruco accion, ManejadorDeRonda manejadorDeRonda,Partido partido) {
 		return new Quiero(accion);
 
 	}	
 	
-	public Accion responderA(ValeCuatro accion) {
+	public TrucoDecorator responderA(ValeCuatro accion) {
 		return new Quiero(accion);
 	}
 

@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+import com.modelo.acciones.truco.AccionTruco;
+import com.modelo.acciones.truco.TrucoDecorator;
+import com.modelo.acciones.truco.TrucoNormal;
 import com.modelo.cartas.Carta;
 import com.modelo.cartas.CartaInvalida;
 
@@ -12,21 +15,16 @@ public class Vuelta implements IRecibible {
 	private Stack<Carta> _cartas = null;
 	private Carta _cartaGanadora = null;
 	private List<Accion> _accionesTanto = null;
-	private List<Accion> _accionesTruco = null;
 	private Ronda _ronda;
+	private AccionTruco _accionTruco = null;
 	
 	private Jugador _jugadorInicial = null;
 	private Jugador _jugadorActual = null;
 
-	public Vuelta(Ronda ronda, List<Accion> acciones, Jugador jugadorInicial) {
-//		this._cartas = new Stack<Carta>();
-//		this._accionesTanto = acciones;
-//		this._cartaGanadora = new CartaInvalida();
-//		this._ronda = ronda;
-		
+	public Vuelta(Ronda ronda, AccionTruco accion, Jugador jugadorInicial) {
 		this._cartas = new Stack<Carta>();
 		this._accionesTanto = new ArrayList<Accion>(); 
-		this._accionesTruco = acciones;
+		this._accionTruco = accion;
 		this._cartaGanadora = new CartaInvalida();
 		this._ronda = ronda;
 
@@ -37,7 +35,7 @@ public class Vuelta implements IRecibible {
 	public Vuelta(Ronda ronda, Jugador jugadorInicial) {
 		this._cartas = new Stack<Carta>();
 		this._accionesTanto = new ArrayList<Accion>(); 
-		this._accionesTruco = new ArrayList<Accion>();
+		this._accionTruco = new TrucoNormal();
 		this._cartaGanadora = new CartaInvalida();
 		this._ronda = ronda;
 
@@ -80,6 +78,10 @@ public class Vuelta implements IRecibible {
 		}
 	}
 	
+	public void setAccionTruco(TrucoDecorator accion){
+		this._accionTruco = accion;
+	}
+	
 	public Stack<Carta> getCartas(){
 		return this._cartas;
 	}
@@ -100,8 +102,32 @@ public class Vuelta implements IRecibible {
 		return this._accionesTanto;
 	}
 	
-	public List<Accion> getAccionesTruco(){
-		return this._accionesTruco;
+	public AccionTruco getAccionTruco(){
+		return this._accionTruco;
+	}
+	
+	//Lo unico que hacen los tres no queridos es crear una nuevaRonda y agregar el puntaje
+	//quizas habria que profundizar
+	public void siTrucoNoQueridoFinalizarRonda(Ronda ronda, Partido partido) {
+		if (this._accionTruco.cantar() == 1){
+			ronda.agregarPuntajeTruco();
+			partido.nuevaRonda();
+		}
+	}
+	
+	public void siReTrucoNoQueridoFinalizarRonda(Ronda ronda, Partido partido) {
+		if (this._accionTruco.cantar() == 2){
+			ronda.agregarPuntajeTruco();
+			partido.nuevaRonda();
+		}
+	}
+	
+
+	public void siValeCuatroNoQueridoFinalizarRonda(Ronda ronda, Partido partido) {
+		if (this._accionTruco.cantar() == 4){
+			ronda.agregarPuntajeTruco();
+			partido.nuevaRonda();
+		}
 	}
 	
 	private boolean esFinDeVuelta(){
@@ -117,4 +143,5 @@ public class Vuelta implements IRecibible {
 		this.setCartaGanadora(carta.ganador(this.getCartaGanadora()));
 		this.getCartas().push(carta);
 	}
+
 }

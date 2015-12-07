@@ -15,7 +15,7 @@ public class ManejadorDeRonda {
 		return this._partido;
 	}
 	
-	public Accion cantarTruco(AccionTruco trucoCantado){
+	public TrucoDecorator cantarTruco(Truco trucoCantado){
 		return this.getJugadorQueDebeAceptar().responderA(trucoCantado, this, this.getPartido());
 	}
 	
@@ -23,11 +23,11 @@ public class ManejadorDeRonda {
 		return this.getPartido().getJugadorSiguienteAlActual();
 	}
 	
-	public Accion cantarReTruco(ReTruco reTruco){
+	public TrucoDecorator cantarReTruco(ReTruco reTruco){
 		return this.getJugadorQueDebeAceptar().responderA(reTruco, this, this.getPartido());
 	}
 
-	public Accion cantarValeCuatro(ValeCuatro valeCuatro) {
+	public TrucoDecorator cantarValeCuatro(ValeCuatro valeCuatro) {
 		return this.getJugadorQueDebeAceptar().responderA(valeCuatro);
 	}
 	

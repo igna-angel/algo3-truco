@@ -1,6 +1,6 @@
 package com.modelo.acciones.truco;
 
-public class ReTruco extends TrucoDecorator {
+public class ReTruco extends Truco {
 
 	public ReTruco(AccionTruco accionDecorar) {
 		super(accionDecorar);

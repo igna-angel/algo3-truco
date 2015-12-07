@@ -1,10 +1,12 @@
 package com.modelo.acciones.truco;
 
-public class Truco implements AccionTruco{
-
-	@Override
-	public int cantar(){
-		return 2;
+public class Truco extends TrucoDecorator{
+	
+	public Truco(AccionTruco accionDecorar) {
+		super(accionDecorar);
 	}
 
+	public int cantar(){
+		return this.accionADecorar.cantar() + 2;
+	}
 }

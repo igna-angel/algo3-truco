@@ -31,30 +31,27 @@ public class TrucoMain {
 
 		partido.getRondaActual().nuevaVuelta();
 		
-//		partido.getRondaActual().seCantoEnvido(partido.getJugadorActual());
+		partido.getRondaActual().seCantoTruco(); //No se quiere e inicia otra ronda
 		
-		partido.getRondaActual().seCantoFlor(partido.getJugadorActual());
-
+		partido.getRondaActual().nuevaVuelta();
+		
+		partido.getRondaActual().seCantoTruco();
+		
+//		partido.getRondaActual().nuevaVueltaSecundaria(partido.getRondaActual().getVueltaActual().getAccionTruco());
+//		
+//		partido.getRondaActual().seCantoReTruco();
+//		
+//		partido.getRondaActual().nuevaVueltaSecundaria(partido.getRondaActual().getVueltaActual().getAccionTruco());
+//		
+//		partido.getRondaActual().seCantoValeCuatro();
+//
+		partido.getRondaActual().agregarPuntajeTruco();
+		
 		System.out.println("Equipo A: " + partido.getPuntosPrimerEquipo());
 		System.out.println("Equipo B: " + partido.getPuntosUltimoEquipo());
 		
-//		partido.getRondaActual().seCantoTruco();
-		
-//		partido.getRondaActual().nuevaVuelta();
-		
-//		partido.getRondaActual().seCantoReTruco();
-//		
-//		partido.getRondaActual().nuevaVuelta();
-//	
-//		partido.getRondaActual().seCantoReTruco();
-//		
-//		partido.getRondaActual().nuevaVuelta();
-//		
-//		partido.getRondaActual().seCantoValeCuatro();
-//		
-//		partido.getRondaActual().agregarPuntajes();
 		//para el puntaje hay que fijarse quien es el ganador, esta por
-		//defecto el equipo uno
+		//defecto el equipo uno para el truco por ahora
 	}
 
 }
