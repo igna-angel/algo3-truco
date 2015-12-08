@@ -98,9 +98,9 @@ public class Boton2JugadoresEventHandler implements EventHandler<ActionEvent>{
 		HBox pantalla = new HBox (ambosPuntajes, campoDeJuego, controles);
 		this.scene = new Scene(pantalla, 700,600);
 		
-		Jugador jugadorActual1 = this.partido.getJugadorActual();
-		Jugador jugadorActual2 = this.partido.getJugadorSiguienteAlActual();
-		BotonEstoyListoEventHandler botonEstoyListoEventHandler = new BotonEstoyListoEventHandler (this.scene, this.stage, this.partido, botonera, jugadorActual1, jugadorActual2, cartasJugador1EnMano, cartasJugador2EnMano);
+		Jugador jugadorActual = this.partido.getJugadorActual();
+		HBox cartasJugadorEnMano = cartasJugador1EnMano;
+		BotonEstoyListoEventHandler botonEstoyListoEventHandler = new BotonEstoyListoEventHandler (this.scene, this.stage, this.partido, botonera, jugadorActual, cartasJugadorEnMano);
 		botonEstoyListo.setOnAction(botonEstoyListoEventHandler);
 	}
 	
