@@ -9,7 +9,10 @@ import com.interfazgrafica.GeneradoresVisuales;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -18,37 +21,47 @@ public class BotonEstoyListoEventHandler implements EventHandler<ActionEvent>{
 		
 	private Stage stage;
 	private Scene scene;
-	private List<Carta> listaDeCartasEnManoJugador1;
-	private List<Carta> listaDeCartasEnManoJugador2;
-	private HBox cartasJugador1EnMano;
-	private HBox cartasJugador2EnMano;
+	private List<Carta> listaDeCartasEnManoJugador;
+	private HBox cartasJugadorEnMano;
 	private GeneradoresVisuales generadores = new GeneradoresVisuales();
+	private Partido partido;
 	
-	BotonEstoyListoEventHandler(Scene scene, Stage stage, Partido partido, VBox botonera, Jugador jugadorActual1, Jugador jugadorActual2, HBox cartasJugador1EnMano, HBox cartasJugador2EnMano){
+	BotonEstoyListoEventHandler(Scene scene, Stage stage, Partido partido, VBox botonera, Jugador jugadorActual, HBox cartasJugadorEnMano){
 		
 		this.stage = stage;
 		
-		this.cartasJugador1EnMano = cartasJugador1EnMano;
-		this.cartasJugador2EnMano = cartasJugador2EnMano;
-		this.listaDeCartasEnManoJugador1 = jugadorActual1.getListaDeCartasEnMano();
-		this.listaDeCartasEnManoJugador2 = jugadorActual2.getListaDeCartasEnMano();
+		this.cartasJugadorEnMano = cartasJugadorEnMano;
+
+		this.listaDeCartasEnManoJugador = jugadorActual.getListaDeCartasEnMano();
+
+		this.partido = partido;
 		
 		this.scene = scene;
+		
+		partido.getRondaActual().asignarPuntos(15, 1);
 	}
 	
 	@Override
 	public void handle(ActionEvent actionEvent){
 		
-		this.cartasJugador1EnMano.getChildren().clear();
-		for (int i=0; i<listaDeCartasEnManoJugador1.size(); i++){
-			Carta unaCarta = listaDeCartasEnManoJugador1.get(i);
-			this.cartasJugador1EnMano.getChildren().add(generadores.generadorDeVisualDeCarta(unaCarta));
+		if (this.partido.getMaximoPuntaje() < 30){
+			this.cartasJugadorEnMano.getChildren().clear();
+			for (int i=0; i<listaDeCartasEnManoJugador.size(); i++){
+				Carta unaCarta = listaDeCartasEnManoJugador.get(i);
+				this.cartasJugadorEnMano.getChildren().add(generadores.generadorDeVisualDeCarta(unaCarta));
+				partido.getRondaActual().asignarPuntos(15, 1);
+			}
 		}
-		
-		this.cartasJugador2EnMano.getChildren().clear();
-		for (int i=0; i<listaDeCartasEnManoJugador2.size(); i++){
-			Carta unaCarta = listaDeCartasEnManoJugador2.get(i);
-			this.cartasJugador2EnMano.getChildren().add(generadores.generadorDeVisualDeCarta(unaCarta));
+		else {
+			Label tituloFinalJuego = new Label ("JUEGO TERMINDO \n \n PUNTAJE FINAL \n \n");
+			tituloFinalJuego.setAlignment(Pos.CENTER);
+			tituloFinalJuego.setPadding(new Insets (20));
+			Label puntajesFinal = new Label ("JUGADOR1: " + partido.getPuntosPrimerEquipo() + "\n JUGADOR2: " + partido.getPuntosUltimoEquipo());
+			puntajesFinal.setAlignment(Pos.CENTER);
+			puntajesFinal.setPadding(new Insets (20));
+			VBox finDelJuego = new VBox (tituloFinalJuego, puntajesFinal);
+			finDelJuego.setAlignment(Pos.CENTER);
+			this.scene = new Scene (finDelJuego, 600, 600); 
 		}
 		
 		this.stage.setScene (scene);
