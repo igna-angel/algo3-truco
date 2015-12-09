@@ -6,6 +6,7 @@ import java.util.Stack;
 
 import com.exceptions.TantoYaCantadoException;
 import com.exceptions.AccionNoPosibleException;
+import com.exceptions.NoHayGanadorException;
 import com.exceptions.NoHayVueltasException;
 
 import com.exceptions.VueltaParaCantarTantoNoPosibleException;
@@ -154,53 +155,6 @@ public abstract class Ronda {
 		this.getVueltas().peek().getAccionesEnvido().add(envido);
 	}
 
-//	private int getPosAccionFinalEnvido() {
-//		if (!this._vueltas.peek().getAccionesEnvido().isEmpty()){
-//			return this._vueltas.peek().getAccionesEnvido().size();
-//		} else {
-//			this._vueltas.pop();
-//			return this.getPosAccionFinalEnvido();
-//		}
-//	}
-//
-//	private void agregarPuntajeDeTantoNormal(Accion accionFinal) {
-//
-//		int puntajeFinal = accionFinal.cantar();
-//		int puntajeNulo = 0;
-//
-//		this._partido.agregarPuntos(puntajeFinal, puntajeNulo);
-//	}
-//
-//	private Accion getAccionFinalEnvido(){
-//		try {
-//			int posAccionFinal = this.getPosAccionFinalEnvido();
-//			Accion accionFinal = this._vueltas.peek().getAccionesEnvido().get(posAccionFinal-1);
-//			return accionFinal;
-//		} catch (EmptyStackException e) {
-//			Accion accionFinal = new Tanto();
-//			return accionFinal;
-//		}
-//	}
-//
-//	private void agregarPuntajeDeTanto(){
-//
-//		Accion accionFinal = this.getAccionFinalEnvido();
-//
-//		if (accionFinal.cantar() < 30){
-//			this.agregarPuntajeDeTantoNormal(accionFinal);
-//		} else {
-//			this.agregarPuntajeDeTantoEspecial();
-//		}
-//	}
-//
-//	private void agregarPuntajeDeTantoEspecial() {
-//
-//		int puntajeFinal = this._partido.getcantidadDePuntosFaltantes();
-//		int puntajeNulo = 0;
-//
-//		this._partido.agregarPuntos(puntajeFinal, puntajeNulo);
-//	}
-
 	public void seCantoFlor(Jugador jugadorOrigen){
 		if(!this.esPrimeraVuelta()) throw new VueltaParaCantarTantoNoPosibleException();
 		if(this.yaSeCantoEnvido()) throw new TantoYaCantadoException();
@@ -245,7 +199,7 @@ public abstract class Ronda {
 		return this.getPartido().getJugadorConCartaGanadora(cartaGanadora);
 	}
 	
-	private void agregarGanadorDeVuelta(Jugador jugador){
+	public void agregarGanadorDeVuelta(Jugador jugador){
 		this._ganadoresVueltas.add(jugador);
 	}
 
@@ -261,7 +215,28 @@ public abstract class Ronda {
 		return this.getVueltas().size() >= 2 && (this.getPartido().getEquipoDeJugador(this.getGanadoresDeVueltas().get(0)) == this.getPartido().getEquipoDeJugador(this.getGanadoresDeVueltas().get(1)));
 	}
 
-//	public void finalizarRonda(){
-//	}
+	public Equipo getEquipoGanador() {
+		if(!this.hayGanador()) throw new NoHayGanadorException();
+		
+		List<Equipo> equiposGanadores = new ArrayList<Equipo>();
+		
+		for(Jugador jugador : this.getGanadoresDeVueltas()){
+			equiposGanadores.add(this.getPartido().getEquipoDeJugador(jugador));
+		}
+		
+		Equipo ganadorA = equiposGanadores.get(0);
+		Equipo ganadorB = null;
+		
+		for(int i = 1; i < equiposGanadores.size(); i++){
+			if(ganadorA == equiposGanadores.get(i))
+				return ganadorA;
+			else ganadorB = equiposGanadores.get(i);
+		}
+		
+		return ganadorB;
+	}
 
+	public int getMayorTantoDeEquipo(Equipo equipo) {
+		return equipo.getMayorTanto();
+	}
 }

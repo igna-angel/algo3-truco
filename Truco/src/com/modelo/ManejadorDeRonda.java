@@ -95,8 +95,4 @@ public class ManejadorDeRonda {
 	public void ejecutarRespuestaTanto(FaltaEnvido accion){
 		this.cantarFaltaEnvido(accion);
 	}
-
-
-
-
 }

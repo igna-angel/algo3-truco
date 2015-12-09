@@ -40,4 +40,15 @@ public class Equipo {
 		}
 	}
 	
+	public int getMayorTanto(){
+		int tantoMayor = 0;
+		int tantoEnMano;
+		
+		for(int i = 0; i < this.getJugadores().getSize(); i++){
+			tantoEnMano = this.getJugadores().getAt(i).getTantoEnMano();
+			tantoMayor = tantoEnMano > tantoMayor? tantoEnMano : tantoMayor;
+		}
+		
+		return tantoMayor;
+	}	
 }

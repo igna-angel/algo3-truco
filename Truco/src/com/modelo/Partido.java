@@ -135,8 +135,6 @@ public class Partido {
 	public int getPuntosUltimoEquipo(){
 		return this.getEquipos().getLast().getPuntaje();
 	}
-
-	
 	
 	public Jugador getProximoEnRepartir(){
 		return this.getJugadorSiguienteA(this.getRepartidorActual());
@@ -162,10 +160,14 @@ public class Partido {
 		int malas = (PUNTAJE_MAXIMO_JUEGO / 2);
 		
 		if(puntaje < malas){
-			return this.PUNTAJE_MAXIMO_JUEGO;
+			return malas - puntaje;
 		} else {
 			return (this.PUNTAJE_MAXIMO_JUEGO - puntaje);
 		}
+	}
+	
+	public int getPuntosFaltantesDeEquipo(Equipo equipo){
+		return this.puntajeFaltanteSegunMalasOBuenas(equipo.getPuntaje());
 	}
 
 	public Jugador getJugadorSiguienteA(Jugador jugadorActual) {
