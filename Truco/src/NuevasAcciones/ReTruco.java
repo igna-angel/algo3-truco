@@ -30,8 +30,7 @@ public class ReTruco extends Accion{
 	@Override
 	public int getPuntosNoQueridos(){
 		return this.getCantidadDecoradas() + Accion.PUNTOS_NO_QUERIDO;
-	}
-	
+	}	
 
 	@Override
 	protected void procesarAccion(EstadoAceptado estado, Partido partido, Ronda ronda) {
@@ -44,5 +43,17 @@ public class ReTruco extends Accion{
 		
 		partido.agregarPuntosAlEquipo(equipoOrigen, this.getPuntosNoQueridos());		
 		
+	}
+
+	@Override
+	public int getPuntosQueridos(Partido partido) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getPuntosQueridos(Partido partido, Equipo equipo) {
+		// TODO Auto-generated method stub
+		return 0;
 	}	
 }

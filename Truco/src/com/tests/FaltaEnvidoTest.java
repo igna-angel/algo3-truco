@@ -76,23 +76,23 @@ public class FaltaEnvidoTest {
 		partido.agregarJugadorAEquipo(new JugadorHumano(), 1);
 		partido.agregarJugadorAEquipo(new JugadorHumano(), 1);
 				
-		Assert.assertEquals(15, this._faltaEnvido.getPuntosQueridos(partido, partido.getEquipos().getFirst()));
-		Assert.assertEquals(15, this._faltaEnvido.getPuntosQueridos(partido, partido.getEquipos().getLast()));
+		Assert.assertEquals(15, this._faltaEnvido.getPuntosQueridos(partido, partido.getPrimerEquipo()));
+		Assert.assertEquals(15, this._faltaEnvido.getPuntosQueridos(partido, partido.getUltimoEquipo()));
 		
 		partido.agregarPuntos(5, 7);
 		
-		Assert.assertEquals(10, this._faltaEnvido.getPuntosQueridos(partido, partido.getEquipos().getFirst()));
-		Assert.assertEquals(8, this._faltaEnvido.getPuntosQueridos(partido, partido.getEquipos().getLast()));
+		Assert.assertEquals(10, this._faltaEnvido.getPuntosQueridos(partido, partido.getPrimerEquipo()));
+		Assert.assertEquals(8, this._faltaEnvido.getPuntosQueridos(partido, partido.getUltimoEquipo()));
 		
 		partido.agregarPuntos(11, 0);
 		
-		Assert.assertEquals(14, this._faltaEnvido.getPuntosQueridos(partido, partido.getEquipos().getFirst()));
-		Assert.assertEquals(8, this._faltaEnvido.getPuntosQueridos(partido, partido.getEquipos().getLast()));
+		Assert.assertEquals(14, this._faltaEnvido.getPuntosQueridos(partido, partido.getPrimerEquipo()));
+		Assert.assertEquals(8, this._faltaEnvido.getPuntosQueridos(partido, partido.getUltimoEquipo()));
 		
 		partido.agregarPuntos(0, 8);
 		
-		Assert.assertEquals(14, this._faltaEnvido.getPuntosQueridos(partido, partido.getEquipos().getFirst()));
-		Assert.assertEquals(15, this._faltaEnvido.getPuntosQueridos(partido, partido.getEquipos().getLast()));
+		Assert.assertEquals(14, this._faltaEnvido.getPuntosQueridos(partido, partido.getPrimerEquipo()));
+		Assert.assertEquals(15, this._faltaEnvido.getPuntosQueridos(partido, partido.getUltimoEquipo()));
 		
 	}
 }

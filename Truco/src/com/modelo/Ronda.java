@@ -8,7 +8,7 @@ import com.exceptions.TantoYaCantadoException;
 import com.exceptions.AccionNoPosibleException;
 import com.exceptions.NoHayGanadorException;
 import com.exceptions.NoHayVueltasException;
-
+import com.exceptions.NoSeEncuentraJugadorException;
 import com.exceptions.VueltaParaCantarTantoNoPosibleException;
 import com.modelo.acciones.envido.Envido;
 import com.modelo.acciones.envido.TantoDecorator;
@@ -180,7 +180,7 @@ public abstract class Ronda {
 	}
 	
 	private boolean jugadorNoTieneFlor(Jugador jugador){
-		return (!jugador.getMano().florEnMano());
+		return (!jugador.getMano().hayFlor());
 	}
 	
 	public Jugador getJugadorActual() {
@@ -235,8 +235,29 @@ public abstract class Ronda {
 		
 		return ganadorB;
 	}
+	
+	public Jugador getJugadorConMayorTantoEnEquipo(Equipo equipo){
+		return equipo.getJugadorConMayorTanto();
+	}
+	
+	public Jugador getJugadorConMayorFlorEnEquipo(Equipo equipo){
+		return equipo.getJugadorConMayorFlor();
+	}
 
-	public int getMayorTantoDeEquipo(Equipo equipo) {
-		return equipo.getMayorTanto();
+	public int getMayorFlorDeEquipo(Equipo equipo){
+		return equipo.getMayorFlor();
+	}
+	
+	public Jugador getJugadorManoEntre(Jugador jugadorA, Jugador jugadorB){
+		Jugador jugadorInicial = this.getPartido().getJugadorSiguienteA(this.getRepartio());
+		Jugador jugadorActual = jugadorInicial;
+		
+		do{		
+			if(jugadorA == jugadorInicial) return jugadorA;
+			else if (jugadorB == jugadorInicial) return jugadorB;
+			jugadorActual = this.getPartido().getJugadorSiguienteA(jugadorActual);
+		}while(jugadorActual != jugadorInicial);
+		
+		throw new NoSeEncuentraJugadorException();
 	}
 }

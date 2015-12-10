@@ -49,5 +49,17 @@ public class Truco extends Accion{
 		
 		partido.agregarPuntosAlEquipo(equipoOrigen, this.getPuntosNoQueridos());		
 		
+	}
+
+	@Override
+	public int getPuntosQueridos(Partido partido) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getPuntosQueridos(Partido partido, Equipo equipo) {
+		// TODO Auto-generated method stub
+		return 0;
 	}	
 }

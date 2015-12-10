@@ -295,29 +295,19 @@ public abstract class Jugador implements IRecibible{
 		return this.getMano().getMaximosPuntosEnvido();
 	}
 
-	public void cantarEnvido(){
-		
-	}
-	
-	public void cantarFaltaEnvido(){
-		
-	}
-	
-	public void cantarFlor(){
-		
-	}
-	
-	public void cantarTruco(){
-		
-	}
-	
-	private void cantar(Accion accion){
-		
-	}
-	
 	public abstract void jugar(Vuelta vuelta);
 
 	public boolean tieneCarta(Carta cartaGanadora) {
 		return this.getMano().contiene(cartaGanadora);
+	}
+	
+	public boolean hayFlor(){
+		return this.getMano().hayFlor();
+	}
+
+	public int getFlorEnMano() {
+		if(!this.hayFlor()) return 0;
+		
+		return this.getMano().getPuntosFlorEnMano();
 	}
 }

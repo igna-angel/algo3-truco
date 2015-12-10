@@ -46,7 +46,7 @@ public class JugadorVirtual extends Jugador {
 	
 	public void cantarTantoOFlorSiCorresponde (Ronda ronda) {
 		int tantoEnMano = this._mano.getTantoEnMano();
-		if (this._mano.florEnMano()) {
+		if (this._mano.hayFlor()) {
 			ronda.seCantoFlor(this);
 		}
 		
@@ -149,7 +149,7 @@ public class JugadorVirtual extends Jugador {
 
 	public TantoDecorator responderA(Flor accion, ManejadorDeRonda manejadorDeRonda, Partido partido) {
 		// Para hacerlo básico, la flor la queremos siempre (solo querer)
-		if (this._mano.florEnMano()) {
+		if (this._mano.hayFlor()) {
 			return new FlorQuiero(accion,this,accion.getOrigen());
 		}
 		

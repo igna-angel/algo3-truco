@@ -4,7 +4,7 @@ import com.exceptions.NumeroFueraDeRangoException;
 
 public abstract class Carta implements IPeleable {
 
-	private static final int PUNTOS_BASE_MISMO_PALO = 20;
+	public static final int PUNTOS_BASE_MISMO_PALO = 20;
 	private static final int PUNTOS_BASE_NO_MISMO_PALO = 0;
 	protected static final int PUNTOS_CARTA_SIN_PUNTOS = 0;
 	

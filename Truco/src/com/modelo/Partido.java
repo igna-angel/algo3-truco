@@ -33,14 +33,14 @@ public class Partido {
 	public void crearOrdenJugadores(){
 		this._ordenJugadores = new CircularList<Jugador>();
 		
-		this.getEquipos().getFirst().getJugadores().resetToFirst();
-		this.getEquipos().getLast().getJugadores().resetToFirst();
+		this.getPrimerEquipo().getJugadores().resetToFirst();
+		this.getUltimoEquipo().getJugadores().resetToFirst();
 		
 		while(this._ordenJugadores.getSize() < this.getCantidadDeJugadoresTotales()){
-			this._ordenJugadores.add(this.getEquipos().getFirst().getJugadores().getCurrent());
-			this._ordenJugadores.add(this.getEquipos().getLast().getJugadores().getCurrent());
-			this.getEquipos().getFirst().getJugadores().advanceCursor();
-			this.getEquipos().getLast().getJugadores().advanceCursor();
+			this._ordenJugadores.add(this.getPrimerEquipo().getJugadores().getCurrent());
+			this._ordenJugadores.add(this.getUltimoEquipo().getJugadores().getCurrent());
+			this.getPrimerEquipo().getJugadores().advanceCursor();
+			this.getUltimoEquipo().getJugadores().advanceCursor();
 		}	
 		
 	}
@@ -104,7 +104,7 @@ public class Partido {
 	
 	public int getCantidadDeJugadoresPorEquipo(){
 		if(this.getEquipos().isEmpty()) throw new NoHayEquiposException();
-		return this.getEquipos().getFirst().getCantidadJugadores();
+		return this.getPrimerEquipo().getCantidadJugadores();
 	}
 	
 	public int getCantidadDeJugadoresTotales(){
@@ -116,7 +116,7 @@ public class Partido {
 	}
 	
 	public int getMaximoPuntaje(){
-		return (this.getEquipos().getFirst().getPuntaje() > this.getEquipos().getLast().getPuntaje()) ? this.getEquipos().getFirst().getPuntaje() : this.getEquipos().getLast().getPuntaje();
+		return (this.getPrimerEquipo().getPuntaje() > this.getUltimoEquipo().getPuntaje()) ? this.getPrimerEquipo().getPuntaje() : this.getUltimoEquipo().getPuntaje();
 	}
 
 	public void agregarPuntosAlEquipo(Equipo equipo, int puntos){
@@ -124,16 +124,24 @@ public class Partido {
 	}
 	
 	public void agregarPuntos(int puntajeA, int puntajeB) {
-		this.agregarPuntosAlEquipo(this.getEquipos().getFirst(), puntajeA);
-		this.agregarPuntosAlEquipo(this.getEquipos().getLast(), puntajeB);
+		this.agregarPuntosAlEquipo(this.getPrimerEquipo(), puntajeA);
+		this.agregarPuntosAlEquipo(this.getUltimoEquipo(), puntajeB);
+	}
+	
+	public Equipo getPrimerEquipo(){
+		return this.getEquipos().getFirst();
+	}
+	
+	public Equipo getUltimoEquipo(){
+		return this.getEquipos().getLast();
 	}
 	
 	public int getPuntosPrimerEquipo(){
-		return this.getEquipos().getFirst().getPuntaje();
+		return this.getPrimerEquipo().getPuntaje();
 	}
 	
 	public int getPuntosUltimoEquipo(){
-		return this.getEquipos().getLast().getPuntaje();
+		return this.getUltimoEquipo().getPuntaje();
 	}
 	
 	public Jugador getProximoEnRepartir(){
@@ -205,6 +213,6 @@ public class Partido {
 	}
 
 	public Equipo getEquipoDeJugador(Jugador jugador){
-		return this.getEquipos().getFirst().contiene(jugador)? this.getEquipos().getFirst() : this.getEquipos().getLast();
+		return this.getPrimerEquipo().contiene(jugador)? this.getPrimerEquipo() : this.getUltimoEquipo();
 	}
 }

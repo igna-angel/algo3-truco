@@ -8,11 +8,10 @@ import com.modelo.Jugador;
 import com.modelo.Partido;
 import com.modelo.Ronda;
 
-public class FaltaEnvido extends Accion{
-
-	public FaltaEnvido(Jugador origen, Jugador destino) {
+public class ContraFlorAlResto extends Accion{
+	
+	public ContraFlorAlResto(Jugador origen, Jugador destino) {
 		super(origen, destino);
-		this.setDecorada(new AccionDummy());
 		List<Accion> acciones = new ArrayList<Accion>();
 		this.setAccionesPosibles(acciones);
 	}
@@ -21,25 +20,24 @@ public class FaltaEnvido extends Accion{
 	public int getPuntosQueridos() {
 		return 0;
 	}
-
-	@Override
-	public int getPuntosNoQueridos() {
-		return this.getDecorada().getPuntosNoQueridos() + Accion.PUNTOS_NO_QUERIDO;
-	}
 	
-	@Override
-	public int getPuntosQueridos(Partido partido) {
-		// TODO Auto-generated method stub
+	public int getPuntosQueridos(Partido partido){
 		return 0;
 	}
-	
-	public int getPuntosQueridos(Partido partido, Equipo equipo){
+
+	@Override
+	public int getPuntosQueridos(Partido partido, Equipo equipo) {
 		return partido.getPuntosFaltantesDeEquipo(equipo);
+	}	
+	
+	@Override
+	public int getPuntosNoQueridos() {
+		return this.getDecorada().getPuntosQueridos() + this.getCantidadDecoradas();
 	}
 
 	@Override
 	public String getID() {
-		return Accion.ACCION_FALTA_ENVIDO;
+		return Accion.ACCION_CONTRA_FLOR_AL_RESTO;
 	}
 
 	@Override
@@ -47,16 +45,16 @@ public class FaltaEnvido extends Accion{
 		Equipo equipoA = partido.getPrimerEquipo();
 		Equipo equipoB = partido.getUltimoEquipo();
 		
-		Jugador jugadorTantoMasAltoEquipoA = ronda.getJugadorConMayorTantoEnEquipo(equipoA);
-		Jugador jugadorTantoMasAltoEquipoB = ronda.getJugadorConMayorTantoEnEquipo(equipoB);
+		Jugador jugadorFlorMasAltaEquipoA = ronda.getJugadorConMayorFlorEnEquipo(equipoA);
+		Jugador jugadorFlorMasAltaEquipoB = ronda.getJugadorConMayorFlorEnEquipo(equipoB);
 		
-		int tantoEquipoA = jugadorTantoMasAltoEquipoA.getTantoEnMano();
-		int tantoEquipoB = jugadorTantoMasAltoEquipoB.getCartasEnMano();
-			
-		if(tantoEquipoA > tantoEquipoB){
+		int florEquipoA = jugadorFlorMasAltaEquipoA.getFlorEnMano();
+		int florEquipoB = jugadorFlorMasAltaEquipoB.getFlorEnMano();
+				
+		if(florEquipoA > florEquipoB){
 			partido.agregarPuntosAlEquipo(equipoA, this.getPuntosQueridos(partido, equipoA));
-		} else if(tantoEquipoA == tantoEquipoB){
-			Jugador jugadorMano = ronda.getJugadorManoEntre(jugadorTantoMasAltoEquipoA, jugadorTantoMasAltoEquipoB);
+		} else if(florEquipoA == florEquipoB){
+			Jugador jugadorMano = ronda.getJugadorManoEntre(jugadorFlorMasAltaEquipoA, jugadorFlorMasAltaEquipoB);
 			partido.agregarPuntosAlEquipo(partido.getEquipoDeJugador(jugadorMano), this.getPuntosQueridos(partido, partido.getEquipoDeJugador(jugadorMano)));
 		}else{
 			partido.agregarPuntosAlEquipo(equipoB, this.getPuntosQueridos(partido, equipoB));

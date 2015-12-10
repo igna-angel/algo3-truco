@@ -8,6 +8,7 @@ import java.util.Set;
 
 import com.exceptions.EmptyListException;
 import com.exceptions.NoContieneCartaException;
+import com.exceptions.NoSePuedenRecibirMasCartasException;
 import com.modelo.cartas.Carta;
 import com.modelo.cartas.CartaInvalida;
 import java.util.Stack;
@@ -26,6 +27,7 @@ public class Mano implements IRecibible{
 	
 	@Override
 	public void recibirCarta(Carta carta) {
+		if(this.getCartas().size() == 3) throw new NoSePuedenRecibirMasCartasException();
 		carta.cartaEnMano();
 		this.getCartas().add(carta);
 	}
@@ -126,7 +128,7 @@ public class Mano implements IRecibible{
 		return (this.getCantidadDeCartasDelMismoPalo() == 3);
 	}
 	
-	public int getMaximosPuntosEnvido(){
+	protected int getMaximosPuntosEnvido(){
 		int[] combinacionesEnvido = new int[6];
 		combinacionesEnvido[0] = this.getCartas().get(0).getPuntosEnvido();
 		combinacionesEnvido[1] = this.getCartas().get(1).getPuntosEnvido();
@@ -141,48 +143,12 @@ public class Mano implements IRecibible{
 	
 	public int getTantoEnMano() {		
 		return this.getMaximosPuntosEnvido();
-		/*int tantoCarta1 = this._cartas.get(0).getNumero();
-		int tantoCarta2 = this._cartas.get(1).getNumero();
-		int tantoCarta3 = this._cartas.get(2).getNumero();
-		int tantoParcial = 0;
-		if (this._cartas.get(0).getPalo() == this._cartas.get(1).getPalo()) {
-			tantoParcial += 20 + tantoCarta1 + tantoCarta2;
-		}
-		
-		else if (this._cartas.get(0).getPalo() == this._cartas.get(2).getPalo()) {
-			tantoParcial += 20 + tantoCarta1 + tantoCarta3;
-		}
-		
-		else if (this._cartas.get(1).getPalo() == this._cartas.get(2).getPalo()) {
-			tantoParcial += 20 + tantoCarta2 + tantoCarta3;
-		}
-		
-		else if (this._cartas.get(0).getPalo() == this._cartas.get(1).getPalo() && this._cartas.get(1).getPalo() == this._cartas.get(2).getPalo()) {
-			tantoParcial += 20 + tantoCarta1 + tantoCarta2 + tantoCarta3;
-		}
-		
-		else {
-			tantoParcial = Collections.max(Arrays.asList(tantoCarta1, tantoCarta2, tantoCarta3));
-		}
-		return tantoParcial;*/
 	}
 
-	public Carta buscarCartaQueGane(Stack<Carta> cartasYaJugadas) {
-		// Busco las cartas que le gana a la más alta de las ya jugadas
-		ComparadorCartas comparador = new ComparadorCartas();
-		Carta masAltaJugada = comparador.compararCartas(cartasYaJugadas.toArray(new Carta[cartasYaJugadas.size()]));
-		List<Carta> cartasQueGananALaMasAlta = comparador.getCartasMasAltasQueUnaDada(masAltaJugada, this._cartas);
-		
-		if (cartasQueGananALaMasAlta.size() == 0) {
-			// No hay cartas que ganen, devuelvo la más baja
-			return comparador.getCartaMasBaja(this._cartas.toArray(new Carta[this._cartas.size()]));
-		}
-		
-		return comparador.getCartaMasBaja(cartasQueGananALaMasAlta.toArray(new Carta[this._cartas.size()]));
+	public int getPuntosFlorEnMano() {
+		return (this.getCartas().get(0).getPuntosEnvido() +
+				this.getCartas().get(1).getPuntosEnvido() +
+				this.getCartas().get(2).getPuntosEnvido() +
+				Carta.PUNTOS_BASE_MISMO_PALO);
 	}
-
-	public boolean florEnMano() {
-		return this._cartas.get(0).getPalo() == this._cartas.get(1).getPalo() && this._cartas.get(1).getPalo() == this._cartas.get(2).getPalo();
-	}
-
 }

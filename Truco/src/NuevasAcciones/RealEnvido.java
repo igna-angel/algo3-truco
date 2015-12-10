@@ -3,6 +3,7 @@ package NuevasAcciones;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.modelo.Equipo;
 import com.modelo.Jugador;
 import com.modelo.Partido;
 import com.modelo.Ronda;
@@ -21,6 +22,18 @@ public class RealEnvido extends Accion {
 	public int getPuntosQueridos() {
 		return this.getDecorada().getPuntosQueridos() + this._puntos;
 	}
+	
+	@Override
+	public int getPuntosQueridos(Partido partido) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+	@Override
+	public int getPuntosQueridos(Partido partido, Equipo equipo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 	@Override
 	public int getPuntosNoQueridos() {
@@ -34,15 +47,22 @@ public class RealEnvido extends Accion {
 
 	@Override
 	protected void procesarAccion(EstadoAceptado estado, Partido partido, Ronda ronda) {
-		int tantoEquipoA = ronda.getMayorTantoDeEquipo(partido.getEquipos().getFirst());
-		int tantoEquipoB = ronda.getMayorTantoDeEquipo(partido.getEquipos().getLast());
+		Jugador jugadorTantoMasAltoEquipoA = ronda.getJugadorConMayorTantoEnEquipo(partido.getPrimerEquipo());
+		Jugador jugadorTantoMasAltoEquipoB = ronda.getJugadorConMayorTantoEnEquipo(partido.getUltimoEquipo());
+		
+		int tantoEquipoA = jugadorTantoMasAltoEquipoA.getTantoEnMano();
+		int tantoEquipoB = jugadorTantoMasAltoEquipoB.getCartasEnMano();
 				
 		if(tantoEquipoA > tantoEquipoB){
-			partido.agregarPuntosAlEquipo(partido.getEquipos().getFirst(), this.getPuntosQueridos());
-		} else {
-			partido.agregarPuntosAlEquipo(partido.getEquipos().getLast(), this.getPuntosQueridos());
+			partido.agregarPuntosAlEquipo(partido.getPrimerEquipo(), this.getPuntosQueridos());
+		} else if(tantoEquipoA == tantoEquipoB){
+			Jugador jugadorMano = ronda.getJugadorManoEntre(jugadorTantoMasAltoEquipoA, jugadorTantoMasAltoEquipoB);
+			partido.agregarPuntosAlEquipo(partido.getEquipoDeJugador(jugadorMano), this.getPuntosQueridos());
+		}else{
+			partido.agregarPuntosAlEquipo(partido.getUltimoEquipo(), this.getPuntosQueridos());
 		}
 	}
+
 
 	@Override
 	protected void procesarAccion(EstadoNegado estado, Partido partido, Ronda ronda) {

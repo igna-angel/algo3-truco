@@ -1,6 +1,7 @@
 package NuevasAcciones;
 
 import com.exceptions.AccionDummyException;
+import com.modelo.Equipo;
 import com.modelo.Partido;
 import com.modelo.Ronda;
 
@@ -24,6 +25,17 @@ public class AccionDummy extends Accion{
 	public int getPuntosQueridos() {
 		return 0;
 	}
+	
+	@Override
+	public int getPuntosQueridos(Partido partido) {
+		return 0;
+	}
+	
+	@Override
+	public int getPuntosQueridos(Partido partido, Equipo equipo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 	@Override
 	public int getPuntosNoQueridos() {
@@ -42,4 +54,5 @@ public class AccionDummy extends Accion{
 		
 	}
 
+	
 }

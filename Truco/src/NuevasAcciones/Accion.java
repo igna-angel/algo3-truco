@@ -5,6 +5,7 @@ import java.util.List;
 import com.exceptions.EstadoIndefinidoException;
 import com.exceptions.NoExisteAccionException;
 import com.exceptions.NoHayAccionesException;
+import com.modelo.Equipo;
 import com.modelo.Jugador;
 import com.modelo.Partido;
 import com.modelo.Ronda;
@@ -14,10 +15,15 @@ public abstract class Accion{
 	public static final int PUNTOS_TRUCO = 2;
 	public static final int PUNTOS_RE_TRUCO = 3;
 	public static final int PUNTOS_VALE_CUATRO = 4;
+	
 	public static final int PUNTOS_ENVIDO = 2;
 	public static final int PUNTOS_ENVIDO_ENVIDO = 2;
 	public static final int PUNTOS_REAL_ENVIDO = 3;
-	public static final int PUNTOS_NO_QUERIDO = 1;
+	
+	public static final int PUNTOS_FLOR = 3;
+	public static final int PUNTOS_CONTRA_FLOR = 3;
+	
+	public static final int PUNTOS_NO_QUERIDO = 1;	
 	
 	public static final String ACCION_TRUCO = "Truco";
 	public static final String ACCION_RE_TRUCO = "Re Truco";
@@ -26,7 +32,10 @@ public abstract class Accion{
 	public static final String ACCION_ENVIDO_ENVIDO = "Envido Envido";
 	public static final String ACCION_REAL_ENVIDO = "Real Envido";
 	public static final String ACCION_FALTA_ENVIDO = "Vale Cuatro";
-	
+	public static final String ACCION_FLOR = "Flor";
+	public static final String ACCION_CONTRA_FLOR = "Contra Flor";
+	public static final String ACCION_CONTRA_FLOR_AL_RESTO = "Contra Flor Al Resto";
+		
 	private List<Accion> _accionesPosibles = null;
 	
 	private Jugador _origen = null; 
@@ -92,6 +101,10 @@ public abstract class Accion{
 	}
 	
 	public abstract int getPuntosQueridos();
+
+	public abstract int getPuntosQueridos(Partido partido);
+
+	public abstract int getPuntosQueridos(Partido partido, Equipo equipo);
 
 	public abstract int getPuntosNoQueridos();
 

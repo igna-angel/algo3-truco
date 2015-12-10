@@ -40,7 +40,7 @@ public class Equipo {
 		}
 	}
 	
-	public int getMayorTanto(){
+	protected int getMayorTanto(){
 		int tantoMayor = 0;
 		int tantoEnMano;
 		
@@ -51,4 +51,56 @@ public class Equipo {
 		
 		return tantoMayor;
 	}	
+
+	public int getCantidadDeJugadoresConFlor(){
+		int jugadoresConFlor = 0;
+		
+		for(int i = 0; i < this.getJugadores().getSize(); i++){
+			if(this.getJugadores().getAt(i).hayFlor())
+				jugadoresConFlor++;
+		}
+		
+		return jugadoresConFlor;		
+	}
+
+	protected int getMayorFlor() {
+		int florMayor = 0;
+		int florEnMano;
+		
+		for(int i = 0; i < this.getJugadores().getSize(); i++){
+			florEnMano = this.getJugadores().getAt(i).getFlorEnMano();
+			florMayor = florEnMano > florMayor? florEnMano : florMayor;
+		}
+		
+		return florMayor;
+	}
+
+	public Jugador getJugadorConMayorTanto() {
+		int jugadorConTantoMayor = 0;
+		int tantoMayor = this.getMayorTanto();
+		
+		for(int i = 0; i < this.getJugadores().getSize(); i++){
+			if(this.getJugadores().getAt(i).getTantoEnMano() == tantoMayor){
+				jugadorConTantoMayor = i;
+				break;
+			}
+		}
+		
+		return this.getJugadores().getAt(jugadorConTantoMayor);
+	}
+	
+
+	public Jugador getJugadorConMayorFlor() {
+		int jugadorConMayorFlor = 0;
+		int florMayor = this.getMayorFlor();
+		
+		for(int i = 0; i < this.getJugadores().getSize(); i++){
+			if(this.getJugadores().getAt(i).getFlorEnMano() == florMayor){
+				jugadorConMayorFlor = i;
+				break;
+			}
+		}
+		
+		return this.getJugadores().getAt(jugadorConMayorFlor);
+	}
 }
