@@ -4,9 +4,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import NuevasAcciones.Accion;
-import NuevasAcciones.ReTruco;
-import NuevasAcciones.Truco;
+import com.acciones.Accion;
+import com.acciones.ReTruco;
+import com.acciones.Truco;
 
 public class ReTrucoTest {
 	private ReTruco _reTruco;

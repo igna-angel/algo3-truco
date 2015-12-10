@@ -1,7 +1,5 @@
 package com.modelo;
 
-import com.modelo.cartas.Carta;
-
 public class JugadorHumano extends Jugador{
 			
 	public JugadorHumano(){
@@ -10,8 +8,11 @@ public class JugadorHumano extends Jugador{
 
 	@Override
 	public void jugar(Vuelta vuelta) {
-		// TODO Auto-generated method stub
+		int cartasEnMano = this.getMano().getCartasEnMano();
 		
+		while(cartasEnMano == this.getMano().getCartasEnMano()){
+			//ACA EJECUTA ADRIANO LOS INPUT
+		}
 	}
 }
 	

@@ -4,16 +4,15 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.acciones.Accion;
+import com.acciones.ContraFlor;
+import com.acciones.ContraFlorAlResto;
+import com.acciones.Flor;
 import com.exceptions.NoHayAccionesException;
 import com.modelo.JugadorHumano;
 import com.modelo.Partido;
 import com.modelo.cartas.CartaNormal;
 import com.modelo.cartas.Carta.Palo;
-
-import NuevasAcciones.Accion;
-import NuevasAcciones.ContraFlor;
-import NuevasAcciones.ContraFlorAlResto;
-import NuevasAcciones.Flor;
 
 
 public class ContraFlorAlRestoTest {

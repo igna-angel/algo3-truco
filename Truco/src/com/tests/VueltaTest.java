@@ -20,7 +20,7 @@ public class VueltaTest {
 	
 	@Before
 	public void setup(){
-		this._vuelta = new Vuelta(new RondaRedonda(new Partido(), new JugadorHumano()), new JugadorHumano());
+		this._vuelta = new Vuelta(new RondaRedonda(new Partido(), new JugadorHumano()), null,new JugadorHumano());
 
 	}
 	

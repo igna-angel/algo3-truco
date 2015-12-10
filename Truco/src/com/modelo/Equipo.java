@@ -89,7 +89,6 @@ public class Equipo {
 		return this.getJugadores().getAt(jugadorConTantoMayor);
 	}
 	
-
 	public Jugador getJugadorConMayorFlor() {
 		int jugadorConMayorFlor = 0;
 		int florMayor = this.getMayorFlor();

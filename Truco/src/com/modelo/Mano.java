@@ -11,7 +11,6 @@ import com.exceptions.NoContieneCartaException;
 import com.exceptions.NoSePuedenRecibirMasCartasException;
 import com.modelo.cartas.Carta;
 import com.modelo.cartas.CartaInvalida;
-import java.util.Stack;
 
 public class Mano implements IRecibible{
 

@@ -4,10 +4,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import NuevasAcciones.Accion;
-import NuevasAcciones.Envido;
-import NuevasAcciones.EnvidoEnvido;
-import NuevasAcciones.RealEnvido;
+import com.acciones.Accion;
+import com.acciones.Envido;
+import com.acciones.EnvidoEnvido;
+import com.acciones.RealEnvido;
 
 public class RealEnvidoTest {
 	private RealEnvido _realEnvido;

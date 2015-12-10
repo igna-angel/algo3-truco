@@ -4,24 +4,6 @@ import java.util.Scanner;
 
 import com.exceptions.AccionNoPosibleException;
 import com.exceptions.EmptyListException;
-import com.modelo.acciones.envido.AccionTanto;
-import com.modelo.acciones.envido.ContraFlorAlResto;
-import com.modelo.acciones.envido.Envido;
-import com.modelo.acciones.envido.TantoDecorator;
-import com.modelo.acciones.envido.FaltaEnvido;
-import com.modelo.acciones.envido.Flor;
-import com.modelo.acciones.envido.FlorMeAchico;
-import com.modelo.acciones.envido.FlorQuiero;
-import com.modelo.acciones.envido.NoQuieroTanto;
-import com.modelo.acciones.envido.QuieroTanto;
-import com.modelo.acciones.envido.RealEnvido;
-import com.modelo.acciones.truco.AccionTruco;
-import com.modelo.acciones.truco.NoQuiero;
-import com.modelo.acciones.truco.Quiero;
-import com.modelo.acciones.truco.ReTruco;
-import com.modelo.acciones.truco.TrucoDecorator;
-import com.modelo.acciones.truco.ValeCuatro;
-import com.modelo.cartas.Carta;
 
 public class JugadorVirtual extends Jugador {
 	private static final int MIN_TANTO_ENVIDO = 23;
@@ -31,7 +13,7 @@ public class JugadorVirtual extends Jugador {
 	public JugadorVirtual() {
 		super();
 	}
-	
+/*	
 	public void elegirCartaABajarYBajarla (Vuelta vuelta) {
 		Carta cartaAJugar;
 		
@@ -85,9 +67,9 @@ public class JugadorVirtual extends Jugador {
 			return manejadorDeRonda.cantarReTruco(new ReTruco(accion));
 		} else {
 			throw new AccionNoPosibleException();
-		}*/
-	}	
-	
+		}
+	}	*/
+	/*
 	public TrucoDecorator responderA(ReTruco accion, ManejadorDeRonda manejadorDeRonda,Partido partido) {
 		return new Quiero(accion);
 
@@ -156,7 +138,7 @@ public class JugadorVirtual extends Jugador {
 		return new FlorMeAchico(accion,this,accion.getOrigen());
 		
 	}
-
+*/
 
 	@Override
 	public void jugar(Vuelta vuelta) {

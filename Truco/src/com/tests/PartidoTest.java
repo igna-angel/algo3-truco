@@ -183,12 +183,14 @@ public class PartidoTest {
 		this._partido.agregarJugadorAEquipo(new JugadorHumano(), 0);
 		this._partido.agregarJugadorAEquipo(new JugadorHumano(), 0);
 		this._partido.agregarJugadorAEquipo(new JugadorHumano(), 0);
+		
 		this._partido.agregarJugadorAEquipo(new JugadorHumano(), 1);
 		this._partido.agregarJugadorAEquipo(new JugadorHumano(), 1);
 		this._partido.agregarJugadorAEquipo(new JugadorHumano(), 1);
 		
 		this._partido.crearPartido();
 		this._partido.nuevaRonda();
+		this._partido.mezclarYRepartir();
 		
 		this._partido.getOrdenJugadores().resetToFirst();
 		do{

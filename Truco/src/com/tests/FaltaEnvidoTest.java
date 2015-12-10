@@ -4,15 +4,14 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.acciones.Accion;
+import com.acciones.Envido;
+import com.acciones.EnvidoEnvido;
+import com.acciones.FaltaEnvido;
+import com.acciones.RealEnvido;
 import com.exceptions.NoHayAccionesException;
 import com.modelo.JugadorHumano;
 import com.modelo.Partido;
-
-import NuevasAcciones.Accion;
-import NuevasAcciones.Envido;
-import NuevasAcciones.EnvidoEnvido;
-import NuevasAcciones.FaltaEnvido;
-import NuevasAcciones.RealEnvido;
 
 public class FaltaEnvidoTest {
 	private Envido _envido;

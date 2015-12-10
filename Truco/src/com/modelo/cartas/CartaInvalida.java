@@ -51,26 +51,6 @@ public class CartaInvalida extends Carta {
 	public Carta ganador(CartaAnchoEspada anchoEspada) {
 		return anchoEspada;
 	}
-
-	@Override
-	public Carta ganador(CartaPardaNormal pardaNormal) {
-		return pardaNormal;
-	}
-
-	@Override
-	public Carta ganador(CartaPardaAnchoFalso pardaFalso) {
-		return pardaFalso;
-	}
-
-	@Override
-	public Carta ganador(CartaPardaDos pardaDos) {
-		return pardaDos;
-	}
-
-	@Override
-	public Carta ganador(CartaPardaTres pardaTres) {
-		return pardaTres;
-	}
 	
 	@Override
 	public int getPuntosEnvido() {

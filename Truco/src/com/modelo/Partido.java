@@ -17,15 +17,15 @@ public class Partido {
 	
 	private Stack<Ronda> _rondas = null;
 	private CircularList<Equipo> _equipos = null;
-	private ManejadorDeRonda _manejadorDeRonda = null;
 	
 	private Mazo _mazo = null;
 	private CircularList<Jugador> _ordenJugadores = null;	
 	
+	private boolean _conFlor = false;
+	
 	public Partido(){
 		this._rondas = new Stack<Ronda>();
 		this._equipos = new CircularList<Equipo>();
-		this._manejadorDeRonda = new ManejadorDeRonda(this);
 		this._mazo = new Mazo();
 		this.getMazo().crear();
 	}
@@ -42,7 +42,6 @@ public class Partido {
 			this.getPrimerEquipo().getJugadores().advanceCursor();
 			this.getUltimoEquipo().getJugadores().advanceCursor();
 		}	
-		
 	}
 
 	public CircularList<Jugador> getOrdenJugadores(){
@@ -51,10 +50,6 @@ public class Partido {
 		
 	public Mazo getMazo(){
 		return this._mazo;
-	}
-	
-	public ManejadorDeRonda getManejadorDeRonda(){
-		return this._manejadorDeRonda;
 	}
 	
 	private Stack<Ronda> getRondas(){
@@ -174,6 +169,10 @@ public class Partido {
 		}
 	}
 	
+	private int getPuntajeFaltanteParaTerminarJuego(){
+		return this.PUNTAJE_MAXIMO_JUEGO - this.getMaximoPuntaje();
+	}
+	
 	public int getPuntosFaltantesDeEquipo(Equipo equipo){
 		return this.puntajeFaltanteSegunMalasOBuenas(equipo.getPuntaje());
 	}
@@ -187,20 +186,25 @@ public class Partido {
 	
 	public void crearPartido(){
 		this.crearOrdenJugadores();
-		
+	}
+	
+	public void mezclarYRepartir(){
 		this.getMazo().mezclar();
 		this.getMazo().repartir(this.getOrdenJugadores(), this.getOrdenJugadores().getFirst(), this.CARTAS_POR_JUGADOR);
-	}	
+	}
 	
 	public void jugar(){
 		while(!this.esFinDePartido()){
+			this.mezclarYRepartir();
 			this.nuevaRonda();
 			this.getRondaActual().jugar();
 		}
+		
+		/// mostrar pantalla victoria
 	}
 	
 	private boolean esFinDePartido(){
-		return this.getcantidadDePuntosFaltantes() == 0;
+		return this.getPuntajeFaltanteParaTerminarJuego() == 0;
 	}
 
 	public Jugador getJugadorConCartaGanadora(Carta cartaGanadora) {
@@ -214,5 +218,9 @@ public class Partido {
 
 	public Equipo getEquipoDeJugador(Jugador jugador){
 		return this.getPrimerEquipo().contiene(jugador)? this.getPrimerEquipo() : this.getUltimoEquipo();
+	}
+	
+	public boolean seJuegaConnFlor(){
+		return this._conFlor;
 	}
 }

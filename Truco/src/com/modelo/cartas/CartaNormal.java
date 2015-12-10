@@ -1,7 +1,5 @@
 package com.modelo.cartas;
 
-import com.exceptions.PardaInvalidaException;
-
 public class CartaNormal extends Carta{
 
 	public CartaNormal() {
@@ -24,7 +22,8 @@ public class CartaNormal extends Carta{
 
 	@Override
 	public Carta ganador(CartaNormal normal) {
-		if(normal.getNumero() == this.getNumero()) return new CartaPardaNormal(this.getNumero());
+//		if(normal.getNumero() == this.getNumero()) return new CartaPardaNormal(this.getNumero());
+		if(normal.getNumero() == this.getNumero()) return normal;
 		return (normal.getNumero() < this.getNumero())? this : normal;
 	}
 
@@ -61,26 +60,6 @@ public class CartaNormal extends Carta{
 	@Override
 	public Carta ganador(CartaAnchoEspada anchoEspada) {
 		return anchoEspada;
-	}
-
-	@Override
-	public Carta ganador(CartaPardaNormal pardaNormal) {
-		throw new PardaInvalidaException();
-	}
-
-	@Override
-	public Carta ganador(CartaPardaAnchoFalso pardaFalso) {
-		throw new PardaInvalidaException();
-	}
-
-	@Override
-	public Carta ganador(CartaPardaDos pardaDos) {
-		throw new PardaInvalidaException();
-	}
-
-	@Override
-	public Carta ganador(CartaPardaTres pardaTres) {
-		throw new PardaInvalidaException();
 	}
 
 	@Override

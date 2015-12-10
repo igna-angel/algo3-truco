@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-import com.modelo.acciones.truco.AccionTruco;
-import com.modelo.acciones.truco.TrucoDecorator;
-import com.modelo.acciones.truco.TrucoNormal;
+import com.acciones.Accion;
 import com.modelo.cartas.Carta;
 import com.modelo.cartas.CartaInvalida;
 
@@ -14,28 +12,16 @@ public class Vuelta implements IRecibible {
 	
 	private Stack<Carta> _cartas = null;
 	private Carta _cartaGanadora = null;
-	private List<Accion> _accionesTanto = null;
 	private Ronda _ronda;
-	private AccionTruco _accionTruco = null;
+	private List<Accion> _acciones = null;
 	
 	private Jugador _jugadorInicial = null;
 	private Jugador _jugadorActual = null;
+	private boolean _esParda = false;
 
-	public Vuelta(Ronda ronda, AccionTruco accion, Jugador jugadorInicial) {
+	public Vuelta(Ronda ronda, List<Accion> acciones, Jugador jugadorInicial) {
 		this._cartas = new Stack<Carta>();
-		this._accionesTanto = new ArrayList<Accion>(); 
-		this._accionTruco = accion;
-		this._cartaGanadora = new CartaInvalida();
-		this._ronda = ronda;
-
-		this.asignarJugadorInicial(jugadorInicial);
-		this.asignarJugadorActual(this.getJugadorInicial());
-	}
-
-	public Vuelta(Ronda ronda, Jugador jugadorInicial) {
-		this._cartas = new Stack<Carta>();
-		this._accionesTanto = new ArrayList<Accion>(); 
-		this._accionTruco = new TrucoNormal();
+		this._acciones = acciones;
 		this._cartaGanadora = new CartaInvalida();
 		this._ronda = ronda;
 
@@ -43,6 +29,20 @@ public class Vuelta implements IRecibible {
 		this.asignarJugadorActual(this.getJugadorInicial());
 	}
 	
+	public List<Accion> getAccionesDeVuelta(){
+		return this._acciones;
+	}
+	
+	public List<Accion> getAccionesDeNuevaVuelta(){
+		List<Accion> accionesNuevaVuelta = new ArrayList<Accion>();
+		
+		for(Accion accion : this.getAccionesDeVuelta()){
+			if(accion.getID() == Accion.ACCION_TRUCO || accion.getID() == Accion.ACCION_RE_TRUCO || accion.getID() == Accion.ACCION_VALE_CUATRO) accionesNuevaVuelta.add(accion);
+		}
+		
+		return accionesNuevaVuelta;
+	}
+
 	public void asignarJugadorInicial(Jugador jugadorInicial){
 		this._jugadorInicial = jugadorInicial;
 	}
@@ -78,10 +78,6 @@ public class Vuelta implements IRecibible {
 		}
 	}
 	
-	public void setAccionTruco(TrucoDecorator accion){
-		this._accionTruco = accion;
-	}
-	
 	public Stack<Carta> getCartas(){
 		return this._cartas;
 	}
@@ -97,39 +93,7 @@ public class Vuelta implements IRecibible {
 	public Ronda getRonda(){
 		return this._ronda;
 	}
-	
-	public List<Accion> getAccionesEnvido(){
-		return this._accionesTanto;
-	}
-	
-	public AccionTruco getAccionTruco(){
-		return this._accionTruco;
-	}
-	
-	//Lo unico que hacen los tres no queridos es crear una nuevaRonda y agregar el puntaje
-	//quizas habria que profundizar
-	public void siTrucoNoQueridoFinalizarRonda(Ronda ronda, Partido partido) {
-		if (this._accionTruco.cantar() == 1){
-			ronda.agregarPuntajeTruco();
-			partido.nuevaRonda();
-		}
-	}
-	
-	public void siReTrucoNoQueridoFinalizarRonda(Ronda ronda, Partido partido) {
-		if (this._accionTruco.cantar() == 2){
-			ronda.agregarPuntajeTruco();
-			partido.nuevaRonda();
-		}
-	}
-	
 
-	public void siValeCuatroNoQueridoFinalizarRonda(Ronda ronda, Partido partido) {
-		if (this._accionTruco.cantar() == 4){
-			ronda.agregarPuntajeTruco();
-			partido.nuevaRonda();
-		}
-	}
-	
 	private boolean esFinDeVuelta(){
 		return this.getRonda().getCantidadDeJugadoresTotales() == this.getCantidadDeCartasEnVuelta();
 	}
@@ -138,10 +102,28 @@ public class Vuelta implements IRecibible {
 		return this.getCartas().size();
 	}
 	
+	private boolean definirSiEsParda(Carta cartaGanadora, Carta cartaNueva){
+		if(cartaGanadora.getNumero() == cartaNueva.getNumero()) return true;
+		
+		if(this._esParda && cartaGanadora.getNumero() > cartaNueva.getNumero())	return true;
+		
+		return false;
+	}
+	
 	@Override
 	public void recibirCarta(Carta carta) {
-		this.setCartaGanadora(carta.ganador(this.getCartaGanadora()));
+		this._esParda = this.definirSiEsParda(this.getCartaGanadora(), carta);
+		this.setCartaGanadora(this.getCartaGanadora().ganador(carta));
 		this.getCartas().push(carta);
 	}
 
+	public boolean getEsParda() {
+		return this._esParda;
+	}
+
+	public void procesarAcciones() {
+		for(Accion accion : this.getAccionesDeVuelta()){
+			accion.procesarAccion(this.getRonda().getPartido(), this.getRonda());
+		}
+	}
 }

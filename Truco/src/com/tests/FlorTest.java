@@ -4,14 +4,13 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.acciones.Accion;
+import com.acciones.Flor;
 import com.exceptions.NoSePuedeNoQuererException;
 import com.modelo.JugadorHumano;
 import com.modelo.Partido;
 import com.modelo.cartas.CartaNormal;
 import com.modelo.cartas.Carta.Palo;
-
-import NuevasAcciones.Accion;
-import NuevasAcciones.Flor;
 
 public class FlorTest {
 	private Flor _flor;

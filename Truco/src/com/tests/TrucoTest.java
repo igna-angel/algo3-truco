@@ -4,8 +4,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import NuevasAcciones.Accion;
-import NuevasAcciones.Truco;
+import com.acciones.Accion;
+import com.acciones.Truco;
 
 public class TrucoTest {
 

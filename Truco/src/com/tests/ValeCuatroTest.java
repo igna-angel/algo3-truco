@@ -4,11 +4,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.acciones.ReTruco;
+import com.acciones.Truco;
+import com.acciones.ValeCuatro;
 import com.exceptions.NoHayAccionesException;
-
-import NuevasAcciones.ReTruco;
-import NuevasAcciones.Truco;
-import NuevasAcciones.ValeCuatro;
 
 public class ValeCuatroTest {
 

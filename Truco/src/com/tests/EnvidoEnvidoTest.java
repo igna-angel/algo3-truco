@@ -4,9 +4,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import NuevasAcciones.Accion;
-import NuevasAcciones.Envido;
-import NuevasAcciones.EnvidoEnvido;
+import com.acciones.Accion;
+import com.acciones.Envido;
+import com.acciones.EnvidoEnvido;
 
 public class EnvidoEnvidoTest {
 	private EnvidoEnvido _envidoEnvido;
