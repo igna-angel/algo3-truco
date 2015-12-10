@@ -46,6 +46,9 @@ public class Boton2JugadoresEventHandler implements EventHandler<ActionEvent>{
 		partido.agregarJugadorAEquipo(new JugadorHumano(), 0);
 		partido.agregarJugadorAEquipo(new JugadorHumano(), 1);
 		partido.crearPartido();
+		//partido.getMazo().mezclar();
+		//partido.getOrdenJugadores().resetToFirst();
+		//partido.getMazo().repartir(partido.getOrdenJugadores(), partido.getOrdenJugadores().getFirst(), 3);
 		partido.nuevaRonda();
 		partido.getRondaActual().nuevaVuelta();
 		
@@ -61,8 +64,6 @@ public class Boton2JugadoresEventHandler implements EventHandler<ActionEvent>{
 		
         HBox cartasJugador1Jugadas = generador.generarEspacioVacioVertical();
         HBox cartasJugador2Jugadas = generador.generarEspacioVacioVertical();
-        cartasJugador1Jugadas.setAlignment(Pos.CENTER);
-        cartasJugador2Jugadas.setAlignment(Pos.CENTER);
         
         HBox cartasJugador1EnMano = generador.generarCartasComienzoDeJugador();
         HBox cartasJugador2EnMano = generador.generarCartasComienzoDeJugador();
@@ -77,9 +78,14 @@ public class Boton2JugadoresEventHandler implements EventHandler<ActionEvent>{
 		turnoJugador.add(1);
 		turnoJugador.add(2);
 		turnoJugador.resetToFirst();
-		Label turnoDe = new Label ("Turno de: JUGADOR ");				
-		HBox esElTurnoDe = new HBox (turnoDe, new Label (turnoJugador.getCurrent().toString()));
+		Label turnoDe = new Label ("Turno de: JUGADOR ");
 		
+		
+		
+		//List <Carta> listaDeCartasEnManoJugador2 =
+		
+				
+		HBox esElTurnoDe = new HBox (turnoDe, new Label (turnoJugador.getCurrent().toString())/*, new Label (Integer.toString(partido.getOrdenJugadores().getFirst().getCantidadCartas()))*/);
 		esElTurnoDe.setPadding(new Insets(20));
 		Button botonEstoyListo = new Button ("Estoy Listo");
 		VBox botonera = new VBox (botonEstoyListo);
@@ -92,9 +98,9 @@ public class Boton2JugadoresEventHandler implements EventHandler<ActionEvent>{
 		HBox pantalla = new HBox (ambosPuntajes, campoDeJuego, controles);
 		this.scene = new Scene(pantalla, 700,600);
 		
+		Jugador jugadorActual = this.partido.getJugadorActual();
 		HBox cartasJugadorEnMano = cartasJugador1EnMano;
-		HBox cartasJugadorJugadas = cartasJugador1Jugadas;
-		BotonEstoyListoEventHandler botonEstoyListoEventHandler = new BotonEstoyListoEventHandler (this.scene, this.stage, this.partido, controles, cartasJugadorEnMano, cartasJugadorJugadas);
+		BotonEstoyListoEventHandler botonEstoyListoEventHandler = new BotonEstoyListoEventHandler (this.scene, this.stage, this.partido, botonera, jugadorActual, cartasJugadorEnMano);
 		botonEstoyListo.setOnAction(botonEstoyListoEventHandler);
 	}
 	
