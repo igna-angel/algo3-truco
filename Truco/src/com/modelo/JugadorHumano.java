@@ -11,7 +11,7 @@ public class JugadorHumano extends Jugador{
 		int cartasEnMano = this.getMano().getCartasEnMano();
 		
 		while(cartasEnMano == this.getMano().getCartasEnMano()){
-			//ACA EJECUTA ADRIANO LOS INPUT
+			System.out.println("Turno Jugador");
 		}
 	}
 }

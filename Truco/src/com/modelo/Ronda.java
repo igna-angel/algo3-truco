@@ -85,6 +85,7 @@ public abstract class Ronda {
 
 	public void jugar() {
 		while(!this.esFinDeRonda()){
+			System.out.println("Jugando Vuelta");
 			this.nuevaVuelta();
 			this.getVueltaActual().jugar();
 			this.agregarGanadorDeVuelta(this.getVueltaActual().getJugadorConCartaGanadora());
