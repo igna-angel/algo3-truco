@@ -45,6 +45,5 @@ public class BotonCartaEnManoEventHandler implements EventHandler<ActionEvent>{
 		this.partido.getJugadorActual().bajarCarta(this.partido.getRondaActual().getVueltaActual(), this.partido.getJugadorActual().getListaDeCartasEnMano().get(i));
 		this.stage.setScene (this.scene);
 		this.stage.show();
-		controles.
 	}
 }

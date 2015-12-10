@@ -25,7 +25,7 @@ import javafx.stage.Stage;
 public class GeneradoresVisuales {
 	
 	public ImageView generarVisionCartaDorso (){
-		Image dorsoAzul = new Image("file:C:\\Users\\Ska-Ska-Ska\\Desktop\\Cartas Españolas\\CartaDorsoAzul.png");
+		Image dorsoAzul = new Image("https://raw.githubusercontent.com/igna-angel/algo3-truco/5e5aa5b00030f72bbe2f85ab055ca5482076829b/cartas%20espa%C3%B1olas/CartaDorsoAzul.png");
 		ImageView cartaDorsoAzul = new ImageView (dorsoAzul);
         cartaDorsoAzul.setFitWidth(70);
         cartaDorsoAzul.setPreserveRatio(true);
@@ -47,7 +47,7 @@ public class GeneradoresVisuales {
 	
 	public HBox generarEspacioVacioVertical (){
 		
-		Image imagenEspacioVacio = new Image("file:C:\\Users\\Ska-Ska-Ska\\Desktop\\Cartas Españolas\\espacioCarta.png");
+		Image imagenEspacioVacio = new Image("https://raw.githubusercontent.com/igna-angel/algo3-truco/5e5aa5b00030f72bbe2f85ab055ca5482076829b/cartas%20espa%C3%B1olas/EspacioCarta.png");
 		ImageView espacioVacioCarta = new ImageView (imagenEspacioVacio);
 		espacioVacioCarta.setFitWidth(70);
 		espacioVacioCarta.setPreserveRatio(true);
@@ -63,7 +63,7 @@ public class GeneradoresVisuales {
 	// Pre: La imagen de la carta debe estar con extension ".png"
 	// Post: Devuelve la visual aplicable a Boxes de la carta
 	public ImageView generadorDeVisualDeCarta (Carta unaCarta){
-		Image imagenDeUnaCarta = new Image ("file:C:\\Users\\Ska-Ska-Ska\\Desktop\\Cartas Españolas\\"+unaCarta.getPalo().toString()+"\\"+Integer.toString(unaCarta.getNumero())+".png");
+		Image imagenDeUnaCarta = new Image ("https://raw.githubusercontent.com/igna-angel/algo3-truco/5e5aa5b00030f72bbe2f85ab055ca5482076829b/cartas%20espa%C3%B1olas/"+unaCarta.getPalo().toString()+"/"+Integer.toString(unaCarta.getNumero())+".png");
 		ImageView visualDeUnaCarta = new ImageView (imagenDeUnaCarta);
 		visualDeUnaCarta.setFitWidth(70);
 		visualDeUnaCarta.setPreserveRatio(true);

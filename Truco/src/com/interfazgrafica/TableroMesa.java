@@ -39,7 +39,7 @@ public class TableroMesa extends Application {
 		presentacion.setFont(Font.font ("VerdanaItalic" , FontWeight.BOLD , 12));
 		presentacion.setTextFill(Color.ANTIQUEWHITE);
 		
-        Image imagenTruco = new Image("file:C:\\Users\\Ska-Ska-Ska\\Desktop\\Cartas Españolas\\truco.png");
+        Image imagenTruco = new Image("https://raw.githubusercontent.com/igna-angel/algo3-truco/5e5aa5b00030f72bbe2f85ab055ca5482076829b/cartas%20espa%C3%B1olas/truco.png");
         ImageView imagenInicio = new ImageView (imagenTruco);
         imagenInicio.setFitWidth(120);
         imagenInicio.setPreserveRatio(true);

@@ -59,6 +59,10 @@ public class BotonEstoyListoEventHandler implements EventHandler<ActionEvent>{
 	public void handle(ActionEvent actionEvent){
 		
 		if (this.partido.getMaximoPuntaje() < 30){
+			Label puedeCantar = new Label ("Jugando");
+			Button envido = new Button ("ENVIDO");
+			VBox posiblesCantos = new VBox (envido);
+			this.controles.getChildren().clear();
 			this.cartasJugadorEnMano.getChildren().clear();
 			this.cartasJugadorJugadas.getChildren().clear();
 			for(int i=0; i<= this.jugadorActual.getCartasEnMano(); i++){
