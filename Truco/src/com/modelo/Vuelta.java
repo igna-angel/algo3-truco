@@ -119,6 +119,7 @@ public class Vuelta implements IRecibible {
 		this._esParda = this.definirSiEsParda(this.getCartaGanadora(), carta);
 		this.setCartaGanadora(this.getCartaGanadora().ganador(carta));
 		this.getCartas().push(carta);
+		this.asignarJugadorSiguiente();
 	}
 
 	public boolean getEsParda() {

@@ -37,6 +37,7 @@ public class BotonCartaEnManoEventHandler implements EventHandler<ActionEvent>{
 	public void handle(ActionEvent actionEvent){
 		if (this.yaClickeado == false){
 			ImprimirTablero.getInstance().traspasarCartaDeManoAMesa(this.cartasJugadorEnMano, this.cartasJugadorJugadas, this.carta);
+			
 			this.yaClickeado = true;
 		}
 	}

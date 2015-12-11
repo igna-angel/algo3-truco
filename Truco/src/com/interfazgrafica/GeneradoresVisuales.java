@@ -1,11 +1,19 @@
 package com.interfazgrafica;
 
+import java.util.List;
+
+import com.modelo.CircularList;
+import com.modelo.Jugador;
 import com.modelo.cartas.Carta;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -32,15 +40,18 @@ public class GeneradoresVisuales {
         return cartaDorsoAzul;
 	}
 	
-	public HBox generarCartasComienzoDeJugador (){
-		ImageView cartaDorso1 = this.generarVisionCartaDorso();
-        ImageView cartaDorso2 = this.generarVisionCartaDorso();
-        ImageView cartaDorso3 = this.generarVisionCartaDorso();
-		HBox cartasJugador = new HBox (cartaDorso1, cartaDorso2, cartaDorso3);
-		cartasJugador.setSpacing(5);
-		cartasJugador.setPadding(new Insets(15));
-		cartasJugador.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
-		return cartasJugador;
+	public void generarCartasDadasVuelta (CircularList<Jugador> listaDeJugadores, List<HBox> contenedoresDeCartas){
+		for (int i=0; i < contenedoresDeCartas.size(); i++){
+			contenedoresDeCartas.get(i).getChildren().clear();
+			for (int j=0; j < listaDeJugadores.getAt(i).getCantidadCartasEnMano(); j++ ){
+				ImageView cartaDorso = this.generarVisionCartaDorso();
+				contenedoresDeCartas.get(i).getChildren().add(cartaDorso);
+			}
+			contenedoresDeCartas.get(i).setSpacing(5);
+			contenedoresDeCartas.get(i).setPadding(new Insets(15));
+			contenedoresDeCartas.get(i).setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+		}
+		
 	}
 	
 	public HBox generarEspacioVacioVertical (){
@@ -57,6 +68,8 @@ public class GeneradoresVisuales {
 		espacioVacio.setBackground(new Background(new BackgroundFill(Color.DARKGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
 		return espacioVacio;
 	}
+	
+
 	
 	// Pre: La imagen de la carta debe estar con extension ".png"
 	// Post: Devuelve la visual aplicable a Boxes de la carta

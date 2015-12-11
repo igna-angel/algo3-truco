@@ -7,6 +7,9 @@ import com.modelo.Partido;
 import com.modelo.Vuelta;
 import com.modelo.cartas.Carta;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.acciones.Accion;
 import com.acciones.EstadoIndefinido;
 import com.exceptions.NoContieneCartaException;
@@ -32,6 +35,11 @@ public class ImprimirTablero {
 	private VBox botonera;
 	private VBox controles;
 	private HBox pantalla;
+	private HBox cartasJugador1EnMano;
+	private HBox cartasJugador2EnMano;
+	private List<HBox> listaDeCartasDeJugadoresEnMano;
+	private CircularList<Integer> turnoJugador;
+	private VBox tablero;
 	
 	private ImprimirTablero(){
 		
@@ -42,6 +50,13 @@ public class ImprimirTablero {
 			this.botonera = new VBox();
 		}
 		return this.botonera;
+	}
+	
+	public VBox getTablero(){
+		if(this.tablero == null){
+			this.tablero = new VBox();
+		}
+		return this.tablero;		
 	}
 	
 	public void generarPartido2Jugadores(){		
@@ -122,7 +137,10 @@ public class ImprimirTablero {
 	
 	public void imprimirTablero (Partido partido){		
 		GeneradoresVisuales generador = new GeneradoresVisuales();
-		
+		listaDeCartasDeJugadoresEnMano = new ArrayList<HBox>();
+		for (int i=0 ; i < partido.getCantidadDeJugadoresTotales(); i++){
+			listaDeCartasDeJugadoresEnMano.add(new HBox());
+		}
 		VBox puntajeJugador1 = new VBox (new Label ("EQUIPO 1"), new Label (Integer.toString(partido.getPuntosPrimerEquipo())));
 		puntajeJugador1.setAlignment(Pos.TOP_CENTER);
 		puntajeJugador1.setSpacing(10);
@@ -137,20 +155,43 @@ public class ImprimirTablero {
 	    HBox cartasJugador2Jugadas = generador.generarEspacioVacioVertical();
 	    cartasJugador1Jugadas.setAlignment(Pos.CENTER);
 	    cartasJugador2Jugadas.setAlignment(Pos.CENTER);
+	    this.tablero = new VBox (cartasJugador1Jugadas, cartasJugador2Jugadas);
 	    
-	    HBox cartasJugador1EnMano = generador.generarCartasComienzoDeJugador();
-	    HBox cartasJugador2EnMano = generador.generarCartasComienzoDeJugador();
-	    cartasJugador1EnMano.setAlignment(Pos.TOP_CENTER);
-		cartasJugador2EnMano.setAlignment(Pos.BOTTOM_CENTER);
+	    GeneradoresVisuales.getInstance().generarCartasDadasVuelta(partido.getOrdenJugadores(), listaDeCartasDeJugadoresEnMano);
+	    this.asignarAlineaciones();
 		
 		
-		VBox campoDeJuego = new VBox (cartasJugador1EnMano, cartasJugador1Jugadas, cartasJugador2Jugadas, cartasJugador2EnMano);
+		VBox campoDeJuego = new VBox (listaDeCartasDeJugadoresEnMano.get(0), this.tablero, listaDeCartasDeJugadoresEnMano.get(1));
 		campoDeJuego.setPadding(new Insets (20));
 		
-		CircularList<Integer> turnoJugador = new CircularList<Integer>();
+		turnoJugador = new CircularList<Integer>();
 		turnoJugador.add(1);
 		turnoJugador.add(2);
 		turnoJugador.resetToFirst();
+		
+		this.generarBotonEstoyListo();
+
+				
+		pantalla = new HBox (ambosPuntajes, campoDeJuego, this.controles);
+		scene = new Scene(pantalla, 700,600);
+
+	}
+	
+	
+	public void asignarAlineaciones (){
+		
+		for (int i=0 ; i < listaDeCartasDeJugadoresEnMano.size(); i++){
+			if (i%2 == 0){
+				this.listaDeCartasDeJugadoresEnMano.get(i).setAlignment(Pos.TOP_CENTER);
+			}
+			else{
+				this.listaDeCartasDeJugadoresEnMano.get(i).setAlignment(Pos.BOTTOM_CENTER);
+			}
+		}
+	}
+	
+	
+	public void generarBotonEstoyListo(){
 		Label turnoDe = new Label ("Turno de: JUGADOR ");				
 		HBox esElTurnoDe = new HBox (turnoDe, new Label (turnoJugador.getCurrent().toString()));
 		
@@ -159,21 +200,25 @@ public class ImprimirTablero {
 		this.botonera = new VBox (botonEstoyListo);
 		this.getBotonera().setSpacing(10);
 		this.getBotonera().setAlignment(Pos.TOP_CENTER);
-		VBox controles = new VBox (esElTurnoDe, this.getBotonera());
-		controles.setAlignment(Pos.TOP_CENTER);
-		System.out.println("Creada visual");
 		
-		HBox cartasJugadorEnMano = cartasJugador1EnMano;
-		HBox cartasJugadorJugadas = cartasJugador1Jugadas;
-		BotonEstoyListoEventHandler botonEstoyListoEventHandler = new BotonEstoyListoEventHandler (partido, cartasJugadorEnMano, cartasJugadorJugadas);
+		this.controles = new VBox (esElTurnoDe, this.getBotonera());
+		this.controles.setAlignment(Pos.TOP_CENTER);
+		
+		BotonEstoyListoEventHandler botonEstoyListoEventHandler = new BotonEstoyListoEventHandler (partido, listaDeCartasDeJugadoresEnMano.get(0));
 		botonEstoyListo.setOnAction(botonEstoyListoEventHandler);
-		
-	
-		pantalla = new HBox (ambosPuntajes, campoDeJuego, controles);
-		scene = new Scene(pantalla, 700,600);
-
 	}
 	
+	
+	public void transicionDeTurno(){
+		
+		this.generarBotonEstoyListo();
+		GeneradoresVisuales.getInstance().generarCartasDadasVuelta(partido.getOrdenJugadores(), listaDeCartasDeJugadoresEnMano);
+	}
+	
+	public void imprimirTurnoDeJugador (Jugador jugador, HBox cartasJugadorEnMano, HBox cartasJugadorJugadas){
+		
+		mostrarCartasJugador(jugador, cartasJugadorEnMano, cartasJugadorJugadas);
+	}
 
 	public void enviarAccionAJugador(Accion accion, Jugador jugadorSiguienteAlActual, Vuelta vuelta) {		
 		this.crearBotoneraDeRetruque(accion, this.getBotonera(), vuelta);
@@ -182,10 +227,8 @@ public class ImprimirTablero {
 	
 	public void mostrarCartasJugador (Jugador jugador, HBox cartasJugadorEnMano, HBox cartasJugadorJugadas){
 		cartasJugadorEnMano.getChildren().clear();
-		cartasJugadorJugadas.getChildren().clear();
 		for(int i=0; i< jugador.getCantidadCartasEnMano(); i++){
 			BotonCartaEnManoEventHandler botonCarta1EventHandler = new BotonCartaEnManoEventHandler(cartasJugadorEnMano, cartasJugadorJugadas, this.partido, jugador.getListaDeCartasEnMano().get(i));
-			System.out.println(i);
 			ImageView visualDeCartaEnMano = GeneradoresVisuales.getInstance().generadorDeVisualDeCarta(jugador.getListaDeCartasEnMano().get(i));
 			Button botonCartaEnMano = new Button ();
 			botonCartaEnMano.setGraphic(visualDeCartaEnMano);
@@ -199,7 +242,6 @@ public class ImprimirTablero {
 		int i = buscarPosicionDeCartaEnMano(carta);
 		cartasJugadorJugadas.getChildren().add(cartasJugadorEnMano.getChildren().get(i));
 		System.out.println("Cantidad de hijos: "+cartasJugadorEnMano.getChildren().size()+" Indice: "+i);
-		//cartasJugadorEnMano.getChildren().remove(i);
 		this.partido.getJugadorActual().bajarCarta(this.partido.getRondaActual().getVueltaActual(), carta);
 	}
 
