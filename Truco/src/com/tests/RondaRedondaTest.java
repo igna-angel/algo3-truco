@@ -15,7 +15,7 @@ public class RondaRedondaTest {
 	
 	@Before
 	public void setup(){
-		Partido partido = new Partido();
+		Partido partido = new Partido(false);
 		partido.agregarEquipo();
 		partido.agregarEquipo();
 		partido.agregarJugadorAEquipo(new JugadorHumano(), 0);

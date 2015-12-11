@@ -17,7 +17,7 @@ public class PartidoTest {
 	
 	@Before
 	public void setup(){
-		this._partido = new Partido();
+		this._partido = new Partido(false);
 	}
 	
 	@Test (expected = NoHayEquiposException.class)
@@ -190,7 +190,6 @@ public class PartidoTest {
 		
 		this._partido.crearPartido();
 		this._partido.nuevaRonda();
-		this._partido.mezclarYRepartir();
 		
 		this._partido.getOrdenJugadores().resetToFirst();
 		do{

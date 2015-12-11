@@ -22,14 +22,20 @@ public class ContraFlorAlRestoTest {
 	private ContraFlorAlResto _florContraFlorAlResto;
 	private ContraFlorAlResto _florContraFlorContraFlorAlResto;
 	
+	private Partido _partido;
+	
 	@Before
 	public void setup(){
+		this._partido = new Partido(true);
+		this._partido.agregarEquipo();
+		this._partido.agregarEquipo();
+		
 		this._flor = new Flor(null, null);
 		
-		this._contraFlor = (ContraFlor) this._flor.getNuevaAccion(this._flor.getAccionPosible(Accion.ACCION_CONTRA_FLOR), null, null);
+		this._contraFlor = (ContraFlor) this._flor.getNuevaAccion(this._flor.getAccionPosible(Accion.ACCION_CONTRA_FLOR), null, null, this._partido);
 		
-		this._florContraFlorAlResto =  (ContraFlorAlResto) this._flor.getNuevaAccion(this._flor.getAccionPosible(Accion.ACCION_CONTRA_FLOR_AL_RESTO), null, null);
-		this._florContraFlorContraFlorAlResto = (ContraFlorAlResto) this._contraFlor.getNuevaAccion(this._contraFlor.getAccionPosible(Accion.ACCION_CONTRA_FLOR_AL_RESTO), null, null);
+		this._florContraFlorAlResto =  (ContraFlorAlResto) this._flor.getNuevaAccion(this._flor.getAccionPosible(Accion.ACCION_CONTRA_FLOR_AL_RESTO), null, null, this._partido);
+		this._florContraFlorContraFlorAlResto = (ContraFlorAlResto) this._contraFlor.getNuevaAccion(this._contraFlor.getAccionPosible(Accion.ACCION_CONTRA_FLOR_AL_RESTO), null, null, this._partido);
 	}
 	
 	@Test
@@ -40,8 +46,8 @@ public class ContraFlorAlRestoTest {
 	
 	@Test (expected = NoHayAccionesException.class)
 	public void testSePideUnaNuevaAccionDebeTirarExcepcion(){
-		this._florContraFlorAlResto.getNuevaAccion(this._florContraFlorAlResto.getAccionesPosibles().get(0), null, null);
-		this._florContraFlorContraFlorAlResto.getNuevaAccion(this._florContraFlorContraFlorAlResto.getAccionesPosibles().get(0), null, null);
+		this._florContraFlorAlResto.getNuevaAccion(this._florContraFlorAlResto.getAccionesPosibles().get(0), null, null, this._partido);
+		this._florContraFlorContraFlorAlResto.getNuevaAccion(this._florContraFlorContraFlorAlResto.getAccionesPosibles().get(0), null, null, this._partido);
 	}
 	
 	@Test
@@ -52,7 +58,7 @@ public class ContraFlorAlRestoTest {
 	
 	@Test
 	public void testLaCantidadDePuntosQueridosDebenSerLasDiferenciasParaLlegarAQuinceYTreinta(){
-		Partido partido = new Partido(false);
+		Partido partido = new Partido(true);
 		
 		partido.agregarEquipo();
 		partido.agregarEquipo();

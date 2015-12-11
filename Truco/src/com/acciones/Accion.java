@@ -3,6 +3,7 @@ package com.acciones;
 import java.util.List;
 
 import com.exceptions.EstadoIndefinidoException;
+import com.exceptions.JugadorNoPuedeCantarAccionConcatenadaConsecutivamenteException;
 import com.exceptions.NoExisteAccionException;
 import com.exceptions.NoHayAccionesException;
 import com.modelo.Equipo;
@@ -110,7 +111,14 @@ public abstract class Accion{
 
 	public abstract String getID();
 	
-	public Accion getNuevaAccion(Accion accion, Jugador origen, Jugador destino){
+	private boolean puedePedirNuevaAccion(Partido partido, Jugador nuevoOrigen){
+		if(this.getDecorada().getOrigen() == null) return true;
+		if(partido.getEquipoDeJugador(this.getDecorada().getOrigen()) == partido.getEquipoDeJugador(nuevoOrigen)) return false;
+		return true;
+	}
+	
+	public Accion getNuevaAccion(Accion accion, Jugador origen, Jugador destino, Partido partido){
+		if(!this.puedePedirNuevaAccion(partido, origen)) throw new JugadorNoPuedeCantarAccionConcatenadaConsecutivamenteException();
 		accion.setDecorada(this);
 		accion.setOrigenDestino(origen, destino);
 		return accion;

@@ -29,7 +29,12 @@ public abstract class Ronda {
 		this._repartio = reparte;
 		this._ganadoresVueltas = new ArrayList<Jugador>();
 		this._vueltas = new ArrayList<Vuelta>();
+		this.recolectarCartasDeJugadores();
 		this.mezclarYRepartir();
+	}
+
+	private void recolectarCartasDeJugadores() {
+		this.getPartido().recolectarCartasDeJugadores();		
 	}
 
 	public abstract Ronda getRondaSiguiente(boolean esPicaPica);

@@ -3,7 +3,7 @@ package com.modelo;
 public class TrucoMain {
 	
 	public static void main(String[] args){
-		Partido partido = new Partido();
+		Partido partido = new Partido(false);
 		
 		partido.agregarEquipo();
 		partido.agregarEquipo();

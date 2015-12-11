@@ -6,13 +6,16 @@ import org.junit.Test;
 
 import com.acciones.Accion;
 import com.acciones.Truco;
+import com.modelo.Partido;
 
 public class TrucoTest {
 
 	private Truco _truco;
+	private Partido _partido;
 	
 	@Before
 	public void setup(){
+		this._partido = new Partido(false);
 		this._truco = new Truco(null, null);
 	}
 	
@@ -23,7 +26,7 @@ public class TrucoTest {
 	
 	@Test
 	public void testSePideUnaNuevaAccionDebeSerReTruco(){
-		Accion nuevaAccion = this._truco.getNuevaAccion(this._truco.getAccionPosible("Re Truco"), null, null);
+		Accion nuevaAccion = this._truco.getNuevaAccion(this._truco.getAccionPosible("Re Truco"), null, null, this._partido);
 		Assert.assertEquals("Re Truco", nuevaAccion.getID());
 	}
 		
@@ -39,7 +42,7 @@ public class TrucoTest {
 	
 	@Test
 	public void testSeCantaReTrucoElPuntajeQueridoDebeSerTres(){
-		Accion nuevaAccion = this._truco.getNuevaAccion(this._truco.getAccionPosible("Re Truco"), null, null);
+		Accion nuevaAccion = this._truco.getNuevaAccion(this._truco.getAccionPosible("Re Truco"), null, null, this._partido);
 		Assert.assertEquals(3, nuevaAccion.getPuntosQueridos());
 	}
 }

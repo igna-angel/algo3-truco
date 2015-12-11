@@ -20,7 +20,14 @@ public class VueltaTest {
 	
 	@Before
 	public void setup(){
-		this._vuelta = new Vuelta(new RondaRedonda(new Partido(), new JugadorHumano()), null,new JugadorHumano());
+		Partido partido = new Partido(false);
+		partido.agregarEquipo();
+		partido.agregarEquipo();
+		partido.agregarJugadorAEquipo(new JugadorHumano(), 0);
+		partido.agregarJugadorAEquipo(new JugadorHumano(), 1);
+		partido.crearPartido();
+
+		this._vuelta = new Vuelta(new RondaRedonda(partido, partido.getEquipos().getFirst().getJugadores().getFirst()), null,new JugadorHumano());
 
 	}
 	

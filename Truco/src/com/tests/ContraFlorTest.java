@@ -15,11 +15,13 @@ import com.modelo.cartas.Carta.Palo;
 public class ContraFlorTest {
 	private Flor _flor;
 	private ContraFlor _contraFlor;
+	private Partido _partido;
 	
 	@Before
 	public void setup(){
+		this._partido = new Partido(true);
 		this._flor = new Flor(null, null);
-		this._contraFlor = (ContraFlor) this._flor.getNuevaAccion(this._flor.getAccionPosible(Accion.ACCION_CONTRA_FLOR), null, null);
+		this._contraFlor = (ContraFlor) this._flor.getNuevaAccion(this._flor.getAccionPosible(Accion.ACCION_CONTRA_FLOR), null, null, this._partido);
 	}
 	
 	@Test
@@ -29,7 +31,7 @@ public class ContraFlorTest {
 	
 	@Test
 	public void testSePideUnaNuevaAccionDebeSerContraFlorAlResto(){
-		Accion nuevaAccion = this._contraFlor.getNuevaAccion(this._contraFlor.getAccionPosible(Accion.ACCION_CONTRA_FLOR_AL_RESTO), null, null);
+		Accion nuevaAccion = this._contraFlor.getNuevaAccion(this._contraFlor.getAccionPosible(Accion.ACCION_CONTRA_FLOR_AL_RESTO), null, null, this._partido);
 		Assert.assertEquals(Accion.ACCION_CONTRA_FLOR_AL_RESTO, nuevaAccion.getID());
 	}
 	

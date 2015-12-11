@@ -6,13 +6,16 @@ import org.junit.Test;
 
 import com.acciones.Accion;
 import com.acciones.Envido;
+import com.modelo.Partido;
 
 public class EnvidoTest {
 
 	private Envido _envido;
+	private Partido _partido;
 	
 	@Before
 	public void setup(){
+		this._partido = new Partido(true);
 		this._envido = new Envido(null, null);
 	}
 	
@@ -23,19 +26,19 @@ public class EnvidoTest {
 	
 	@Test
 	public void testSePideUnaNuevaAccionDebeSerEnvidoEnvido(){
-		Accion nuevaAccion = this._envido.getNuevaAccion(this._envido.getAccionPosible(Accion.ACCION_ENVIDO_ENVIDO), null, null);
+		Accion nuevaAccion = this._envido.getNuevaAccion(this._envido.getAccionPosible(Accion.ACCION_ENVIDO_ENVIDO), null, null, this._partido);
 		Assert.assertEquals(Accion.ACCION_ENVIDO_ENVIDO, nuevaAccion.getID());
 	}
 	
 	@Test
 	public void testSePideUnaNuevaAccionDebeSerRealEnvido(){
-		Accion nuevaAccion = this._envido.getNuevaAccion(this._envido.getAccionPosible(Accion.ACCION_REAL_ENVIDO), null, null);
+		Accion nuevaAccion = this._envido.getNuevaAccion(this._envido.getAccionPosible(Accion.ACCION_REAL_ENVIDO), null, null, this._partido);
 		Assert.assertEquals(Accion.ACCION_REAL_ENVIDO, nuevaAccion.getID());
 	}
 	
 	@Test
 	public void testSePideUnaNuevaAccionDebeSerFaltaEnvido(){
-		Accion nuevaAccion = this._envido.getNuevaAccion(this._envido.getAccionPosible(Accion.ACCION_FALTA_ENVIDO), null, null);
+		Accion nuevaAccion = this._envido.getNuevaAccion(this._envido.getAccionPosible(Accion.ACCION_FALTA_ENVIDO), null, null, this._partido);
 		Assert.assertEquals(Accion.ACCION_FALTA_ENVIDO, nuevaAccion.getID());
 	}
 	
@@ -51,13 +54,13 @@ public class EnvidoTest {
 	
 	@Test
 	public void testSeCantaEnvidoEnvidoElPuntajeQueridoDebeSerCuatro(){
-		Accion nuevaAccion = this._envido.getNuevaAccion(this._envido.getAccionPosible(Accion.ACCION_ENVIDO_ENVIDO), null, null);
+		Accion nuevaAccion = this._envido.getNuevaAccion(this._envido.getAccionPosible(Accion.ACCION_ENVIDO_ENVIDO), null, null, this._partido);
 		Assert.assertEquals(4, nuevaAccion.getPuntosQueridos());
 	}
 	
 	@Test
 	public void testSeCantaRealEnvidoElPuntajeQueridoDebeSerCinco(){
-		Accion nuevaAccion = this._envido.getNuevaAccion(this._envido.getAccionPosible(Accion.ACCION_REAL_ENVIDO), null, null);
+		Accion nuevaAccion = this._envido.getNuevaAccion(this._envido.getAccionPosible(Accion.ACCION_REAL_ENVIDO), null, null, this._partido);
 		Assert.assertEquals(5, nuevaAccion.getPuntosQueridos());
 	}
 }

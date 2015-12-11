@@ -230,4 +230,10 @@ public class Partido {
 	public boolean seJuegaConnFlor(){
 		return this._conFlor;
 	}
+	
+	public void recolectarCartasDeJugadores(){
+		for(int i = 0; i < this.getOrdenJugadores().getSize(); i++){
+			this.getOrdenJugadores().getAt(i).devolverCartas();
+		}
+	}
 }

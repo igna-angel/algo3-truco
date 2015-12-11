@@ -7,14 +7,17 @@ import org.junit.Test;
 import com.acciones.Accion;
 import com.acciones.Envido;
 import com.acciones.EnvidoEnvido;
+import com.modelo.Partido;
 
 public class EnvidoEnvidoTest {
 	private EnvidoEnvido _envidoEnvido;
+	private Partido _partido;
 	
 	@Before
 	public void setup(){
+		this._partido = new Partido(true);
 		Envido envido = new Envido(null, null);
-		this._envidoEnvido = (EnvidoEnvido) envido.getNuevaAccion(envido.getAccionPosible(Accion.ACCION_ENVIDO_ENVIDO), null, null);
+		this._envidoEnvido = (EnvidoEnvido) envido.getNuevaAccion(envido.getAccionPosible(Accion.ACCION_ENVIDO_ENVIDO), null, null, this._partido);
 	}
 	
 	@Test
@@ -24,13 +27,13 @@ public class EnvidoEnvidoTest {
 	
 	@Test
 	public void testSePideUnaNuevaAccionDebeSerRealEnvido(){
-		Accion nuevaAccion = this._envidoEnvido.getNuevaAccion(this._envidoEnvido.getAccionPosible(Accion.ACCION_REAL_ENVIDO), null, null);
+		Accion nuevaAccion = this._envidoEnvido.getNuevaAccion(this._envidoEnvido.getAccionPosible(Accion.ACCION_REAL_ENVIDO), null, null, this._partido);
 		Assert.assertEquals(Accion.ACCION_REAL_ENVIDO, nuevaAccion.getID());
 	}
 	
 	@Test
 	public void testSePideUnaNuevaAccionDebeSerFaltaEnvido(){
-		Accion nuevaAccion = this._envidoEnvido.getNuevaAccion(this._envidoEnvido.getAccionPosible(Accion.ACCION_FALTA_ENVIDO), null, null);
+		Accion nuevaAccion = this._envidoEnvido.getNuevaAccion(this._envidoEnvido.getAccionPosible(Accion.ACCION_FALTA_ENVIDO), null, null, this._partido);
 		Assert.assertEquals(Accion.ACCION_FALTA_ENVIDO, nuevaAccion.getID());
 	}
 	
@@ -46,7 +49,7 @@ public class EnvidoEnvidoTest {
 	
 	@Test
 	public void testSeCantaRealEnvidoElPuntajeQueridoDebeSerSiete(){
-		Accion nuevaAccion = this._envidoEnvido.getNuevaAccion(this._envidoEnvido.getAccionPosible(Accion.ACCION_REAL_ENVIDO), null, null);
+		Accion nuevaAccion = this._envidoEnvido.getNuevaAccion(this._envidoEnvido.getAccionPosible(Accion.ACCION_REAL_ENVIDO), null, null, this._partido);
 		Assert.assertEquals(7, nuevaAccion.getPuntosQueridos());
 	}
 }
