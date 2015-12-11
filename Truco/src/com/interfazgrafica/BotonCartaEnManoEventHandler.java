@@ -23,27 +23,27 @@ public class BotonCartaEnManoEventHandler implements EventHandler<ActionEvent>{
 	HBox cartasJugadorJugadas;
 	VBox controles;
 	Partido partido;
-	int i;
+	Carta carta;
 	BotonEstoyListoEventHandler botonEstoyListoEventHandler;
+	boolean yaClickeado;
 	
 	
-	BotonCartaEnManoEventHandler(Scene scene, Stage stage, VBox controles, HBox cartasJugadorEnMano, HBox cartasJugadorJugadas, Partido partido, int i){
-		this.stage = stage;
-		this.scene = scene;
+	BotonCartaEnManoEventHandler(HBox cartasJugadorEnMano, HBox cartasJugadorJugadas, Partido partido, Carta carta){
+
 		this.cartasJugadorEnMano = cartasJugadorEnMano;
 		this.cartasJugadorJugadas = cartasJugadorJugadas;
-		this.controles = controles;
 		this.partido = partido;
-		this.i = i;
+		this.carta = carta;
+		boolean yaClickeado = false;
 	}
 	
 	@Override
 	public void handle(ActionEvent actionEvent){
 		
-		cartasJugadorJugadas.getChildren().add(cartasJugadorEnMano.getChildren().get(i));
-		cartasJugadorEnMano.getChildren().remove(i);
-		this.partido.getJugadorActual().bajarCarta(this.partido.getRondaActual().getVueltaActual(), this.partido.getJugadorActual().getListaDeCartasEnMano().get(i));
-		this.stage.setScene (this.scene);
-		this.stage.show();
+		
+		if (this.yaClickeado == false){
+		ImprimirTablero.getInstance().traspasarCartaDeManoAMesa(this.cartasJugadorEnMano, this.cartasJugadorJugadas, this.carta);
+		this.yaClickeado = true;
+		}
 	}
 }

@@ -25,7 +25,11 @@ public abstract class Jugador implements IRecibible{
 		return this.getMano().getCantidadCartas();
 	}
 	
-	public int getCartasEnMano(){
+	public int getCantidadCartasEnMano(){
+		return this.getMano().getCantidadCartasEnMano();
+	}
+	
+	public List<Carta> getCartasEnMano(){
 		return this.getMano().getCartasEnMano();
 	}
 	

@@ -29,6 +29,7 @@ public abstract class Ronda {
 		this._repartio = reparte;
 		this._ganadoresVueltas = new ArrayList<Jugador>();
 		this._vueltas = new ArrayList<Vuelta>();
+		this.mezclarYRepartir();
 	}
 
 	public abstract Ronda getRondaSiguiente(boolean esPicaPica);
@@ -83,8 +84,13 @@ public abstract class Ronda {
 		return this.getVueltaActual().getJugadorActual();
 	}
 
+	public void mezclarYRepartir(){
+		this.getPartido().mezclarYRepartir();
+	}
+	
 	public void jugar() {
 		while(!this.esFinDeRonda()){
+			System.out.println("Jugar Ronda");
 			this.nuevaVuelta();
 			this.getVueltaActual().jugar();
 			this.agregarGanadorDeVuelta(this.getVueltaActual().getJugadorConCartaGanadora());

@@ -133,7 +133,7 @@ public abstract class Accion{
 		this._estado = new EstadoNegado();
 	}
 	
-	private EstadoAccion getEstado(){
+	public EstadoAccion getEstado(){
 		return this._estado;
 	}
 	

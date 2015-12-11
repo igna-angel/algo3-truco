@@ -22,7 +22,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.stage.Stage;
 
 
-public class TableroMesa extends Application {
+public class Presentacion extends Application {
 
     public static void main(String[] args) {
         launch(args);

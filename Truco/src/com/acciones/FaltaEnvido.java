@@ -51,7 +51,7 @@ public class FaltaEnvido extends Accion{
 		Jugador jugadorTantoMasAltoEquipoB = ronda.getJugadorConMayorTantoEnEquipo(equipoB);
 		
 		int tantoEquipoA = jugadorTantoMasAltoEquipoA.getTantoEnMano();
-		int tantoEquipoB = jugadorTantoMasAltoEquipoB.getCartasEnMano();
+		int tantoEquipoB = jugadorTantoMasAltoEquipoB.getCantidadCartasEnMano();
 			
 		if(tantoEquipoA > tantoEquipoB){
 			partido.agregarPuntosAlEquipo(equipoA, this.getPuntosQueridos(partido, equipoA));

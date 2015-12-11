@@ -57,10 +57,10 @@ public class JugadorTest {
 
 		this._jugador.recibirCarta(cartaTest);
 
-		Assert.assertEquals(1, this._jugador.getCartasEnMano());
+		Assert.assertEquals(1, this._jugador.getCantidadCartasEnMano());
 		
 		this._jugador.bajarCarta(vuelta, cartaTest);
 
-		Assert.assertEquals(0, this._jugador.getCartasEnMano());	
+		Assert.assertEquals(0, this._jugador.getCantidadCartasEnMano());	
 	}
 }

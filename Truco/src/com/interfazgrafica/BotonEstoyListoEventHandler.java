@@ -30,43 +30,37 @@ public class BotonEstoyListoEventHandler implements EventHandler<ActionEvent>{
 	private List<Carta> listaDeCartasEnManoJugador;
 	private HBox cartasJugadorEnMano;
 	private HBox cartasJugadorJugadas;
+	private VBox botonera;
 	private GeneradoresVisuales generadores = new GeneradoresVisuales();
 	private Partido partido;
 	private Jugador jugadorActual;
-	private VBox controles;
 	
-	BotonEstoyListoEventHandler(Scene scene, Stage stage, Partido partido, VBox controles, HBox cartasJugadorEnMano, HBox cartasDeJugadorJugadas){
-		
-		this.stage = stage;
-		
-		this.scene = scene;
-		
+	BotonEstoyListoEventHandler(Partido partido, HBox cartasJugadorEnMano, HBox cartasDeJugadorJugadas, VBox botonera){
+				
 		this.partido = partido;
-		
 		this.jugadorActual = this.partido.getJugadorActual();
-		
 		this.cartasJugadorEnMano = cartasJugadorEnMano;
-		
 		this.cartasJugadorJugadas = cartasDeJugadorJugadas;
-
+		this.botonera = botonera;
 		this.listaDeCartasEnManoJugador = jugadorActual.getListaDeCartasEnMano();
 		
-		this.controles = controles;
-
 	}
 	
 	@Override
 	public void handle(ActionEvent actionEvent){
 		
-		if (this.partido.getMaximoPuntaje() < 30){
-			Label puedeCantar = new Label ("Jugando");
+		ImprimirTablero.getInstance().crearBotonera(this.botonera);
+		ImprimirTablero.getInstance().mostrarCartasJugador (partido.getJugadorActual(), this.cartasJugadorEnMano ,this.cartasJugadorJugadas);
+		/*if (this.partido.getMaximoPuntaje() < 30){*/
+			/*Label puedeCantar = new Label ("Jugando");
 			Button envido = new Button ("ENVIDO");
 			VBox posiblesCantos = new VBox (envido);
-			this.controles.getChildren().clear();
-			this.cartasJugadorEnMano.getChildren().clear();
+			this.controles.getChildren().clear();*/
+			/*this.cartasJugadorEnMano.getChildren().clear();
 			this.cartasJugadorJugadas.getChildren().clear();
-			for(int i=0; i<= this.jugadorActual.getCartasEnMano(); i++){
+			for(int i=0; i< this.jugadorActual.getCartasEnMano(); i++){
 				BotonCartaEnManoEventHandler botonCarta1EventHandler = new BotonCartaEnManoEventHandler(this.scene, this.stage, this.controles, this.cartasJugadorEnMano, this.cartasJugadorJugadas, this.partido, i);
+				System.out.println(i);
 				ImageView visualDeCartaEnMano = generadores.generadorDeVisualDeCarta(listaDeCartasEnManoJugador.get(i));
 				Button botonCartaEnMano = new Button ();
 				botonCartaEnMano.setGraphic(visualDeCartaEnMano);
@@ -74,25 +68,7 @@ public class BotonEstoyListoEventHandler implements EventHandler<ActionEvent>{
 				this.cartasJugadorEnMano.getChildren().add(botonCartaEnMano);
 				
 			}
-			/*BotonCartaEnManoEventHandler botonCarta1EventHandler = new BotonCartaEnManoEventHandler(this.scene, this.stage, this.cartasJugadorEnMano, this.cartasJugadorJugadas, 0);
-			BotonCartaEnManoEventHandler botonCarta2EventHandler = new BotonCartaEnManoEventHandler(this.scene, this.stage, this.cartasJugadorEnMano, this.cartasJugadorJugadas, 1 );
-			BotonCartaEnManoEventHandler botonCarta3EventHandler = new BotonCartaEnManoEventHandler(this.scene, this.stage, this.cartasJugadorEnMano, this.cartasJugadorJugadas, 2 );
 
-			ImageView visualDeCartaEnMano1 = generadores.generadorDeVisualDeCarta(listaDeCartasEnManoJugador.get(0));
-			ImageView visualDeCartaEnMano2 = generadores.generadorDeVisualDeCarta(listaDeCartasEnManoJugador.get(1));
-			ImageView visualDeCartaEnMano3 = generadores.generadorDeVisualDeCarta(listaDeCartasEnManoJugador.get(2));
-			Button botonCartaEnMano1 = new Button ();
-			Button botonCartaEnMano2 = new Button ();
-			Button botonCartaEnMano3 = new Button ();
-			botonCartaEnMano1.setGraphic(visualDeCartaEnMano1);
-			botonCartaEnMano1.setOnAction(botonCarta1EventHandler);
-			botonCartaEnMano2.setGraphic(visualDeCartaEnMano2);
-			botonCartaEnMano2.setOnAction(botonCarta2EventHandler);
-			botonCartaEnMano3.setGraphic(visualDeCartaEnMano3);
-			botonCartaEnMano3.setOnAction(botonCarta3EventHandler);
-			this.cartasJugadorEnMano.getChildren().add(botonCartaEnMano1);
-			this.cartasJugadorEnMano.getChildren().add(botonCartaEnMano2);
-			this.cartasJugadorEnMano.getChildren().add(botonCartaEnMano3);*/
 		}
 		
 		else {
@@ -105,9 +81,7 @@ public class BotonEstoyListoEventHandler implements EventHandler<ActionEvent>{
 			VBox finDelJuego = new VBox (tituloFinalJuego, puntajesFinal);
 			finDelJuego.setAlignment(Pos.CENTER);
 			this.scene = new Scene (finDelJuego, 600, 600); 
-		}
+		}*/
 		
-		this.stage.setScene (scene);
-		this.stage.show();
 	}
 }

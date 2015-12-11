@@ -52,7 +52,7 @@ public class Envido extends Accion{
 		Jugador jugadorTantoMasAltoEquipoB = ronda.getJugadorConMayorTantoEnEquipo(partido.getUltimoEquipo());
 		
 		int tantoEquipoA = jugadorTantoMasAltoEquipoA.getTantoEnMano();
-		int tantoEquipoB = jugadorTantoMasAltoEquipoB.getCartasEnMano();
+		int tantoEquipoB = jugadorTantoMasAltoEquipoB.getCantidadCartasEnMano();
 				
 		if(tantoEquipoA > tantoEquipoB){
 			partido.agregarPuntosAlEquipo(partido.getPrimerEquipo(), this.getPuntosQueridos());

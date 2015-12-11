@@ -34,16 +34,22 @@ public class Mano implements IRecibible{
 	public int getCantidadCartas(){
 		return this.getCartas().size();
 	}
-	
-	public int getCartasEnMano(){
-		int cartasEnMano = 0;
+
+	public List<Carta> getCartasEnMano(){
+		List<Carta> cartasEnMano = new ArrayList<Carta>();
 		for(Carta carta : this.getCartas()){
 			if(carta.estaCartaEnMano()){
-				cartasEnMano++;
+				cartasEnMano.add(carta);
 			}
 		}
-		
+						
 		return cartasEnMano;
+	}
+	
+	
+	public int getCantidadCartasEnMano(){
+		
+		return this.getCartasEnMano().size();
 	}
 	
 	public boolean contiene(Carta carta){

@@ -6,6 +6,7 @@ import java.util.Stack;
 import com.exceptions.NoContieneCartaException;
 import com.exceptions.NoHayEquiposException;
 import com.modelo.cartas.Carta;
+import com.interfazgrafica.ImprimirTablero;
 
 public class Partido {
 
@@ -23,11 +24,14 @@ public class Partido {
 	
 	private boolean _conFlor = false;
 	
-	public Partido(){
+	
+	public Partido(boolean conFlor){
 		this._rondas = new Stack<Ronda>();
 		this._equipos = new CircularList<Equipo>();
 		this._mazo = new Mazo();
 		this.getMazo().crear();
+		this._conFlor = conFlor;
+		
 	}
 	
 	public void crearOrdenJugadores(){
@@ -196,7 +200,9 @@ public class Partido {
 	public void jugar(){
 		while(!this.esFinDePartido()){
 			this.mezclarYRepartir();
+			System.out.println("Jugar Partido");
 			this.nuevaRonda();
+			//ImprimirTablero.getInstance().imprimirTablero(this);
 			this.getRondaActual().jugar();
 		}
 		
