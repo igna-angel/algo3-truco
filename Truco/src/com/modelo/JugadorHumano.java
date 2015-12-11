@@ -10,6 +10,7 @@ public class JugadorHumano extends Jugador{
 
 	@Override
 	public void jugar(Vuelta vuelta) {
+<<<<<<< HEAD
 		Scanner scan = new Scanner(System.in);
 		int cartasEnMano = this.getMano().getCantidadCartasEnMano();
 		System.out.println("Jugar Humano");
@@ -18,6 +19,12 @@ public class JugadorHumano extends Jugador{
 			if (scan.hasNext())
 				{scan.next();}
 			System.out.println("post scanner");
+=======
+		int cartasEnMano = this.getMano().getCartasEnMano();
+		
+		while(cartasEnMano == this.getMano().getCartasEnMano()){
+			System.out.println("Turno Jugador");
+>>>>>>> origin/master
 		}
 	}
 }

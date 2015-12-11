@@ -199,6 +199,7 @@ public class Partido {
 	
 	public void jugar(){
 		while(!this.esFinDePartido()){
+			System.out.println("Jugando Ronda");
 			this.mezclarYRepartir();
 			System.out.println("Jugar Partido");
 			this.nuevaRonda();

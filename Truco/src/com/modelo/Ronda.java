@@ -90,7 +90,11 @@ public abstract class Ronda {
 	
 	public void jugar() {
 		while(!this.esFinDeRonda()){
+<<<<<<< HEAD
 			System.out.println("Jugar Ronda");
+=======
+			System.out.println("Jugando Vuelta");
+>>>>>>> origin/master
 			this.nuevaVuelta();
 			this.getVueltaActual().jugar();
 			this.agregarGanadorDeVuelta(this.getVueltaActual().getJugadorConCartaGanadora());

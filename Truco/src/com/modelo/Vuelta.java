@@ -77,7 +77,11 @@ public class Vuelta implements IRecibible {
 
 	public void jugar(){
 		while(!this.esFinDeVuelta()){
+<<<<<<< HEAD
 			System.out.println("Jugar Vuelta");
+=======
+			System.out.println("Jugando Jugador");
+>>>>>>> origin/master
 			this.procesarTurnoJugadorActual();
 			this.asignarJugadorSiguiente();
 		}
