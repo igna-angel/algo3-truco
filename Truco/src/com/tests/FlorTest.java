@@ -44,7 +44,7 @@ public class FlorTest {
 	
 	@Test
 	public void testUnoAUnoLaCantidadDePuntosQueridosDebeSerCero(){
-		Partido partido = new Partido();
+		Partido partido = new Partido(true);
 		
 		partido.agregarEquipo();
 		partido.agregarEquipo();
@@ -68,7 +68,7 @@ public class FlorTest {
 	
 	@Test
 	public void testUnoAUnoLaCantidadDePuntosQueridosDebeSerTres(){
-		Partido partido = new Partido();
+		Partido partido = new Partido(true);
 		
 		partido.agregarEquipo();
 		partido.agregarEquipo();
@@ -116,7 +116,7 @@ public class FlorTest {
 	
 	@Test
 	public void testDosADosLaCantidadDePuntosQueridosDebeSerCero(){
-		Partido partido = new Partido();
+		Partido partido = new Partido(true);
 		
 		partido.agregarEquipo();
 		partido.agregarEquipo();
@@ -155,7 +155,7 @@ public class FlorTest {
 	
 	@Test
 	public void testDosADosLaCantidadDePuntosQueridosDebeSerTres(){
-		Partido partido = new Partido();
+		Partido partido = new Partido(true);
 		
 		partido.agregarEquipo();
 		partido.agregarEquipo();
@@ -311,7 +311,7 @@ public class FlorTest {
 	
 	@Test
 	public void testTresATresLaCantidadDePuntosQueridosDebeSerCero(){
-		Partido partido = new Partido();
+		Partido partido = new Partido(true);
 		
 		partido.agregarEquipo();
 		partido.agregarEquipo();
@@ -362,7 +362,7 @@ public class FlorTest {
 	
 	@Test
 	public void testTresATresLaCantidadDePuntosQueridosDebeSerTres(){
-		Partido partido = new Partido();
+		Partido partido = new Partido(true);
 		
 		partido.agregarEquipo();
 		partido.agregarEquipo();

@@ -40,7 +40,7 @@ public class ContraFlorTest {
 	
 	@Test
 	public void testUnoAUnoLaCantidadDePuntosQueridosDebeSerSeis(){
-		Partido partido = new Partido();
+		Partido partido = new Partido(true);
 		
 		partido.agregarEquipo();
 		partido.agregarEquipo();
@@ -64,7 +64,7 @@ public class ContraFlorTest {
 	
 	@Test
 	public void testDosADosLaCantidadDePuntosQueridosDebeSerSeis(){
-		Partido partido = new Partido();
+		Partido partido = new Partido(true);
 		
 		partido.agregarEquipo();
 		partido.agregarEquipo();
@@ -102,7 +102,7 @@ public class ContraFlorTest {
 	
 	@Test
 	public void testTresATresLaCantidadDePuntosQueridosDebeSerSeis(){
-		Partido partido = new Partido();
+		Partido partido = new Partido(true);
 		
 		partido.agregarEquipo();
 		partido.agregarEquipo();

@@ -66,7 +66,7 @@ public class FaltaEnvidoTest {
 	
 	@Test
 	public void testLaCantidadDePuntosQueridosDebenSerLasDiferenciasParaLlegarAQuinceYTreinta(){
-		Partido partido = new Partido();
+		Partido partido = new Partido(false);
 		partido.agregarEquipo();
 		partido.agregarEquipo();
 
