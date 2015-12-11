@@ -72,7 +72,7 @@ public class GeneradoresVisuales {
 	// Pre: La imagen de la carta debe estar con extension ".png"
 	// Post: Devuelve la visual aplicable a Boxes de la carta
 	public ImageView generadorDeVisualDeCarta (Carta unaCarta){
-		Image imagenDeUnaCarta = new Image ("file:C:\\Users\\Ska-Ska-Ska\\Desktop\\Cartas Españolas\\"+unaCarta.getPalo().toString()+"\\"+unaCarta.getNumero()+".png");
+		Image imagenDeUnaCarta = new Image ("https://raw.githubusercontent.com/igna-angel/algo3-truco/5e5aa5b00030f72bbe2f85ab055ca5482076829b/cartas%20espa%C3%B1olas/"+unaCarta.getPalo().toString()+"/"+unaCarta.getNumero()+".png");
 		ImageView visualDeUnaCarta = new ImageView (imagenDeUnaCarta);
 		visualDeUnaCarta.setFitWidth(70);
 		visualDeUnaCarta.setPreserveRatio(true);
