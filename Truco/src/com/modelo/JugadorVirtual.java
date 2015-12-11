@@ -1,10 +1,5 @@
 package com.modelo;
 
-import java.util.Scanner;
-
-import com.exceptions.AccionNoPosibleException;
-import com.exceptions.EmptyListException;
-
 public class JugadorVirtual extends Jugador {
 	private static final int MIN_TANTO_ENVIDO = 23;
 	private static final int MIN_TANTO_REAL_ENVIDO = 28;

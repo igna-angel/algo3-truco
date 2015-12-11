@@ -1,6 +1,7 @@
 package com.interfazgrafica;
 
 import com.acciones.Accion;
+import com.modelo.Jugador;
 import com.modelo.Vuelta;
 
 import javafx.event.ActionEvent;
@@ -10,20 +11,19 @@ public class BotonAccionEventHandler implements EventHandler<ActionEvent> {
 
 	private Accion accion;
 	private Vuelta vuelta;
-	private ImprimirTablero tablero;
+	private Jugador _origen;
+	private Jugador _destino;
 	
-	public BotonAccionEventHandler (Accion accion, Vuelta vuelta, ImprimirTablero tablero){
+	public BotonAccionEventHandler (Accion accion, Vuelta vuelta, Jugador origen, Jugador destino){
 		this.accion = accion;
 		this.vuelta = vuelta;
-		this.tablero = tablero;
+		this._origen = origen;
+		this._destino = destino;
 	}
 	
 	public void handle (ActionEvent actionEvent){
-		this.accion.setOrigenDestino(this.vuelta.getJugadorActual(), this.vuelta.getJugadorSiguienteAlActual());
-		tablero.enviarAccionAJugador (accion, this.vuelta.getJugadorSiguienteAlActual(), this.vuelta);
-		
+		this.accion.setOrigenDestino(this._origen, this._destino);
+		ImprimirTablero.getInstance().enviarAccionAJugador (accion, this._destino, this.vuelta);
 	}
-	
-	
 }
 

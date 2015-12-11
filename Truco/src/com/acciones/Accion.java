@@ -32,7 +32,7 @@ public abstract class Accion{
 	public static final String ACCION_ENVIDO = "Envido";
 	public static final String ACCION_ENVIDO_ENVIDO = "Envido Envido";
 	public static final String ACCION_REAL_ENVIDO = "Real Envido";
-	public static final String ACCION_FALTA_ENVIDO = "Vale Cuatro";
+	public static final String ACCION_FALTA_ENVIDO = "Falta Envido";
 	public static final String ACCION_FLOR = "Flor";
 	public static final String ACCION_CONTRA_FLOR = "Contra Flor";
 	public static final String ACCION_CONTRA_FLOR_AL_RESTO = "Contra Flor Al Resto";
@@ -72,11 +72,11 @@ public abstract class Accion{
 		this._destino = destino;
 	}
 	
-	protected Jugador getOrigen(){
+	public Jugador getOrigen(){
 		return this._origen;
 	}
 	
-	protected Jugador getDestino(){
+	public Jugador getDestino(){
 		return this._destino;
 	}
 	

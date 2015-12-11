@@ -6,7 +6,6 @@ import java.util.Stack;
 import com.exceptions.NoContieneCartaException;
 import com.exceptions.NoHayEquiposException;
 import com.modelo.cartas.Carta;
-import com.interfazgrafica.ImprimirTablero;
 
 public class Partido {
 
@@ -235,5 +234,9 @@ public class Partido {
 		for(int i = 0; i < this.getOrdenJugadores().getSize(); i++){
 			this.getOrdenJugadores().getAt(i).devolverCartas();
 		}
+	}
+	
+	public int getNumeroDeEquipo(Equipo equipo){
+		return equipo == this.getEquipos().getFirst()? 0 : 1;
 	}
 }

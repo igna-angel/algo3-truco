@@ -1,7 +1,5 @@
 package com.modelo;
 
-import java.util.Scanner;
-
 public class JugadorHumano extends Jugador{
 			
 	public JugadorHumano(){

@@ -1,9 +1,5 @@
 package com.interfazgrafica;
 
-import java.util.List;
-
-import com.modelo.CircularList;
-import com.modelo.Jugador;
 import com.modelo.Partido;
 import com.modelo.cartas.Carta;
 import com.interfazgrafica.BotonEstoyListoEventHandler;
@@ -34,16 +30,14 @@ public class BotonCartaEnManoEventHandler implements EventHandler<ActionEvent>{
 		this.cartasJugadorJugadas = cartasJugadorJugadas;
 		this.partido = partido;
 		this.carta = carta;
-		boolean yaClickeado = false;
+		this.yaClickeado = false;
 	}
 	
 	@Override
 	public void handle(ActionEvent actionEvent){
-		
-		
 		if (this.yaClickeado == false){
-		ImprimirTablero.getInstance().traspasarCartaDeManoAMesa(this.cartasJugadorEnMano, this.cartasJugadorJugadas, this.carta);
-		this.yaClickeado = true;
+			ImprimirTablero.getInstance().traspasarCartaDeManoAMesa(this.cartasJugadorEnMano, this.cartasJugadorJugadas, this.carta);
+			this.yaClickeado = true;
 		}
 	}
 }
