@@ -188,8 +188,15 @@ public class ImprimirTablero {
 	
 	public void aceptarAccion(Accion accion){
 		accion.aceptar();
+
+		accion.limpiarAccionesRelacionadasEnVuelta(this.partido.getVueltaActual());
 		accion.reemplazarAccionOriginalEnVuelta(this.partido.getVueltaActual());
 		accion.limpiarAccionesRelacionadasEnVuelta(this.partido.getVueltaActual());
+		
+		for(Accion nuevaAccion : this.partido.getVueltaActual().getAccionesDeVuelta()){
+			System.out.println(nuevaAccion.getID());
+		}
+		
 		this.crearBotoneraAcciones();
 	}
 	

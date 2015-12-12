@@ -1,5 +1,6 @@
 package com.interfazgrafica;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.modelo.CircularList;
@@ -17,7 +18,15 @@ import javafx.scene.layout.CornerRadii;
 
 public class GeneradoresVisuales {
 	
+	private Image _imagenCartaDorso = null;
+	private Image _imagenEspacioVacio = null;
+	private HashMap<String, Image> _imagenesCartas = null;
+	
 	private static GeneradoresVisuales instance = null;
+	
+	private GeneradoresVisuales(){
+		this._imagenesCartas = new HashMap<String, Image>();
+	}
 	
 	public static GeneradoresVisuales getInstance(){
 		if (GeneradoresVisuales.instance == null){
@@ -27,38 +36,47 @@ public class GeneradoresVisuales {
 	}
 	
 	public ImageView generarVisionCartaDorso (){
-		Image dorsoAzul = new Image("https://raw.githubusercontent.com/igna-angel/algo3-truco/5e5aa5b00030f72bbe2f85ab055ca5482076829b/cartas%20espa%C3%B1olas/CartaDorsoAzul.png");
-		ImageView cartaDorsoAzul = new ImageView (dorsoAzul);
-        cartaDorsoAzul.setFitWidth(70);
-        cartaDorsoAzul.setPreserveRatio(true);
-        cartaDorsoAzul.setSmooth(true);
-        cartaDorsoAzul.setCache(true);
-        return cartaDorsoAzul;
+		if(this._imagenCartaDorso == null){
+			this._imagenCartaDorso = new Image("https://raw.githubusercontent.com/igna-angel/algo3-truco/5e5aa5b00030f72bbe2f85ab055ca5482076829b/cartas%20espa%C3%B1olas/CartaDorsoAzul.png");
+		}
+		
+		ImageView nuevo = new ImageView (this._imagenCartaDorso);
+		nuevo.setFitWidth(70);
+		nuevo.setPreserveRatio(true);
+		nuevo.setSmooth(true);
+		nuevo.setCache(true);
+			
+        return nuevo;
 	}
 	
 	public void generarCartasDadasVuelta (CircularList<Jugador> listaDeJugadores, List<HBox> contenedoresDeCartas){
 		for (int i=0; i < contenedoresDeCartas.size(); i++){
 			contenedoresDeCartas.get(i).getChildren().clear();
 			for (int j=0; j < listaDeJugadores.getAt(i).getCantidadCartasEnMano(); j++ ){
-				ImageView cartaDorso = this.generarVisionCartaDorso();
-				contenedoresDeCartas.get(i).getChildren().add(cartaDorso);
+				contenedoresDeCartas.get(i).getChildren().add(this.generarVisionCartaDorso());
 			}
 			contenedoresDeCartas.get(i).setSpacing(5);
 			contenedoresDeCartas.get(i).setPadding(new Insets(15));
 			contenedoresDeCartas.get(i).setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
 		}
-		
 	}
 	
-	public HBox generarEspacioVacioVertical (){		
-		Image imagenEspacioVacio = new Image("https://raw.githubusercontent.com/igna-angel/algo3-truco/5e5aa5b00030f72bbe2f85ab055ca5482076829b/cartas%20espa%C3%B1olas/EspacioCarta.png");
-		ImageView espacioVacioCarta = new ImageView (imagenEspacioVacio);
-		espacioVacioCarta.setFitWidth(70);
-		espacioVacioCarta.setPreserveRatio(true);
-		espacioVacioCarta.setSmooth(true);
-		espacioVacioCarta.setCache(true);
+	private ImageView generarImagenEspacioVacio(){
+		if(this._imagenEspacioVacio == null){
+			this._imagenEspacioVacio = new Image("https://raw.githubusercontent.com/igna-angel/algo3-truco/5e5aa5b00030f72bbe2f85ab055ca5482076829b/cartas%20espa%C3%B1olas/EspacioCarta.png");
+		}
 		
-		HBox espacioVacio = new HBox (espacioVacioCarta);
+		ImageView nuevo = new ImageView (this._imagenEspacioVacio);
+		nuevo.setFitWidth(70);
+		nuevo.setPreserveRatio(true);
+		nuevo.setSmooth(true);
+		nuevo.setCache(true);
+		
+		return nuevo;
+	}
+	
+	public HBox generarEspacioVacioVertical (){	
+		HBox espacioVacio = new HBox (this.generarImagenEspacioVacio());
 		espacioVacio.setSpacing(5);
 		espacioVacio.setPadding(new Insets(15));
 		espacioVacio.setBackground(new Background(new BackgroundFill(Color.DARKGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -70,8 +88,11 @@ public class GeneradoresVisuales {
 	// Pre: La imagen de la carta debe estar con extension ".png"
 	// Post: Devuelve la visual aplicable a Boxes de la carta
 	public ImageView generadorDeVisualDeCarta (Carta unaCarta){
-		Image imagenDeUnaCarta = new Image ("https://raw.githubusercontent.com/igna-angel/algo3-truco/5e5aa5b00030f72bbe2f85ab055ca5482076829b/cartas%20espa%C3%B1olas/"+unaCarta.getPalo().toString()+"/"+unaCarta.getNumero()+".png");
-		ImageView visualDeUnaCarta = new ImageView (imagenDeUnaCarta);
+		if(!this._imagenesCartas.containsKey(unaCarta.getPalo().toString()+unaCarta.getNumero())){
+			this._imagenesCartas.put(unaCarta.getPalo().toString()+unaCarta.getNumero(), new Image ("https://raw.githubusercontent.com/igna-angel/algo3-truco/5e5aa5b00030f72bbe2f85ab055ca5482076829b/cartas%20espa%C3%B1olas/"+unaCarta.getPalo().toString()+"/"+unaCarta.getNumero()+".png"));
+		}
+		
+		ImageView visualDeUnaCarta = new ImageView (this._imagenesCartas.get(unaCarta.getPalo().toString()+unaCarta.getNumero()));
 		visualDeUnaCarta.setFitWidth(70);
 		visualDeUnaCarta.setPreserveRatio(true);
 		visualDeUnaCarta.setSmooth(true);
