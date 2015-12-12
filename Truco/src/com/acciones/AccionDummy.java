@@ -64,6 +64,11 @@ public class AccionDummy extends Accion{
 	public void limpiarAccionesRelacionadasEnVuelta(Vuelta vuelta) {
 
 	}
+	
+	@Override
+	public void iniciarNuevaRondaSiCorresponde() {
+		
+	}
 
 	
 }

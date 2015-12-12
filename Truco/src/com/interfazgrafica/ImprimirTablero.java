@@ -395,5 +395,19 @@ public class ImprimirTablero {
 	public int getPosicionDeCartaEnMano (Jugador jugador, Carta carta){			
 		return jugador.getPosiconDeCarta(carta);
 	}
+	
+	public void iniciarNuevaRonda () {
+		this.limpiarTableros();
+		this.imprimirTablero();
+		partido.nuevaRonda();
+		//partido.mezclarYRepartir();
+		//partido.getRondaActual().jugar();
+		this.generarBotonEstoyListo();
+		//partido.getRondaActual().nuevaVuelta();
+	}
+	
+	public Partido getPartido() {
+		return this.partido;
+	}
 
 }

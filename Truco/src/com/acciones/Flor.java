@@ -89,4 +89,9 @@ public class Flor extends Accion {
 		
 		vuelta.setAccionesDeVuelta(nuevasAccionesVuelta);
 	}
+	
+	@Override
+	public void iniciarNuevaRondaSiCorresponde() {
+		
+	}
 }

@@ -84,4 +84,9 @@ public class ContraFlorAlResto extends Accion{
 		
 		vuelta.setAccionesDeVuelta(nuevasAccionesVuelta);
 	}
+	
+	@Override
+	public void iniciarNuevaRondaSiCorresponde() {
+		
+	}
 }

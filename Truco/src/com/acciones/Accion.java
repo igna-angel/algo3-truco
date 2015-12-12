@@ -208,4 +208,6 @@ public abstract class Accion{
 		
 		//this.limpiarAccionesRelacionadasEnVuelta(vuelta);
 	}
+	
+	public abstract void iniciarNuevaRondaSiCorresponde();
 }
