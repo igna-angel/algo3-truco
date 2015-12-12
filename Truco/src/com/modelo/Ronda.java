@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.acciones.Accion;
+import com.acciones.AccionNoTruco;
 import com.acciones.Envido;
 import com.acciones.FaltaEnvido;
 import com.acciones.Flor;
@@ -76,6 +77,7 @@ public abstract class Ronda {
 	public void nuevaVuelta() {
 		if(this.getVueltas().isEmpty()){
 			List<Accion> accionesBase = new ArrayList<Accion>();
+			accionesBase.add(new AccionNoTruco());
 			accionesBase.add(new Envido(null, null));
 			accionesBase.add(new RealEnvido(null, null));
 			accionesBase.add(new FaltaEnvido(null, null));

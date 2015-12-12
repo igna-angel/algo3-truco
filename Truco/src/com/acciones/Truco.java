@@ -71,7 +71,8 @@ public class Truco extends Accion{
 			if(!accion.getID().equals(Accion.ACCION_ENVIDO) &&
 				!accion.getID().equals(Accion.ACCION_REAL_ENVIDO) &&
 				!accion.getID().equals(Accion.ACCION_FALTA_ENVIDO) &&
-				!accion.getID().equals(Accion.ACCION_FLOR)){
+				!accion.getID().equals(Accion.ACCION_FLOR) && 
+				!accion.getID().equals(Accion.ACCION_NO_TRUCO)){
 					nuevasAccionesVuelta.add(accion);
 			}
 		}

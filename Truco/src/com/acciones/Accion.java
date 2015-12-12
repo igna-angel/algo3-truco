@@ -31,6 +31,7 @@ public abstract class Accion{
 	public static final int PUNTOS_CONTRA_FLOR = 3;
 	
 	public static final int PUNTOS_NO_QUERIDO = 1;	
+	public static final int PUNTOS_NO_TRUCO = 1;
 	
 	public static final String ACCION_TRUCO = "Truco";
 	public static final String ACCION_RE_TRUCO = "Re Truco";
@@ -43,6 +44,7 @@ public abstract class Accion{
 	public static final String ACCION_CONTRA_FLOR = "Contra Flor";
 	public static final String ACCION_CONTRA_FLOR_AL_RESTO = "Contra Flor Al Resto";
 	public static final String ACCION_DUMMY = "Dummy";
+	public static final String ACCION_NO_TRUCO = "No Truco";
 		
 	private List<Accion> _accionesPosibles = null;
 	
