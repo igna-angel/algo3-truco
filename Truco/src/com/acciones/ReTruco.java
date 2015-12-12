@@ -65,7 +65,11 @@ public class ReTruco extends Accion{
 		this.getDecorada().limpiarAccionesRelacionadasEnVuelta(vuelta);
 		
 		for(Accion accion : vuelta.getAccionesDeVuelta()){
-			if(!accion.getID().equals(Accion.ACCION_TRUCO)){
+			if(accion.getEstado().getID().equals(ESTADO_INDEFINIDO)){
+				if(!accion.getID().equals(Accion.ACCION_TRUCO)){
+					nuevasAccionesVuelta.add(accion);
+				}
+			}else{
 				nuevasAccionesVuelta.add(accion);
 			}
 		}

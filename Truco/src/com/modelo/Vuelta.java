@@ -37,31 +37,6 @@ public class Vuelta implements IRecibible {
 	public void setAccionesDeVuelta(List<Accion> acciones){
 		this._acciones = acciones;
 	}	
-	
-	public List<Accion> getAccionesDeNuevaVuelta(){
-		List<Accion> accionesNuevaVuelta = new ArrayList<Accion>();
-		
-		for(Accion accion : this.getAccionesDeVuelta()){
-			if(accion.getID().equals(Accion.ACCION_TRUCO) || accion.getID().equals(Accion.ACCION_RE_TRUCO) || accion.getID().equals(Accion.ACCION_VALE_CUATRO))
-				accionesNuevaVuelta.add(accion);
-		}
-		
-		this.limpiarAccionesIndefinidas();
-		
-		return accionesNuevaVuelta;
-	}
-		
-	private void limpiarAccionesIndefinidas(){
-		List<Accion> nuevasAccionesVueltaActual = new ArrayList<Accion>();
-		
-		for(Accion accion : this.getAccionesDeVuelta()){
-			if(accion.getEstado().getID() != Accion.ESTADO_INDEFINIDO){
-				nuevasAccionesVueltaActual.add(accion);
-			}
-		}
-		
-		this._acciones = nuevasAccionesVueltaActual;
-	}
 
 	public void asignarJugadorInicial(Jugador jugadorInicial){
 		this._jugadorInicial = jugadorInicial;

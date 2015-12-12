@@ -65,7 +65,11 @@ public class ValeCuatro extends Accion{
 		this.getDecorada().limpiarAccionesRelacionadasEnVuelta(vuelta);
 		
 		for(Accion accion : vuelta.getAccionesDeVuelta()){
-			if(!accion.getID().equals(Accion.ACCION_RE_TRUCO)){
+			if(accion.getEstado().getID().equals(ESTADO_INDEFINIDO)){
+				if(!accion.getID().equals(Accion.ACCION_RE_TRUCO)){
+					nuevasAccionesVuelta.add(accion);
+				}
+			}else{
 				nuevasAccionesVuelta.add(accion);
 			}
 		}

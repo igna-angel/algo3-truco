@@ -73,12 +73,18 @@ public class FaltaEnvido extends Accion{
 	public void limpiarAccionesRelacionadasEnVuelta(Vuelta vuelta) {
 		List<Accion> nuevasAccionesVuelta = new ArrayList<Accion>();
 		
+		this.getDecorada().limpiarAccionesRelacionadasEnVuelta(vuelta);
+		
 		for(Accion accion : vuelta.getAccionesDeVuelta()){
-			if(!accion.getID().equals(Accion.ACCION_REAL_ENVIDO) &&
-				!accion.getID().equals(Accion.ACCION_ENVIDO) &&
-				!accion.getID().equals(Accion.ACCION_FLOR) &&
-				!accion.getID().equals(Accion.ACCION_ENVIDO_ENVIDO)){
-					nuevasAccionesVuelta.add(accion);
+			if(accion.getEstado().getID().equals(ESTADO_INDEFINIDO)){
+				if(!accion.getID().equals(Accion.ACCION_REAL_ENVIDO) &&
+					!accion.getID().equals(Accion.ACCION_ENVIDO) &&
+					!accion.getID().equals(Accion.ACCION_FLOR) &&
+					!accion.getID().equals(Accion.ACCION_ENVIDO_ENVIDO)){
+						nuevasAccionesVuelta.add(accion);
+				}
+			}else{
+				nuevasAccionesVuelta.add(accion);
 			}
 		}
 		

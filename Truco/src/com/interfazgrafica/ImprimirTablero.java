@@ -105,6 +105,7 @@ public class ImprimirTablero {
 		
 		for (Accion accion : this.partido.getVueltaActual().getAccionesDeVuelta())
 		{
+			System.out.println("imprime boton: " + accion.getID());
 			if (accion.getEstado().getID().equals(Accion.ESTADO_INDEFINIDO) && accion.puedePedirNuevaAccion(this.partido, this.partido.getJugadorActual())){
 				Button unBoton = new Button();
 				unBoton.setText(accion.getID());
@@ -199,13 +200,13 @@ public class ImprimirTablero {
 	
 	public void aceptarAccion(Accion accion){
 		accion.aceptar();
-
-		accion.limpiarAccionesRelacionadasEnVuelta(this.partido.getVueltaActual());
 		accion.reemplazarAccionOriginalEnVuelta(this.partido.getVueltaActual());
 		accion.limpiarAccionesRelacionadasEnVuelta(this.partido.getVueltaActual());
 		
+		System.out.println("nuevas acciones de Vuelta");
 		for(Accion nuevaAccion : this.partido.getVueltaActual().getAccionesDeVuelta()){
-			System.out.println(nuevaAccion.getID());
+			//System.out.println(accion == nuevaAccion);
+			System.out.println(nuevaAccion.getID() + " " + nuevaAccion.getEstado().getID());
 		}
 		
 		this.crearBotoneraAcciones();

@@ -2,6 +2,7 @@ package com.acciones;
 
 import java.util.List;
 
+import com.exceptions.AccionDummyException;
 import com.exceptions.EstadoIndefinidoException;
 import com.exceptions.JugadorNoPuedeCantarAccionConcatenadaConsecutivamenteException;
 import com.exceptions.NoExisteAccionException;
@@ -142,6 +143,9 @@ public abstract class Accion{
 	}
 
 	public void aceptar(){
+		
+		System.out.println("esta accion: " + this.getID() + " la decorada: " + this.getDecorada());
+		
 		this.getDecorada().indefinir();
 		this._estado = new EstadoAceptado();
 	}
@@ -175,20 +179,33 @@ public abstract class Accion{
 	public abstract void limpiarAccionesRelacionadasEnVuelta(Vuelta vuelta);
 	
 	public void reemplazarAccionOriginalEnVuelta(Vuelta vuelta){
-		if(vuelta.getAccionesDeVuelta().contains(this.getDecorada())){
-			if(!this.getDecorada().getID().equals(Accion.ACCION_DUMMY)){
-				int indiceDecorada = vuelta.getAccionesDeVuelta().indexOf(this.getDecorada());
-				vuelta.getAccionesDeNuevaVuelta().set(indiceDecorada, this);
-			}
-		}
-		
 		try{
-			for(Accion accion : this.getAccionesPosibles()){
-				vuelta.getAccionesDeVuelta().add(accion);
+			this.getDecorada().reemplazarAccionOriginalEnVuelta(vuelta);
+				
+			if(!vuelta.getAccionesDeVuelta().contains(this)){
+				System.out.println("vuelta no contiene a: " + this.getID() + " contiene decorada: " + vuelta.getAccionesDeVuelta().contains(this.getDecorada()));
+				if(vuelta.getAccionesDeVuelta().contains(this.getDecorada())){
+					System.out.println("vuelta contiene a la decorada de: " + this.getID() + ", decorada: " + this.getDecorada().getID());
+					if(!this.getDecorada().getID().equals(Accion.ACCION_DUMMY)){
+						int indiceDecorada = vuelta.getAccionesDeVuelta().indexOf(this.getDecorada());
+						vuelta.getAccionesDeVuelta().set(indiceDecorada, this);
+					}
+				}
 			}
-		}catch(NoHayAccionesException e){
-			System.out.println(e.getClass());
-		}
 			
+			try{
+				for(Accion accion : this.getAccionesPosibles()){
+					if(!vuelta.getAccionesDeVuelta().contains(accion))
+						vuelta.getAccionesDeVuelta().add(accion);
+				}
+			}catch(NoHayAccionesException e){
+				System.out.println(e.getClass());
+			}
+			
+		}catch(AccionDummyException e){
+			System.out.println(e.getClass());
+		}		
+		
+		//this.limpiarAccionesRelacionadasEnVuelta(vuelta);
 	}
 }

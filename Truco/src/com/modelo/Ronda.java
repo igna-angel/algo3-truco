@@ -92,7 +92,7 @@ public abstract class Ronda {
 			this.procesarAcciones();
 			this._partido.nuevaRonda();
 		}else{
-			this.getVueltas().add(new Vuelta(this, this.getVueltaActual().getAccionesDeNuevaVuelta(), this.getVueltaActual().getJugadorConCartaGanadora()));
+			this.getVueltas().add(new Vuelta(this, this.getVueltaActual().getAccionesDeVuelta(), this.getVueltaActual().getJugadorConCartaGanadora()));
 		}
 	}
 	public Jugador getJugadorActual() {
@@ -114,9 +114,10 @@ public abstract class Ronda {
 	}
 	
 	private void procesarAcciones(){
-		for(Vuelta vuelta : this.getVueltas()){
+		/*for(Vuelta vuelta : this.getVueltas()){
 			vuelta.procesarAcciones();
-		}
+		}*/
+		this.getVueltaActual().procesarAcciones();
 	}
 
 	public Jugador getJugadorConCartaGanadora(Carta cartaGanadora) {

@@ -52,7 +52,7 @@ public class EnvidoEnvido extends Accion{
 		Jugador jugadorTantoMasAltoEquipoB = ronda.getJugadorConMayorTantoEnEquipo(partido.getUltimoEquipo());
 		
 		int tantoEquipoA = jugadorTantoMasAltoEquipoA.getTantoEnMano();
-		int tantoEquipoB = jugadorTantoMasAltoEquipoB.getCantidadCartasEnMano();
+		int tantoEquipoB = jugadorTantoMasAltoEquipoB.getTantoEnMano();
 				
 		if(tantoEquipoA > tantoEquipoB){
 			partido.agregarPuntosAlEquipo(partido.getPrimerEquipo(), this.getPuntosQueridos());
@@ -73,8 +73,17 @@ public class EnvidoEnvido extends Accion{
 	public void limpiarAccionesRelacionadasEnVuelta(Vuelta vuelta) {
 		List<Accion> nuevasAccionesVuelta = new ArrayList<Accion>();
 		
+		this.getDecorada().limpiarAccionesRelacionadasEnVuelta(vuelta);
+		
 		for(Accion accion : vuelta.getAccionesDeVuelta()){
-			if(accion.getID() != Accion.ACCION_REAL_ENVIDO || accion.getID() != Accion.ACCION_FALTA_ENVIDO || accion.getID() != Accion.ACCION_FLOR || accion.getID() != Accion.ACCION_ENVIDO){
+			if(accion.getEstado().getID().equals(Accion.ESTADO_INDEFINIDO)){
+				if(!accion.getID().equals(Accion.ACCION_REAL_ENVIDO) &&
+					!accion.getID().equals(Accion.ACCION_ENVIDO) &&
+					!accion.getID().equals(Accion.ACCION_FLOR) &&
+					!accion.getID().equals(Accion.ACCION_FALTA_ENVIDO)){
+						nuevasAccionesVuelta.add(accion);
+				}
+			}else{
 				nuevasAccionesVuelta.add(accion);
 			}
 		}

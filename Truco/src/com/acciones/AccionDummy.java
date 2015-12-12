@@ -1,5 +1,6 @@
 package com.acciones;
 
+import com.exceptions.AccionDummyException;
 import com.modelo.Equipo;
 import com.modelo.Partido;
 import com.modelo.Ronda;
@@ -21,6 +22,11 @@ public class AccionDummy extends Accion{
 		return Accion.ACCION_DUMMY;
 	}
 
+	@Override
+	protected Accion getDecorada() {
+		throw new AccionDummyException();
+	}
+	
 	@Override
 	public int getPuntosQueridos() {
 		return 0;
