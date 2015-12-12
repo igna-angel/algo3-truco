@@ -95,6 +95,7 @@ public abstract class Ronda {
 			this.procesarAcciones();
 			this._partido.nuevaRonda();
 		}else{
+			this.getVueltaActual().limpiarAccionesDeTanto();
 			this.getVueltas().add(new Vuelta(this, this.getVueltaActual().getAccionesDeVuelta(), this.getVueltaActual().getJugadorConCartaGanadora()));
 		}
 	}
