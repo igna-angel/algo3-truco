@@ -55,6 +55,7 @@ public class JugadorTest {
 		partido.agregarJugadorAEquipo(new JugadorHumano(), 0);
 		partido.agregarJugadorAEquipo(new JugadorHumano(), 1);
 		partido.crearPartido();
+		partido.nuevaRonda();
 		
 		Vuelta vuelta = new Vuelta(new RondaRedonda(partido, partido.getEquipos().getFirst().getJugadores().getFirst()), null, new JugadorHumano());
 		

@@ -67,6 +67,10 @@ public class Partido {
 		return this.getRondas().peek();
 	}
 	
+	public Vuelta getVueltaActual(){
+		return this.getRondaActual().getVueltaActual();
+	}
+	
 	public void nuevaRonda(){
 		if(getEquipos().isEmpty()) throw new NoHayEquiposException();
 		if(this.getRondas().isEmpty()){
@@ -152,6 +156,10 @@ public class Partido {
 
 	public Jugador getJugadorActual(){
 		return this.getRondaActual().getJugadorActual();
+	}
+	
+	public int getNumeroJugadorActual(){
+		return this.getOrdenJugadores().getIndexOf(this.getJugadorActual());
 	}
 	
 	public Jugador getJugadorSiguienteAlActual(){

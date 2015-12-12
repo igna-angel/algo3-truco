@@ -31,6 +31,7 @@ public abstract class Ronda {
 		this._vueltas = new ArrayList<Vuelta>();
 		this.recolectarCartasDeJugadores();
 		this.mezclarYRepartir();
+		this.nuevaVuelta();
 	}
 
 	private void recolectarCartasDeJugadores() {
@@ -59,9 +60,13 @@ public abstract class Ronda {
 		return this._vueltas;
 	}
 
+	public int getCantidadDeVueltas(){
+		return this.getVueltas().size();
+	}
+	
 	public Vuelta getVueltaActual(){
 		if(this.getVueltas().isEmpty()) throw new NoHayVueltasException();
-		return this.getVueltas().get(this.getVueltas().size()-1);
+		return this.getVueltas().get(this.getCantidadDeVueltas()-1);
 	}
 
 	public int getCantidadDeJugadoresTotales(){
@@ -75,16 +80,19 @@ public abstract class Ronda {
 			accionesBase.add(new RealEnvido(null, null));
 			accionesBase.add(new FaltaEnvido(null, null));
 			accionesBase.add(new Truco(null, null));
+			
 			if(this.getPartido().seJuegaConnFlor()){
 				accionesBase.add(new Flor(null, null));
 			}
 			
 			this.getVueltas().add(new Vuelta(this, accionesBase, this.getPartido().getJugadorSiguienteA(this.getRepartio())));
+		}else if(this.esFinDeRonda()){
+			this.procesarAcciones();
+			this._partido.nuevaRonda();
 		}else{
 			this.getVueltas().add(new Vuelta(this, this.getVueltaActual().getAccionesDeNuevaVuelta(), this.getVueltaActual().getJugadorConCartaGanadora()));
 		}
 	}
-	
 	public Jugador getJugadorActual() {
 		return this.getVueltaActual().getJugadorActual();
 	}
@@ -121,22 +129,30 @@ public abstract class Ronda {
 		return this._ganadoresVueltas;
 	}
 	
-	private boolean esFinDeRonda(){
-		return (!this.hayParda() && this.hayGanador()) || this.seJugaronTodasLasVueltas();
+	public boolean esInicioDeRonda(){
+		return this.getCantidadDeVueltas() == 1 && this.getVueltaActual().esInicioDeVuelta();
+	}
+	
+	public boolean esFinDeRonda(){
+		return ( (!this.hayParda() && this.hayGanador()) || this.seJugaronTodasLasVueltas());
 	}
 	
 	private boolean seJugaronTodasLasVueltas(){
-		return this.getVueltas().size() == Ronda.NUMERO_MAXIMO_VUELTAS;
+		return this.getCantidadDeVueltas() == Ronda.NUMERO_MAXIMO_VUELTAS;
 	}
 
 	private boolean hayGanador() {
-		return (this.getVueltas().size() >= 2 && (this.getPartido().getEquipoDeJugador(this.getGanadoresDeVueltas().get(0)) == this.getPartido().getEquipoDeJugador(this.getGanadoresDeVueltas().get(1))));
+		return ((this.getCantidadDeVueltas() >= 2) && this.ganadorDeVueltaUnoEsElMismoQueDeVueltaDos());
+	}
+	
+	private boolean ganadorDeVueltaUnoEsElMismoQueDeVueltaDos(){
+		return this.getPartido().getEquipoDeJugador(this.getGanadoresDeVueltas().get(0)) == this.getPartido().getEquipoDeJugador(this.getGanadoresDeVueltas().get(1));
 	}
 	
 	private boolean hayParda(){
 		if(this.getVueltas().isEmpty()) return false;
-		if(this.getVueltas().size() == 1 && this.getVueltas().get(0).getEsParda()) return true;
-		if(this.getVueltas().size() == 2){
+		if(this.getCantidadDeVueltas() == 1 && this.getVueltas().get(0).getEsParda()) return true;
+		if(this.getCantidadDeVueltas() == 2){
 			if(this.getVueltas().get(0).getEsParda() && this.getVueltas().get(1).getEsParda()) return true;
 			return false;
 		}
@@ -144,7 +160,8 @@ public abstract class Ronda {
 	}
 
 	public Equipo getEquipoGanador() {
-		if(!this.hayGanador()) throw new NoHayGanadorException();
+		System.out.println(this.hayGanador());
+		if(!this.esFinDeRonda()) throw new NoHayGanadorException();
 		
 		List<Equipo> equiposGanadores = new ArrayList<Equipo>();
 		
@@ -187,5 +204,9 @@ public abstract class Ronda {
 		}while(jugadorActual != jugadorInicial);
 		
 		throw new NoSeEncuentraJugadorException();
+	}
+
+	public void asignarGanadorDeVuelta() {
+		this.agregarGanadorDeVuelta(this.getVueltaActual().getJugadorConCartaGanadora());
 	}
 }

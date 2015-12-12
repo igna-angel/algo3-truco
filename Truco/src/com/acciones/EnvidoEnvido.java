@@ -7,6 +7,7 @@ import com.modelo.Equipo;
 import com.modelo.Jugador;
 import com.modelo.Partido;
 import com.modelo.Ronda;
+import com.modelo.Vuelta;
 
 public class EnvidoEnvido extends Accion{
 
@@ -66,5 +67,18 @@ public class EnvidoEnvido extends Accion{
 	@Override
 	protected void procesarAccion(EstadoNegado estado, Partido partido, Ronda ronda) {
 		partido.agregarPuntosAlEquipo(partido.getEquipoDeJugador(this.getOrigen()), this.getPuntosNoQueridos());
+	}
+
+	@Override
+	public void limpiarAccionesRelacionadasEnVuelta(Vuelta vuelta) {
+		List<Accion> nuevasAccionesVuelta = new ArrayList<Accion>();
+		
+		for(Accion accion : vuelta.getAccionesDeVuelta()){
+			if(accion.getID() != Accion.ACCION_REAL_ENVIDO || accion.getID() != Accion.ACCION_FALTA_ENVIDO || accion.getID() != Accion.ACCION_FLOR || accion.getID() != Accion.ACCION_ENVIDO){
+				nuevasAccionesVuelta.add(accion);
+			}
+		}
+		
+		vuelta.setAccionesDeVuelta(nuevasAccionesVuelta);
 	}
 }

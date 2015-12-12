@@ -10,4 +10,9 @@ public class EstadoIndefinido implements EstadoAccion{
 		accion.procesarAccion(this, partido, ronda);
 	}
 
+	@Override
+	public String getID() {
+		return Accion.ESTADO_INDEFINIDO;
+	}
+
 }

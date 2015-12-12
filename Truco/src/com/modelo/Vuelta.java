@@ -5,6 +5,12 @@ import java.util.List;
 import java.util.Stack;
 
 import com.acciones.Accion;
+import com.acciones.ContraFlorAlResto;
+import com.acciones.Envido;
+import com.acciones.FaltaEnvido;
+import com.acciones.Flor;
+import com.acciones.RealEnvido;
+import com.exceptions.EstadoIndefinidoException;
 import com.modelo.cartas.Carta;
 import com.modelo.cartas.CartaInvalida;
 
@@ -33,14 +39,33 @@ public class Vuelta implements IRecibible {
 		return this._acciones;
 	}
 	
+	public void setAccionesDeVuelta(List<Accion> acciones){
+		this._acciones = acciones;
+	}	
+	
 	public List<Accion> getAccionesDeNuevaVuelta(){
 		List<Accion> accionesNuevaVuelta = new ArrayList<Accion>();
 		
 		for(Accion accion : this.getAccionesDeVuelta()){
-			if(accion.getID() == Accion.ACCION_TRUCO || accion.getID() == Accion.ACCION_RE_TRUCO || accion.getID() == Accion.ACCION_VALE_CUATRO) accionesNuevaVuelta.add(accion);
+			if(accion.getID().equals(Accion.ACCION_TRUCO) || accion.getID().equals(Accion.ACCION_RE_TRUCO) || accion.getID().equals(Accion.ACCION_VALE_CUATRO))
+				accionesNuevaVuelta.add(accion);
 		}
 		
+		this.limpiarAccionesIndefinidas();
+		
 		return accionesNuevaVuelta;
+	}
+		
+	private void limpiarAccionesIndefinidas(){
+		List<Accion> nuevasAccionesVueltaActual = new ArrayList<Accion>();
+		
+		for(Accion accion : this.getAccionesDeVuelta()){
+			if(accion.getEstado().getID() != Accion.ESTADO_INDEFINIDO){
+				nuevasAccionesVueltaActual.add(accion);
+			}
+		}
+		
+		this._acciones = nuevasAccionesVueltaActual;
 	}
 
 	public void asignarJugadorInicial(Jugador jugadorInicial){
@@ -97,8 +122,12 @@ public class Vuelta implements IRecibible {
 	public Ronda getRonda(){
 		return this._ronda;
 	}
+	
+	public boolean esInicioDeVuelta(){
+		return this.getCartas().isEmpty();
+	}
 
-	private boolean esFinDeVuelta(){
+	public boolean esFinDeVuelta(){
 		return this.getRonda().getCantidadDeJugadoresTotales() == this.getCantidadDeCartasEnVuelta();
 	}
 	
@@ -119,7 +148,13 @@ public class Vuelta implements IRecibible {
 		this._esParda = this.definirSiEsParda(this.getCartaGanadora(), carta);
 		this.setCartaGanadora(this.getCartaGanadora().ganador(carta));
 		this.getCartas().push(carta);
+		
 		this.asignarJugadorSiguiente();
+		
+		if(this.esFinDeVuelta()){
+			this._ronda.asignarGanadorDeVuelta();
+			this.getRonda().nuevaVuelta();
+		}
 	}
 
 	public boolean getEsParda() {
@@ -128,7 +163,11 @@ public class Vuelta implements IRecibible {
 
 	public void procesarAcciones() {
 		for(Accion accion : this.getAccionesDeVuelta()){
-			accion.procesarAccion(this.getRonda().getPartido(), this.getRonda());
+			try{
+				accion.procesarAccion(this.getRonda().getPartido(), this.getRonda());
+			}catch(EstadoIndefinidoException e){
+				System.out.println("Accion con estado indefinido, salteando");
+			}
 		}
 	}
 }

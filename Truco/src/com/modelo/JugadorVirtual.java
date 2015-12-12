@@ -1,10 +1,10 @@
 package com.modelo;
 
 public class JugadorVirtual extends Jugador {
-	private static final int MIN_TANTO_ENVIDO = 23;
+	/*private static final int MIN_TANTO_ENVIDO = 23;
 	private static final int MIN_TANTO_REAL_ENVIDO = 28;
 	private static final int MIN_TANTO_FALTA_ENVIDO = 31;
-	
+	*/
 	public JugadorVirtual() {
 		super();
 	}

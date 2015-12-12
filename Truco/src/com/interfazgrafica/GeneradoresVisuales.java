@@ -7,13 +7,9 @@ import com.modelo.Jugador;
 import com.modelo.cartas.Carta;
 
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -54,14 +50,14 @@ public class GeneradoresVisuales {
 		
 	}
 	
-	public HBox generarEspacioVacioVertical (){
-		
+	public HBox generarEspacioVacioVertical (){		
 		Image imagenEspacioVacio = new Image("https://raw.githubusercontent.com/igna-angel/algo3-truco/5e5aa5b00030f72bbe2f85ab055ca5482076829b/cartas%20espa%C3%B1olas/EspacioCarta.png");
 		ImageView espacioVacioCarta = new ImageView (imagenEspacioVacio);
 		espacioVacioCarta.setFitWidth(70);
 		espacioVacioCarta.setPreserveRatio(true);
 		espacioVacioCarta.setSmooth(true);
 		espacioVacioCarta.setCache(true);
+		
 		HBox espacioVacio = new HBox (espacioVacioCarta);
 		espacioVacio.setSpacing(5);
 		espacioVacio.setPadding(new Insets(15));

@@ -46,9 +46,17 @@ public class Mano implements IRecibible{
 		return cartasEnMano;
 	}
 	
+	public int getPosiconDeCarta(Carta carta){
+		for (int i=0; i < this.getCartasEnMano().size(); i++){
+			if(this.getCartasEnMano().get(i) == carta){
+				return i;	
+			}
+		}
+		
+		throw new NoContieneCartaException();
+	}
 	
 	public int getCantidadCartasEnMano(){
-		
 		return this.getCartasEnMano().size();
 	}
 	

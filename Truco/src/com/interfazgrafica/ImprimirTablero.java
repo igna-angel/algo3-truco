@@ -1,6 +1,4 @@
 package com.interfazgrafica;
-
-import com.modelo.CircularList;
 import com.modelo.Jugador;
 import com.modelo.JugadorHumano;
 import com.modelo.Partido;
@@ -28,19 +26,30 @@ import javafx.stage.Stage;
 
 public class ImprimirTablero {
 	
+	private static ImprimirTablero instance = null;
+	
 	private Scene scene;
 	private Stage stage;
 	private Partido partido;
-	private static ImprimirTablero instance = null;
 	private VBox botonera;
 	private VBox controles;
 	private HBox pantalla;
-	private HBox cartasJugador1EnMano;
-	private HBox cartasJugador2EnMano;
+
 	private List<HBox> listaDeCartasDeJugadoresEnMano;
-	private CircularList<Integer> turnoJugador;
-	private VBox tablero;
+	private List<HBox> listaDeCartasDeJugadoresJugadas;
+	private VBox _tableroDeMesa;
 	
+	private VBox _puntajeEquipoUno;
+	private VBox _puntajeEquipoDos;
+	private HBox _tableroPuntajes;
+	
+	private Label _turnoDeLabel;
+	private HBox _tableroTurnoDe;
+	
+	private VBox _tableroDeMano;
+	
+	private VBox _tableroDeManoYMesa;
+		
 	private ImprimirTablero(){
 		
 	}
@@ -53,10 +62,10 @@ public class ImprimirTablero {
 	}
 	
 	public VBox getTablero(){
-		if(this.tablero == null){
-			this.tablero = new VBox();
+		if(this._tableroDeMesa == null){
+			this._tableroDeMesa = new VBox();
 		}
-		return this.tablero;		
+		return this._tableroDeMesa;		
 	}
 	
 	public void generarPartido2Jugadores(){		
@@ -71,13 +80,10 @@ public class ImprimirTablero {
 		
 		partido.crearPartido();
 		partido.nuevaRonda();
-		
-		partido.getRondaActual().nuevaVuelta();
-		
-		ImprimirTablero.getInstance().imprimirTablero(partido);
-		
-		this.stage.setScene (scene);
-		this.stage.show();
+				
+		this.crearTableros();
+		ImprimirTablero.getInstance().imprimirTablero();
+		this.generarNuevaEscena();
 	}
 	
 
@@ -93,16 +99,17 @@ public class ImprimirTablero {
 		return this.scene;
 	}
 	
-	public void crearBotonera (VBox botonera){
-		botonera.getChildren().clear();
-		for (Accion accion : partido.getRondaActual().getVueltaActual().getAccionesDeVuelta())
+	public void crearBotoneraAcciones (){
+		this.getBotonera().getChildren().clear();
+		
+		for (Accion accion : this.partido.getVueltaActual().getAccionesDeVuelta())
 		{
-			if (accion.getEstado() instanceof EstadoIndefinido){
+			System.out.println(accion.puedePedirNuevaAccion(this.partido, this.partido.getJugadorActual()));
+			if (accion.getEstado().getID().equals(Accion.ESTADO_INDEFINIDO) && accion.puedePedirNuevaAccion(this.partido, this.partido.getJugadorActual())){
 				Button unBoton = new Button();
 				unBoton.setText(accion.getID());
-				botonera.getChildren().add(unBoton);
-				unBoton.setOnAction(new BotonAccionEventHandler(accion, partido.getRondaActual().getVueltaActual(), this.partido.getJugadorActual(), this.partido.getJugadorSiguienteAlActual()));
-			
+				this.getBotonera().getChildren().add(unBoton);
+				unBoton.setOnAction(new BotonAccionEventHandler(accion, this.partido.getVueltaActual(), this.partido.getJugadorActual(), this.partido.getJugadorSiguienteAlActual()));
 			}
 		}
 	}	
@@ -110,7 +117,7 @@ public class ImprimirTablero {
 	public void crearBotoneraDeRetruque (Accion accionOriginal, VBox botonera, Vuelta vuelta){
 		botonera.getChildren().clear();
 		
-		Label responde = new Label("Responde el Equipo: " + partido.getNumeroDeEquipo(partido.getEquipoDeJugador(accionOriginal.getDestino())));
+		Label responde = new Label( "Responde el Equipo: " + Integer.toString(partido.getNumeroDeEquipo(partido.getEquipoDeJugador(accionOriginal.getDestino())) + 1) );
 		botonera.getChildren().add(responde);
 		
 		Button aceptar = new Button ("QUIERO");
@@ -127,131 +134,256 @@ public class ImprimirTablero {
 				Button unBoton = new Button();
 				unBoton.setText(accion.getID());
 				botonera.getChildren().add(unBoton);
-				unBoton.setOnAction(new BotonAccionEventHandler(accion, vuelta, accionOriginal.getDestino(), accionOriginal.getOrigen()));			
+				Accion nuevaAccion = accionOriginal.getNuevaAccion(accion, accionOriginal.getOrigen(), accionOriginal.getDestino(), this.partido);
+				unBoton.setOnAction(new BotonAccionEventHandler(nuevaAccion, vuelta, accionOriginal.getDestino(), accionOriginal.getOrigen()));			
 			}
 		}catch(NoHayAccionesException e){
 			System.out.println("NO HAY MAS ACCIONES POSIBLES");
 		}
 	}	
 	
+	private void generarPuntajesDeEquipos(){
+		this._puntajeEquipoUno = new VBox (new Label ("EQUIPO 1"), new Label (Integer.toString(partido.getPuntosPrimerEquipo())));
+		this._puntajeEquipoUno.setAlignment(Pos.TOP_CENTER);
+		this._puntajeEquipoUno.setSpacing(10);
+
+		this._puntajeEquipoDos = new VBox (new Label ("EQUIPO 2"), new Label (Integer.toString(partido.getPuntosUltimoEquipo())));
+		this._puntajeEquipoDos.setAlignment(Pos.TOP_CENTER);
+		this._puntajeEquipoDos.setSpacing(10);
+		
+		this._tableroPuntajes.getChildren().clear();
+		this._tableroPuntajes.getChildren().add(_puntajeEquipoUno);
+		this._tableroPuntajes.getChildren().add(_puntajeEquipoDos);
+	}
 	
-	public void imprimirTablero (Partido partido){		
-		GeneradoresVisuales generador = new GeneradoresVisuales();
-		listaDeCartasDeJugadoresEnMano = new ArrayList<HBox>();
+	private void generarListaDeCartasEnManoDeJugadores(){
+		this.listaDeCartasDeJugadoresEnMano = new ArrayList<HBox>();
+		
 		for (int i=0 ; i < partido.getCantidadDeJugadoresTotales(); i++){
-			listaDeCartasDeJugadoresEnMano.add(new HBox());
-		}
-		VBox puntajeJugador1 = new VBox (new Label ("EQUIPO 1"), new Label (Integer.toString(partido.getPuntosPrimerEquipo())));
-		puntajeJugador1.setAlignment(Pos.TOP_CENTER);
-		puntajeJugador1.setSpacing(10);
-		VBox puntajeJugador2 = new VBox (new Label ("EQUIPO 2"), new Label (Integer.toString(partido.getPuntosUltimoEquipo())));
-		puntajeJugador2.setAlignment(Pos.TOP_CENTER);
-		puntajeJugador2.setSpacing(10);
-		HBox ambosPuntajes = new HBox (puntajeJugador1, puntajeJugador2);
-		ambosPuntajes.setSpacing(15);
-		ambosPuntajes.setPadding(new Insets(20));
-		
-	    HBox cartasJugador1Jugadas = generador.generarEspacioVacioVertical();
-	    HBox cartasJugador2Jugadas = generador.generarEspacioVacioVertical();
-	    cartasJugador1Jugadas.setAlignment(Pos.CENTER);
-	    cartasJugador2Jugadas.setAlignment(Pos.CENTER);
-	    this.tablero = new VBox (cartasJugador1Jugadas, cartasJugador2Jugadas);
-	    
-	    GeneradoresVisuales.getInstance().generarCartasDadasVuelta(partido.getOrdenJugadores(), listaDeCartasDeJugadoresEnMano);
-	    this.asignarAlineaciones();
-		
-		
-		VBox campoDeJuego = new VBox (listaDeCartasDeJugadoresEnMano.get(0), this.tablero, listaDeCartasDeJugadoresEnMano.get(1));
-		campoDeJuego.setPadding(new Insets (20));
-		
-		turnoJugador = new CircularList<Integer>();
-		turnoJugador.add(1);
-		turnoJugador.add(2);
-		turnoJugador.resetToFirst();
-		
-		this.generarBotonEstoyListo();
-
-				
-		pantalla = new HBox (ambosPuntajes, campoDeJuego, this.controles);
-		scene = new Scene(pantalla, 700,600);
-
-	}
-	
-	
-	public void asignarAlineaciones (){
-		
-		for (int i=0 ; i < listaDeCartasDeJugadoresEnMano.size(); i++){
-			if (i%2 == 0){
-				this.listaDeCartasDeJugadoresEnMano.get(i).setAlignment(Pos.TOP_CENTER);
-			}
-			else{
-				this.listaDeCartasDeJugadoresEnMano.get(i).setAlignment(Pos.BOTTOM_CENTER);
-			}
+			this.listaDeCartasDeJugadoresEnMano.add(new HBox());
 		}
 	}
 	
-	
-	public void generarBotonEstoyListo(){
-		Label turnoDe = new Label ("Turno de: JUGADOR ");				
-		HBox esElTurnoDe = new HBox (turnoDe, new Label (turnoJugador.getCurrent().toString()));
+	private void generarListaDeCartasJugadasDeJugadores(){
+		this.listaDeCartasDeJugadoresJugadas = new ArrayList<HBox>();
 		
-		esElTurnoDe.setPadding(new Insets(20));
-		Button botonEstoyListo = new Button ("Estoy Listo");
-		this.botonera = new VBox (botonEstoyListo);
+		for (int i=0 ; i < partido.getCantidadDeJugadoresTotales(); i++){
+			HBox nuevoEspacio = GeneradoresVisuales.getInstance().generarEspacioVacioVertical();
+			nuevoEspacio.setAlignment(Pos.CENTER);
+			this.listaDeCartasDeJugadoresJugadas.add(nuevoEspacio);
+		}
+	}
+	
+	private void agregarListaDeCartasJugadasATablero(){
+		int size = this.listaDeCartasDeJugadoresJugadas.size();
+		
+		for(int i = 0; i < size; i++){
+			this._tableroDeMesa.getChildren().add(this.listaDeCartasDeJugadoresJugadas.get(i));
+		}
+	}
+	
+	private void agregarListaDeCartasEnManoATableroDeMano(){
+		int size = this.listaDeCartasDeJugadoresEnMano.size();
+		
+		for(int i = 0; i < size; i++){
+			this._tableroDeMano.getChildren().add(this.listaDeCartasDeJugadoresEnMano.get(i));
+		}
+	}
+	
+	public void aceptarAccion(Accion accion){
+		System.out.println("Aceptando " + accion.getID());
+		accion.aceptar();
+		accion.limpiarAccionesRelacionadasEnVuelta(this.partido.getVueltaActual());
+		accion.reemplazarAccionOriginalEnVuelta(this.partido.getVueltaActual());
+		System.out.println("nuevas acciones en vuelta");
+		for(Accion nuevasAcciones : partido.getVueltaActual().getAccionesDeVuelta()){
+			System.out.println(nuevasAcciones.getID());
+		}
+		this.crearBotoneraAcciones();
+	}
+	
+	public void negarAccion(Accion accion){
+		accion.negar();
+		accion.reemplazarAccionOriginalEnVuelta(this.partido.getVueltaActual());
+		accion.limpiarAccionesRelacionadasEnVuelta(this.partido.getVueltaActual());
+		this.crearBotoneraAcciones();
+	}
+
+	private void crearTableros(){
+		this._tableroDeMesa = new VBox();
+		
+		this.botonera = new VBox();
 		this.getBotonera().setSpacing(10);
 		this.getBotonera().setAlignment(Pos.TOP_CENTER);
 		
-		this.controles = new VBox (esElTurnoDe, this.getBotonera());
+		this.controles = new VBox();
 		this.controles.setAlignment(Pos.TOP_CENTER);
 		
-		BotonEstoyListoEventHandler botonEstoyListoEventHandler = new BotonEstoyListoEventHandler (partido, listaDeCartasDeJugadoresEnMano.get(0));
-		botonEstoyListo.setOnAction(botonEstoyListoEventHandler);
+		this._tableroDeMano = new VBox ();
+		this._tableroDeMano.setPadding(new Insets (20));
+		
+		this._tableroDeManoYMesa = new VBox();
+		this._tableroDeManoYMesa.setPadding(new Insets (20));
+		
+		this._tableroPuntajes = new HBox();
+		this._tableroPuntajes.setSpacing(15);
+		this._tableroPuntajes.setPadding(new Insets(20));
+		
+		this._tableroTurnoDe = new HBox();
+		this._tableroTurnoDe.setPadding(new Insets(20));
+		
+		this.pantalla = new HBox();
 	}
 	
+	private void generarPantalla(){
+		this.pantalla.getChildren().add(this._tableroPuntajes);	
+		this.pantalla.getChildren().add(this._tableroDeManoYMesa);
+		this.pantalla.getChildren().add(this.controles);
+	}
 	
-	public void transicionDeTurno(){
+	private void generarTableroDeManoYMesa(){
+		this._tableroDeManoYMesa.getChildren().add(this._tableroDeMano.getChildren().get(0));
+		this._tableroDeManoYMesa.getChildren().add(this._tableroDeMesa);
+		this._tableroDeManoYMesa.getChildren().add(this._tableroDeMano.getChildren().get(0));
+	}
+	
+	private void generarNuevaEscena(){
+		this.scene = new Scene(pantalla, 700,600);
+		this.stage.setScene (scene);
+		this.stage.show();
+	}
+
+	public void imprimirTablero (){	
+		this.generarListaDeCartasEnManoDeJugadores();
+
+		this.generarListaDeCartasJugadasDeJugadores();
+	    	    
+	    this.agregarListaDeCartasJugadasATablero();
+	    
+	    GeneradoresVisuales.getInstance().generarCartasDadasVuelta(partido.getOrdenJugadores(), listaDeCartasDeJugadoresEnMano);
+	    this.asignarAlineaciones();
+	    
+		this.agregarListaDeCartasEnManoATableroDeMano();
 		
+		this.generarTableroDeManoYMesa();
+		
+		this.generarBotonEstoyListo();
+			
+		this.generarPuntajesDeEquipos();
+		
+		this.generarPantalla();
+	}	
+	
+	public void asignarAlineaciones (){		
+		for (int i=0 ; i < listaDeCartasDeJugadoresEnMano.size(); i++){
+			if (i%2 == 0){
+				this.listaDeCartasDeJugadoresEnMano.get(i).setAlignment(Pos.BOTTOM_CENTER);
+			}
+			else{
+				this.listaDeCartasDeJugadoresEnMano.get(i).setAlignment(Pos.TOP_CENTER);
+			}
+		}
+	}
+	
+	private void generarLabelTurnoDe(int numeroJugadorActual){
+		this._turnoDeLabel = new Label ("Turno de: JUGADOR ");	
+		
+		this._tableroTurnoDe.getChildren().clear();
+		this._tableroTurnoDe.getChildren().add(this._turnoDeLabel);
+		this._tableroTurnoDe.getChildren().add(new Label (Integer.toString(numeroJugadorActual + 1)));
+	}
+	
+	public void ejecutarEstoyListo(){
+		ImprimirTablero.getInstance().crearBotoneraAcciones();
+		
+		int numeroDeJugadorActual = partido.getNumeroJugadorActual();			
+		ImprimirTablero.getInstance().mostrarCartasJugador(partido.getJugadorActual(), this.listaDeCartasDeJugadoresEnMano.get(numeroDeJugadorActual), this.listaDeCartasDeJugadoresJugadas.get(numeroDeJugadorActual));			
+	}
+		
+	public void generarBotonEstoyListo(){
+		int numeroDeJugadorActual = partido.getOrdenJugadores().getIndexOf(partido.getJugadorActual());
+		
+		this.generarLabelTurnoDe(numeroDeJugadorActual);
+		
+		Button botonEstoyListo = new Button ("Estoy Listo");
+		BotonEstoyListoEventHandler botonEstoyListoEventHandler = new BotonEstoyListoEventHandler();
+		botonEstoyListo.setOnAction(botonEstoyListoEventHandler);
+		
+		this.botonera.getChildren().clear();
+		this.botonera.getChildren().add(botonEstoyListo);
+				
+		this.controles.getChildren().clear();
+		this.controles.getChildren().add(this._tableroTurnoDe);
+		this.controles.getChildren().add(this.getBotonera());
+	}
+	
+	public void transicionDeTurno(){		
 		this.generarBotonEstoyListo();
 		GeneradoresVisuales.getInstance().generarCartasDadasVuelta(partido.getOrdenJugadores(), listaDeCartasDeJugadoresEnMano);
 	}
 	
-	public void imprimirTurnoDeJugador (Jugador jugador, HBox cartasJugadorEnMano, HBox cartasJugadorJugadas){
-		
+	public void imprimirTurnoDeJugador (Jugador jugador, HBox cartasJugadorEnMano, HBox cartasJugadorJugadas){		
 		mostrarCartasJugador(jugador, cartasJugadorEnMano, cartasJugadorJugadas);
 	}
 
 	public void enviarAccionAJugador(Accion accion, Jugador jugadorSiguienteAlActual, Vuelta vuelta) {		
 		this.crearBotoneraDeRetruque(accion, this.getBotonera(), vuelta);
 	}
-	
-	
+		
 	public void mostrarCartasJugador (Jugador jugador, HBox cartasJugadorEnMano, HBox cartasJugadorJugadas){
 		cartasJugadorEnMano.getChildren().clear();
+		
 		for(int i=0; i< jugador.getCantidadCartasEnMano(); i++){
-			BotonCartaEnManoEventHandler botonCarta1EventHandler = new BotonCartaEnManoEventHandler(cartasJugadorEnMano, cartasJugadorJugadas, this.partido, jugador.getListaDeCartasEnMano().get(i));
-			ImageView visualDeCartaEnMano = GeneradoresVisuales.getInstance().generadorDeVisualDeCarta(jugador.getListaDeCartasEnMano().get(i));
-			Button botonCartaEnMano = new Button ();
-			botonCartaEnMano.setGraphic(visualDeCartaEnMano);
-			botonCartaEnMano.setOnAction(botonCarta1EventHandler);
-			cartasJugadorEnMano.getChildren().add(botonCartaEnMano);
+			cartasJugadorEnMano.getChildren().add(this.crearBotonCarta(jugador.getCartasEnMano().get(i)));
 		}	
+	}
+	
+	private Button crearBotonCarta(Carta carta){
+		Button nuevoBotonCarta = new Button();
+		ImageView visualDeCartaEnMano = GeneradoresVisuales.getInstance().generadorDeVisualDeCarta(carta);
+		nuevoBotonCarta.setGraphic(visualDeCartaEnMano);
+		nuevoBotonCarta.setOnAction(new BotonCartaEnManoEventHandler(carta));
+		return nuevoBotonCarta;
 	}
 
 	public void traspasarCartaDeManoAMesa(HBox cartasJugadorEnMano, HBox cartasJugadorJugadas, Carta carta) {
+		int posicionEnMano = getPosicionDeCartaEnMano(partido.getJugadorActual(), carta);
+		cartasJugadorJugadas.getChildren().add(cartasJugadorEnMano.getChildren().get(posicionEnMano));
+	}
+	
+	private boolean limpiarTableros(){		
+		if(this.partido.getRondaActual().esInicioDeRonda()){
+			for(int i = 0; i < this.listaDeCartasDeJugadoresEnMano.size(); i++){
+				this.listaDeCartasDeJugadoresEnMano.get(i).getChildren().clear();
+			}
+			
+			for(int i = 0; i < this.listaDeCartasDeJugadoresJugadas.size(); i++){
+				this.listaDeCartasDeJugadoresJugadas.get(i).getChildren().clear();
+			}
+						
+			this._tableroDeMesa.getChildren().clear();
+			this._tableroDeManoYMesa.getChildren().clear();	
+			this.pantalla.getChildren().clear();
+			return true;
+		}
 		
-		int i = buscarPosicionDeCartaEnMano(carta);
-		cartasJugadorJugadas.getChildren().add(cartasJugadorEnMano.getChildren().get(i));
-		System.out.println("Cantidad de hijos: "+cartasJugadorEnMano.getChildren().size()+" Indice: "+i);
-		this.partido.getJugadorActual().bajarCarta(this.partido.getRondaActual().getVueltaActual(), carta);
+		return false;
+	}
+	
+	public void bajarCarta(Carta carta){
+		int numeroJugadorActual = partido.getNumeroJugadorActual();
+		this.traspasarCartaDeManoAMesa(this.listaDeCartasDeJugadoresEnMano.get(numeroJugadorActual), this.listaDeCartasDeJugadoresJugadas.get(numeroJugadorActual), carta);
+		
+		this.partido.getJugadorActual().bajarCarta(this.partido.getVueltaActual(), carta);
+		
+		if(this.limpiarTableros())
+			this.imprimirTablero();
+		else
+			this.transicionDeTurno();	
 	}
 
-	public int buscarPosicionDeCartaEnMano (Carta carta){
-			
-		for (int i=0; i < partido.getJugadorActual().getCantidadCartasEnMano(); i++)
-			if ((partido.getJugadorActual().getCartasEnMano().get(i))==carta){
-			return i;	
-			};
-		throw new NoContieneCartaException();
+	public int getPosicionDeCartaEnMano (Jugador jugador, Carta carta){			
+		return jugador.getPosiconDeCarta(carta);
 	}
 
 }

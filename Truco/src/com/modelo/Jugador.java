@@ -17,6 +17,10 @@ public abstract class Jugador implements IRecibible{
 		return this._mano;
 	}
 	
+	public int getPosiconDeCarta(Carta carta){
+		return this.getMano().getPosiconDeCarta(carta);
+	}
+	
 	public void recibirCarta(Carta carta){
 		this.getMano().recibirCarta(carta);
 	}

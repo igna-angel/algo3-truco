@@ -14,8 +14,7 @@ public class BotonNegarEventHandler implements EventHandler<ActionEvent> {
 	}
 	
 	public void handle (ActionEvent actionEvent){
-		this.accionBase.negar();
-		ImprimirTablero.getInstance().crearBotonera(ImprimirTablero.getInstance().getBotonera());
+		ImprimirTablero.getInstance().negarAccion(accionBase);
 	}
 }
 

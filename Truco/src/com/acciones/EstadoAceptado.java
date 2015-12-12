@@ -10,4 +10,10 @@ public class EstadoAceptado implements EstadoAccion{
 		accion.procesarAccion(this, partido, ronda);
 	}
 
+	@Override
+	public String getID() {
+		return Accion.ESTADO_ACEPTADO;
+	}
+
+	
 }

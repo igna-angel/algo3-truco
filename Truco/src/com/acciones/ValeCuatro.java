@@ -7,6 +7,7 @@ import com.modelo.Equipo;
 import com.modelo.Jugador;
 import com.modelo.Partido;
 import com.modelo.Ronda;
+import com.modelo.Vuelta;
 
 public class ValeCuatro extends Accion{
 
@@ -55,5 +56,20 @@ public class ValeCuatro extends Accion{
 	public int getPuntosQueridos(Partido partido, Equipo equipo) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public void limpiarAccionesRelacionadasEnVuelta(Vuelta vuelta) {
+		List<Accion> nuevasAccionesVuelta = new ArrayList<Accion>();
+		
+		this.getDecorada().limpiarAccionesRelacionadasEnVuelta(vuelta);
+		
+		for(Accion accion : vuelta.getAccionesDeVuelta()){
+			if(!accion.getID().equals(Accion.ACCION_RE_TRUCO)){
+				nuevasAccionesVuelta.add(accion);
+			}
+		}
+		
+		vuelta.setAccionesDeVuelta(nuevasAccionesVuelta);
 	}	
 }

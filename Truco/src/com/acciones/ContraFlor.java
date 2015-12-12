@@ -7,6 +7,7 @@ import com.modelo.Equipo;
 import com.modelo.Jugador;
 import com.modelo.Partido;
 import com.modelo.Ronda;
+import com.modelo.Vuelta;
 
 public class ContraFlor extends Accion{
 
@@ -63,5 +64,22 @@ public class ContraFlor extends Accion{
 	@Override
 	protected void procesarAccion(EstadoNegado estado, Partido partido, Ronda ronda) {
 		partido.agregarPuntosAlEquipo(partido.getEquipoDeJugador(this.getOrigen()), this.getPuntosNoQueridos());
+	}
+
+	@Override
+	public void limpiarAccionesRelacionadasEnVuelta(Vuelta vuelta) {
+		List<Accion> nuevasAccionesVuelta = new ArrayList<Accion>();
+		
+		for(Accion accion : vuelta.getAccionesDeVuelta()){
+			if(!accion.getID().equals(Accion.ACCION_REAL_ENVIDO) &&
+				!accion.getID().equals(Accion.ACCION_FALTA_ENVIDO) &&
+				!accion.getID().equals(Accion.ACCION_ENVIDO) &&
+				!accion.getID().equals(Accion.ACCION_ENVIDO_ENVIDO) &&
+				!accion.getID().equals(Accion.ACCION_FLOR)){
+				   nuevasAccionesVuelta.add(accion);
+			}
+		}
+		
+		vuelta.setAccionesDeVuelta(nuevasAccionesVuelta);
 	}
 }

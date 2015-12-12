@@ -7,6 +7,7 @@ import com.modelo.Equipo;
 import com.modelo.Jugador;
 import com.modelo.Partido;
 import com.modelo.Ronda;
+import com.modelo.Vuelta;
 
 public class Truco extends Accion{
 	
@@ -48,7 +49,6 @@ public class Truco extends Accion{
 		Equipo equipoOrigen = partido.getEquipoDeJugador(this.getOrigen());
 		
 		partido.agregarPuntosAlEquipo(equipoOrigen, this.getPuntosNoQueridos());		
-		
 	}
 
 	@Override
@@ -61,5 +61,21 @@ public class Truco extends Accion{
 	public int getPuntosQueridos(Partido partido, Equipo equipo) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public void limpiarAccionesRelacionadasEnVuelta(Vuelta vuelta) {
+		List<Accion> nuevasAccionesVuelta = new ArrayList<Accion>();
+		
+		for(Accion accion : vuelta.getAccionesDeVuelta()){
+			if(!accion.getID().equals(Accion.ACCION_ENVIDO) &&
+				!accion.getID().equals(Accion.ACCION_REAL_ENVIDO) &&
+				!accion.getID().equals(Accion.ACCION_FALTA_ENVIDO) &&
+				!accion.getID().equals(Accion.ACCION_FLOR)){
+					nuevasAccionesVuelta.add(accion);
+			}
+		}
+		
+		vuelta.setAccionesDeVuelta(nuevasAccionesVuelta);
 	}	
 }

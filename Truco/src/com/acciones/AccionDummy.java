@@ -4,6 +4,7 @@ import com.exceptions.AccionDummyException;
 import com.modelo.Equipo;
 import com.modelo.Partido;
 import com.modelo.Ronda;
+import com.modelo.Vuelta;
 
 public class AccionDummy extends Accion{
 
@@ -18,7 +19,7 @@ public class AccionDummy extends Accion{
 	
 	@Override
 	public String getID() {
-		throw new AccionDummyException();
+		return Accion.ACCION_DUMMY;
 	}
 
 	@Override
@@ -52,6 +53,11 @@ public class AccionDummy extends Accion{
 	protected void procesarAccion(EstadoNegado estado, Partido partido, Ronda ronda) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public void limpiarAccionesRelacionadasEnVuelta(Vuelta vuelta) {
+
 	}
 
 	

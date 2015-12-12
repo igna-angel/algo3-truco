@@ -7,5 +7,5 @@ public interface EstadoAccion {
 
 	void procesar(Accion accion, Partido partido, Ronda ronda);
 
-	
+	String getID();
 }

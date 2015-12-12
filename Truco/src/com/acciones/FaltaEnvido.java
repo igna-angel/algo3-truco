@@ -7,6 +7,7 @@ import com.modelo.Equipo;
 import com.modelo.Jugador;
 import com.modelo.Partido;
 import com.modelo.Ronda;
+import com.modelo.Vuelta;
 
 public class FaltaEnvido extends Accion{
 
@@ -51,7 +52,7 @@ public class FaltaEnvido extends Accion{
 		Jugador jugadorTantoMasAltoEquipoB = ronda.getJugadorConMayorTantoEnEquipo(equipoB);
 		
 		int tantoEquipoA = jugadorTantoMasAltoEquipoA.getTantoEnMano();
-		int tantoEquipoB = jugadorTantoMasAltoEquipoB.getCantidadCartasEnMano();
+		int tantoEquipoB = jugadorTantoMasAltoEquipoB.getTantoEnMano();
 			
 		if(tantoEquipoA > tantoEquipoB){
 			partido.agregarPuntosAlEquipo(equipoA, this.getPuntosQueridos(partido, equipoA));
@@ -66,5 +67,21 @@ public class FaltaEnvido extends Accion{
 	@Override
 	protected void procesarAccion(EstadoNegado estado, Partido partido, Ronda ronda) {
 		partido.agregarPuntosAlEquipo(partido.getEquipoDeJugador(this.getOrigen()), this.getPuntosNoQueridos());
+	}
+
+	@Override
+	public void limpiarAccionesRelacionadasEnVuelta(Vuelta vuelta) {
+		List<Accion> nuevasAccionesVuelta = new ArrayList<Accion>();
+		
+		for(Accion accion : vuelta.getAccionesDeVuelta()){
+			if(!accion.getID().equals(Accion.ACCION_REAL_ENVIDO) &&
+				!accion.getID().equals(Accion.ACCION_ENVIDO) &&
+				!accion.getID().equals(Accion.ACCION_FLOR) &&
+				!accion.getID().equals(Accion.ACCION_ENVIDO_ENVIDO)){
+					nuevasAccionesVuelta.add(accion);
+			}
+		}
+		
+		vuelta.setAccionesDeVuelta(nuevasAccionesVuelta);
 	}
 }

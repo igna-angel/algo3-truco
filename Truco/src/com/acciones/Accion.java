@@ -1,5 +1,6 @@
 package com.acciones;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.exceptions.EstadoIndefinidoException;
@@ -10,8 +11,13 @@ import com.modelo.Equipo;
 import com.modelo.Jugador;
 import com.modelo.Partido;
 import com.modelo.Ronda;
+import com.modelo.Vuelta;
 
 public abstract class Accion{
+	
+	public static final String ESTADO_ACEPTADO = "Aceptado";
+	public static final String ESTADO_NEGADO = "NEGADO";
+	public static final String ESTADO_INDEFINIDO = "Indefinido";
 	
 	public static final int PUNTOS_TRUCO = 2;
 	public static final int PUNTOS_RE_TRUCO = 3;
@@ -36,6 +42,7 @@ public abstract class Accion{
 	public static final String ACCION_FLOR = "Flor";
 	public static final String ACCION_CONTRA_FLOR = "Contra Flor";
 	public static final String ACCION_CONTRA_FLOR_AL_RESTO = "Contra Flor Al Resto";
+	public static final String ACCION_DUMMY = "Dummy";
 		
 	private List<Accion> _accionesPosibles = null;
 	
@@ -111,7 +118,7 @@ public abstract class Accion{
 
 	public abstract String getID();
 	
-	private boolean puedePedirNuevaAccion(Partido partido, Jugador nuevoOrigen){
+	public boolean puedePedirNuevaAccion(Partido partido, Jugador nuevoOrigen){
 		if(this.getDecorada().getOrigen() == null) return true;
 		if(partido.getEquipoDeJugador(this.getDecorada().getOrigen()) == partido.getEquipoDeJugador(nuevoOrigen)) return false;
 		return true;
@@ -134,10 +141,16 @@ public abstract class Accion{
 	}
 
 	public void aceptar(){
+		this.getDecorada().indefinir();
 		this._estado = new EstadoAceptado();
 	}
 	
+	public void indefinir(){
+		this._estado = new EstadoIndefinido();
+	}
+	
 	public void negar(){
+		this.getDecorada().indefinir();
 		this._estado = new EstadoNegado();
 	}
 	
@@ -146,12 +159,35 @@ public abstract class Accion{
 	}
 	
 	public void procesarAccion(Partido partido, Ronda ronda){
+		System.out.println("Procesando accion " + this.getID());
+		
 		this.getEstado().procesar(this, partido, ronda);
 	}
 	
 	protected void procesarAccion(EstadoIndefinido estado, Partido partido, Ronda ronda){
 		throw new EstadoIndefinidoException();
 	}
+	
 	protected abstract void procesarAccion(EstadoAceptado estado, Partido partido, Ronda ronda);
 	protected abstract void procesarAccion(EstadoNegado estado, Partido partido, Ronda ronda);
+	
+	public abstract void limpiarAccionesRelacionadasEnVuelta(Vuelta vuelta);
+	
+	public void reemplazarAccionOriginalEnVuelta(Vuelta vuelta){
+		if(vuelta.getAccionesDeVuelta().contains(this.getDecorada())){
+			if(!this.getDecorada().getID().equals(Accion.ACCION_DUMMY)){
+				int indiceDecorada = vuelta.getAccionesDeVuelta().indexOf(this.getDecorada());
+				vuelta.getAccionesDeNuevaVuelta().set(indiceDecorada, this);
+			}
+		}
+		
+		try{
+			for(Accion accion : this.getAccionesPosibles()){
+				vuelta.getAccionesDeVuelta().add(accion);
+			}
+		}catch(NoHayAccionesException e){
+			System.out.println(e.getClass());
+		}
+			
+	}
 }
