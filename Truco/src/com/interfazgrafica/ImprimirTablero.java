@@ -18,8 +18,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 public class ImprimirTablero {
@@ -156,7 +160,9 @@ public class ImprimirTablero {
 		this.listaDeCartasDeJugadoresEnMano = new ArrayList<HBox>();
 		
 		for (int i=0 ; i < partido.getCantidadDeJugadoresTotales(); i++){
-			this.listaDeCartasDeJugadoresEnMano.add(new HBox());
+			HBox cartasDeUnJugadorEnMano = new HBox();
+			cartasDeUnJugadorEnMano.setMinSize(300, 140);
+			this.listaDeCartasDeJugadoresEnMano.add(cartasDeUnJugadorEnMano);
 		}
 	}
 	
@@ -164,8 +170,13 @@ public class ImprimirTablero {
 		this.listaDeCartasDeJugadoresJugadas = new ArrayList<HBox>();
 		
 		for (int i=0 ; i < partido.getCantidadDeJugadoresTotales(); i++){
-			HBox nuevoEspacio = GeneradoresVisuales.getInstance().generarEspacioVacioVertical();
+			HBox nuevoEspacio = new HBox();
+			nuevoEspacio.setMinSize(300, 140);
 			nuevoEspacio.setAlignment(Pos.CENTER);
+			nuevoEspacio.setSpacing(5);
+			nuevoEspacio.setPadding(new Insets(15));
+			nuevoEspacio.setBackground(new Background(new BackgroundFill(Color.DARKGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
+			
 			this.listaDeCartasDeJugadoresJugadas.add(nuevoEspacio);
 		}
 	}

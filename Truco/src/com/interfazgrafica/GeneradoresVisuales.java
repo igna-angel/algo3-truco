@@ -61,29 +61,6 @@ public class GeneradoresVisuales {
 		}
 	}
 	
-	private ImageView generarImagenEspacioVacio(){
-		if(this._imagenEspacioVacio == null){
-			this._imagenEspacioVacio = new Image("https://raw.githubusercontent.com/igna-angel/algo3-truco/5e5aa5b00030f72bbe2f85ab055ca5482076829b/cartas%20espa%C3%B1olas/EspacioCarta.png");
-		}
-		
-		ImageView nuevo = new ImageView (this._imagenEspacioVacio);
-		nuevo.setFitWidth(70);
-		nuevo.setPreserveRatio(true);
-		nuevo.setSmooth(true);
-		nuevo.setCache(true);
-		
-		return nuevo;
-	}
-	
-	public HBox generarEspacioVacioVertical (){	
-		HBox espacioVacio = new HBox (this.generarImagenEspacioVacio());
-		espacioVacio.setSpacing(5);
-		espacioVacio.setPadding(new Insets(15));
-		espacioVacio.setBackground(new Background(new BackgroundFill(Color.DARKGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
-		return espacioVacio;
-	}
-	
-
 	
 	// Pre: La imagen de la carta debe estar con extension ".png"
 	// Post: Devuelve la visual aplicable a Boxes de la carta
