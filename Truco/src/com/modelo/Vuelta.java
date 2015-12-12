@@ -5,11 +5,6 @@ import java.util.List;
 import java.util.Stack;
 
 import com.acciones.Accion;
-import com.acciones.ContraFlorAlResto;
-import com.acciones.Envido;
-import com.acciones.FaltaEnvido;
-import com.acciones.Flor;
-import com.acciones.RealEnvido;
 import com.exceptions.EstadoIndefinidoException;
 import com.modelo.cartas.Carta;
 import com.modelo.cartas.CartaInvalida;

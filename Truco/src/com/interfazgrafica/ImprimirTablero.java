@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.acciones.Accion;
-import com.acciones.EstadoIndefinido;
-import com.exceptions.NoContieneCartaException;
 import com.exceptions.NoHayAccionesException;
 import com.interfazgrafica.GeneradoresVisuales;
 
@@ -89,7 +87,6 @@ public class ImprimirTablero {
 
 	public static ImprimirTablero getInstance(){
 		if (ImprimirTablero.instance == null){
-			System.out.println("Instancia");
 			ImprimirTablero.instance = new ImprimirTablero();
 		}
 		return ImprimirTablero.instance;
@@ -104,7 +101,6 @@ public class ImprimirTablero {
 		
 		for (Accion accion : this.partido.getVueltaActual().getAccionesDeVuelta())
 		{
-			System.out.println(accion.puedePedirNuevaAccion(this.partido, this.partido.getJugadorActual()));
 			if (accion.getEstado().getID().equals(Accion.ESTADO_INDEFINIDO) && accion.puedePedirNuevaAccion(this.partido, this.partido.getJugadorActual())){
 				Button unBoton = new Button();
 				unBoton.setText(accion.getID());
@@ -191,14 +187,9 @@ public class ImprimirTablero {
 	}
 	
 	public void aceptarAccion(Accion accion){
-		System.out.println("Aceptando " + accion.getID());
 		accion.aceptar();
-		accion.limpiarAccionesRelacionadasEnVuelta(this.partido.getVueltaActual());
 		accion.reemplazarAccionOriginalEnVuelta(this.partido.getVueltaActual());
-		System.out.println("nuevas acciones en vuelta");
-		for(Accion nuevasAcciones : partido.getVueltaActual().getAccionesDeVuelta()){
-			System.out.println(nuevasAcciones.getID());
-		}
+		accion.limpiarAccionesRelacionadasEnVuelta(this.partido.getVueltaActual());
 		this.crearBotoneraAcciones();
 	}
 	

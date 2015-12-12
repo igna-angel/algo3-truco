@@ -1,6 +1,5 @@
 package com.acciones;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.exceptions.EstadoIndefinidoException;

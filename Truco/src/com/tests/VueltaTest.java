@@ -7,7 +7,6 @@ import org.junit.Test;
 import com.modelo.Jugador;
 import com.modelo.JugadorHumano;
 import com.modelo.Partido;
-import com.modelo.RondaRedonda;
 import com.modelo.Vuelta;
 import com.modelo.cartas.Carta;
 import com.modelo.cartas.Carta.Palo;

@@ -76,6 +76,7 @@ public class Envido extends Accion{
 		
 		for(Accion accion : vuelta.getAccionesDeVuelta()){
 			if(!accion.getID().equals(Accion.ACCION_REAL_ENVIDO) &&
+				!accion.getID().equals(Accion.ACCION_ENVIDO_ENVIDO) &&
 				!accion.getID().equals(Accion.ACCION_FALTA_ENVIDO) &&
 				!accion.getID().equals(Accion.ACCION_FLOR)){
 					nuevasAccionesVuelta.add(accion);

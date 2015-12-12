@@ -1,6 +1,5 @@
 package com.acciones;
 
-import com.exceptions.AccionDummyException;
 import com.modelo.Equipo;
 import com.modelo.Partido;
 import com.modelo.Ronda;
