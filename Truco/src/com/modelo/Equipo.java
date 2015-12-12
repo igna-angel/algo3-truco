@@ -40,6 +40,10 @@ public class Equipo {
 		}
 	}
 	
+	public boolean hayFlor(){
+		return this.getCantidadDeJugadoresConFlor() != 0;
+	}
+	
 	protected int getMayorTanto(){
 		int tantoMayor = 0;
 		int tantoEnMano;

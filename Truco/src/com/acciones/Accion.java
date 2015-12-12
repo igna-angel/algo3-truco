@@ -210,23 +210,21 @@ public abstract class Accion{
 	}
 
 	public boolean esDeTanto() {
-		if(this.getID().equals(Accion.ACCION_REAL_ENVIDO) ||
-		   this.getID().equals(Accion.ACCION_ENVIDO_ENVIDO) ||
-		   this.getID().equals(Accion.ACCION_FALTA_ENVIDO) ||
-		   this.getID().equals(Accion.ACCION_ENVIDO)){
-				return true;
-		} else {
-				return false;
-		}
+		return (this.getID().equals(Accion.ACCION_REAL_ENVIDO) ||
+				this.getID().equals(Accion.ACCION_ENVIDO_ENVIDO) ||
+				this.getID().equals(Accion.ACCION_FALTA_ENVIDO) ||
+		   		this.getID().equals(Accion.ACCION_ENVIDO));
 	}
 	
 	public boolean esDeTruco() {
-		if(this.getID().equals(Accion.ACCION_TRUCO) ||
-		   this.getID().equals(Accion.ACCION_RE_TRUCO) ||
-		   this.getID().equals(Accion.ACCION_VALE_CUATRO)){
-				return true;
-		} else {
-				return false;
-		}
+		return (this.getID().equals(Accion.ACCION_TRUCO) ||
+				this.getID().equals(Accion.ACCION_RE_TRUCO) ||
+				this.getID().equals(Accion.ACCION_VALE_CUATRO));
+	}
+	
+	public boolean esDeFlor() {
+		return (this.getID().equals(Accion.ACCION_FLOR) ||
+				this.getID().equals(Accion.ACCION_CONTRA_FLOR) ||
+				this.getID().equals(Accion.ACCION_CONTRA_FLOR_AL_RESTO));
 	}
 }

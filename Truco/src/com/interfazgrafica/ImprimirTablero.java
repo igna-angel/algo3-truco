@@ -109,8 +109,9 @@ public class ImprimirTablero {
 		this.getBotonera().getChildren().clear();
 		
 		for (Accion accion : this.partido.getVueltaActual().getAccionesDeVuelta())
-		{
+		{			
 			if (accion.getEstado().getID().equals(Accion.ESTADO_INDEFINIDO) && accion.puedePedirNuevaAccion(this.partido, this.partido.getJugadorActual())){
+				if((accion.esDeFlor() && !partido.getJugadorActual().hayFlor())) continue; 
 				Button unBoton = new Button();
 				unBoton.setText(accion.getID());
 				this.getBotonera().getChildren().add(unBoton);
@@ -152,6 +153,11 @@ public class ImprimirTablero {
 	}
 	
 	public void crearBotoneraDeRetruque (Accion accionOriginal, VBox botonera, Vuelta vuelta){
+		if(accionOriginal.esDeFlor() && !this.getPartido().getEquipoDeJugador(accionOriginal.getDestino()).hayFlor()){
+			this.negarAccion(accionOriginal);
+			return;
+		}
+		
 		botonera.getChildren().clear();
 		
 		Label responde = new Label( "Responde el Equipo: " + Integer.toString(partido.getNumeroDeEquipo(partido.getEquipoDeJugador(accionOriginal.getDestino())) + 1) );
@@ -248,9 +254,14 @@ public class ImprimirTablero {
 			accion.negar(this.getPartido().getRondaActual());
 			this.limpiarTableros();
 			this.imprimirTablero();
-		}else{
+		}else if(accion.esDeTanto()){
 			accion.negar();
 			accion.reemplazarAccionOriginalEnVuelta(this.partido.getVueltaActual());
+			accion.limpiarAccionesRelacionadasEnVuelta(this.partido.getVueltaActual());
+			this.crearBotoneraAcciones();
+			ImprimirTablero.getInstance().mostrarCartasJugador();
+		}else{
+			accion.negar();
 			accion.limpiarAccionesRelacionadasEnVuelta(this.partido.getVueltaActual());
 			this.crearBotoneraAcciones();
 			ImprimirTablero.getInstance().mostrarCartasJugador();

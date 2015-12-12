@@ -71,7 +71,7 @@ public class Flor extends Accion {
 
 	@Override
 	protected void procesarAccion(EstadoNegado estado, Partido partido, Ronda ronda) {
-		throw new NoSePuedeNoQuererException();
+		partido.agregarPuntosAlEquipo(partido.getEquipoDeJugador(this.getOrigen()), this.getPuntosQueridos());
 	}
 
 	@Override

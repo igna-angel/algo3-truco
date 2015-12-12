@@ -69,7 +69,7 @@ public class ContraFlorAlResto extends Accion{
 
 	@Override
 	public void limpiarAccionesRelacionadasEnVuelta(Vuelta vuelta) {
-List<Accion> nuevasAccionesVuelta = new ArrayList<Accion>();
+		List<Accion> nuevasAccionesVuelta = new ArrayList<Accion>();
 		
 		this.getDecorada().limpiarAccionesRelacionadasEnVuelta(vuelta);
 		
