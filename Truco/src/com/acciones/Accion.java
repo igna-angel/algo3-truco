@@ -210,4 +210,15 @@ public abstract class Accion{
 	}
 	
 	public abstract void iniciarNuevaRondaSiCorresponde();
+
+	public boolean esDeTanto() {
+		if(this.getID().equals(Accion.ACCION_REAL_ENVIDO) ||
+		   this.getID().equals(Accion.ACCION_ENVIDO_ENVIDO) ||
+		   this.getID().equals(Accion.ACCION_FALTA_ENVIDO) ||
+		   this.getID().equals(Accion.ACCION_ENVIDO)){
+				return true;
+		} else {
+				return false;
+		}
+	}
 }
