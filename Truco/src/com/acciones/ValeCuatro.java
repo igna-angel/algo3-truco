@@ -20,7 +20,7 @@ public class ValeCuatro extends Accion{
 
 	@Override
 	public String getID() {
-		return "Vale Cuatro";
+		return Accion.ACCION_VALE_CUATRO;
 	}
 
 	@Override

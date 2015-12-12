@@ -26,7 +26,7 @@ public class Truco extends Accion{
 	
 	@Override
 	public String getID(){
-		return "Truco";
+		return Accion.ACCION_TRUCO;
 	}
 	
 	@Override
@@ -82,10 +82,5 @@ public class Truco extends Accion{
 		}
 		
 		vuelta.setAccionesDeVuelta(nuevasAccionesVuelta);
-	}
-	
-	@Override
-	public void negar(){
-		
 	}
 }

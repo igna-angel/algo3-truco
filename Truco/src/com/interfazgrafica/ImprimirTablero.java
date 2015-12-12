@@ -107,7 +107,6 @@ public class ImprimirTablero {
 		
 		for (Accion accion : this.partido.getVueltaActual().getAccionesDeVuelta())
 		{
-			System.out.println("imprime boton: " + accion.getID());
 			if (accion.getEstado().getID().equals(Accion.ESTADO_INDEFINIDO) && accion.puedePedirNuevaAccion(this.partido, this.partido.getJugadorActual())){
 				Button unBoton = new Button();
 				unBoton.setText(accion.getID());
@@ -237,30 +236,22 @@ public class ImprimirTablero {
 		accion.reemplazarAccionOriginalEnVuelta(this.partido.getVueltaActual());
 		accion.limpiarAccionesRelacionadasEnVuelta(this.partido.getVueltaActual());
 		
-		System.out.println("nuevas acciones de Vuelta");
-		for(Accion nuevaAccion : this.partido.getVueltaActual().getAccionesDeVuelta()){
-			//System.out.println(accion == nuevaAccion);
-			System.out.println(nuevaAccion.getID() + " " + nuevaAccion.getEstado().getID());
-		}
-		
 		this.crearBotoneraAcciones();
 		ImprimirTablero.getInstance().mostrarCartasJugador();
 	}
 	
 	public void negarAccion(Accion accion){
-		
-		accion.negar();
-		accion.reemplazarAccionOriginalEnVuelta(this.partido.getVueltaActual());
-		accion.limpiarAccionesRelacionadasEnVuelta(this.partido.getVueltaActual());
-		this.crearBotoneraAcciones();
-		ImprimirTablero.getInstance().mostrarCartasJugador();
-//		int puntosPorAccionNoQuerida = accion.getPuntosNoQueridos();
-//		Partido partido = ImprimirTablero.getInstance().getPartido();
-//		Equipo EquipoASumarPuntos = partido.getEquipoDeJugador(accion.getOrigen());
-//		partido.agregarPuntosAlEquipo(EquipoASumarPuntos, puntosPorAccionNoQuerida);
-//		if (accion.esDeTruco()){
-//			ImprimirTablero.getInstance().iniciarNuevaRonda();
-//		}
+		if(accion.esDeTruco()){
+			accion.negar(this.getPartido().getRondaActual());
+			this.limpiarTableros();
+			this.imprimirTablero();
+		}else{
+			accion.negar();
+			accion.reemplazarAccionOriginalEnVuelta(this.partido.getVueltaActual());
+			accion.limpiarAccionesRelacionadasEnVuelta(this.partido.getVueltaActual());
+			this.crearBotoneraAcciones();
+			ImprimirTablero.getInstance().mostrarCartasJugador();
+		}
 	}
 
 	private void crearTableros(){
@@ -439,17 +430,7 @@ public class ImprimirTablero {
 	public int getPosicionDeCartaEnMano (Jugador jugador, Carta carta){			
 		return jugador.getPosiconDeCarta(carta);
 	}
-	
-	public void iniciarNuevaRonda () {
-		this.limpiarTableros();
-		this.imprimirTablero();
-		partido.nuevaRonda();
-		//partido.mezclarYRepartir();
-		//partido.getRondaActual().jugar();
-		this.generarBotonEstoyListo();
-		//partido.getRondaActual().nuevaVuelta();
-	}
-	
+
 	public Partido getPartido() {
 		return this.partido;
 	}

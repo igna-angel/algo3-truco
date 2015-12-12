@@ -143,9 +143,6 @@ public abstract class Accion{
 	}
 
 	public void aceptar(){
-		
-		System.out.println("esta accion: " + this.getID() + " la decorada: " + this.getDecorada());
-		
 		this.getDecorada().indefinir();
 		this._estado = new EstadoAceptado();
 	}
@@ -159,13 +156,18 @@ public abstract class Accion{
 		this._estado = new EstadoNegado();
 	}
 	
+	public void negar(Ronda ronda){
+		this.negar();
+		this.limpiarAccionesRelacionadasEnVuelta(ronda.getVueltaActual());
+		ronda.definirFinDeRonda();
+		ronda.nuevaVuelta();
+	}
+	
 	public EstadoAccion getEstado(){
 		return this._estado;
 	}
 	
-	public void procesarAccion(Partido partido, Ronda ronda){
-		System.out.println("Procesando accion " + this.getID());
-		
+	public void procesarAccion(Partido partido, Ronda ronda){		
 		this.getEstado().procesar(this, partido, ronda);
 	}
 	
@@ -183,9 +185,7 @@ public abstract class Accion{
 			this.getDecorada().reemplazarAccionOriginalEnVuelta(vuelta);
 				
 			if(!vuelta.getAccionesDeVuelta().contains(this)){
-				System.out.println("vuelta no contiene a: " + this.getID() + " contiene decorada: " + vuelta.getAccionesDeVuelta().contains(this.getDecorada()));
 				if(vuelta.getAccionesDeVuelta().contains(this.getDecorada())){
-					System.out.println("vuelta contiene a la decorada de: " + this.getID() + ", decorada: " + this.getDecorada().getID());
 					if(!this.getDecorada().getID().equals(Accion.ACCION_DUMMY)){
 						int indiceDecorada = vuelta.getAccionesDeVuelta().indexOf(this.getDecorada());
 						vuelta.getAccionesDeVuelta().set(indiceDecorada, this);

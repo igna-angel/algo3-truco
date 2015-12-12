@@ -21,7 +21,7 @@ public class ReTruco extends Accion{
 
 	@Override
 	public String getID() {
-		return "Re Truco";
+		return Accion.ACCION_RE_TRUCO;
 	}
 	
 	@Override

@@ -91,7 +91,7 @@ public abstract class Ronda {
 			}
 			
 			this.getVueltas().add(new Vuelta(this, accionesBase, this.getPartido().getJugadorSiguienteA(this.getRepartio())));
-		}else if(this.esFinDeRonda()/*|| trucoNoQuerido*/){
+		}else if(this.esFinDeRonda()){
 			this.procesarAcciones();
 			this._partido.nuevaRonda();
 		}else{
@@ -117,9 +117,6 @@ public abstract class Ronda {
 	}
 	
 	private void procesarAcciones(){
-		/*for(Vuelta vuelta : this.getVueltas()){
-			vuelta.procesarAcciones();
-		}*/
 		this.getVueltaActual().procesarAcciones();
 	}
 
