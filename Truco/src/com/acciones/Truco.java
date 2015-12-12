@@ -66,7 +66,7 @@ public class Truco extends Accion{
 	@Override
 	public void limpiarAccionesRelacionadasEnVuelta(Vuelta vuelta) {
 		List<Accion> nuevasAccionesVuelta = new ArrayList<Accion>();
-		
+				
 		for(Accion accion : vuelta.getAccionesDeVuelta()){
 			if(accion.getEstado().getID().equals(ESTADO_INDEFINIDO)){
 				if(!accion.getID().equals(Accion.ACCION_ENVIDO) &&
@@ -75,11 +75,13 @@ public class Truco extends Accion{
 					!accion.getID().equals(Accion.ACCION_FLOR)){
 						nuevasAccionesVuelta.add(accion);
 				}
-			}else{
-				if(!accion.getID().equals(Accion.ACCION_NO_TRUCO))
-					nuevasAccionesVuelta.add(accion);
+				continue;
 			}
+			if(!accion.getID().equals(Accion.ACCION_NO_TRUCO))
+					nuevasAccionesVuelta.add(accion);
 		}
+		
+		if(!nuevasAccionesVuelta.contains(this)) nuevasAccionesVuelta.add(this);
 		
 		vuelta.setAccionesDeVuelta(nuevasAccionesVuelta);
 	}

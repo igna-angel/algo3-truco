@@ -75,6 +75,8 @@ public class ValeCuatro extends Accion{
 			}
 		}
 		
+		if(!nuevasAccionesVuelta.contains(this)) nuevasAccionesVuelta.add(this);
+		
 		vuelta.setAccionesDeVuelta(nuevasAccionesVuelta);
 	}	
 }

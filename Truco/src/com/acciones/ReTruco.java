@@ -44,7 +44,6 @@ public class ReTruco extends Accion{
 		Equipo equipoOrigen = partido.getEquipoDeJugador(this.getOrigen());
 		
 		partido.agregarPuntosAlEquipo(equipoOrigen, this.getPuntosNoQueridos());		
-		
 	}
 
 	@Override
@@ -62,7 +61,7 @@ public class ReTruco extends Accion{
 	@Override
 	public void limpiarAccionesRelacionadasEnVuelta(Vuelta vuelta) {
 		List<Accion> nuevasAccionesVuelta = new ArrayList<Accion>();
-		
+			
 		this.getDecorada().limpiarAccionesRelacionadasEnVuelta(vuelta);
 		
 		for(Accion accion : vuelta.getAccionesDeVuelta()){
@@ -70,10 +69,14 @@ public class ReTruco extends Accion{
 				if(!accion.getID().equals(Accion.ACCION_TRUCO)){
 					nuevasAccionesVuelta.add(accion);
 				}
-			}else{
-				nuevasAccionesVuelta.add(accion);
+				continue;
 			}
+
+			nuevasAccionesVuelta.add(accion);
 		}
+		
+
+		if(!nuevasAccionesVuelta.contains(this)) nuevasAccionesVuelta.add(this);
 		
 		vuelta.setAccionesDeVuelta(nuevasAccionesVuelta);
 	}	
