@@ -24,6 +24,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class ImprimirTablero {
@@ -114,6 +115,38 @@ public class ImprimirTablero {
 			}
 		}
 	}	
+	
+	public void imprimirPuntajeTanto(int puntosEnvido){
+		String informePuntos = "Tu tanto es de: " + puntosEnvido;
+		Label cantidadDeTanto = new Label();
+		cantidadDeTanto.setText(informePuntos);
+		cantidadDeTanto.setFont(Font.font ("Calisto MT", 17));
+		cantidadDeTanto.setTextFill(Color.DARKBLUE);
+		this.botonera.getChildren().add(cantidadDeTanto);
+	}
+	
+	public void mostrarCartasJugador(){
+		int numeroDeJugadorActual = partido.getNumeroJugadorActual();	
+		ImprimirTablero.getInstance().mostrarCartasJugador(partido.getJugadorActual(), this.listaDeCartasDeJugadoresEnMano.get(numeroDeJugadorActual), this.listaDeCartasDeJugadoresJugadas.get(numeroDeJugadorActual));	
+	}
+	
+	private void crearBotoneraDeRetruqueSegunCorresponda(Accion accion, VBox botonera, Vuelta vuelta){
+		if(accion.esDeTanto()){
+			this.crearBotoneraDeTanto(accion,this.getBotonera(),vuelta);
+		} else {
+			this.crearBotoneraDeRetruque(accion, this.getBotonera(), vuelta);
+		}
+	}
+	
+	public void crearBotoneraDeTanto(Accion accion, VBox botonera, Vuelta vuelta){
+		this.getBotonera().getChildren().clear();
+		Label responde = new Label( "Responde el Equipo: " + Integer.toString(partido.getNumeroDeEquipo(partido.getEquipoDeJugador(accion.getDestino())) + 1) );
+		this.getBotonera().getChildren().add(responde);
+		GeneradoresVisuales.getInstance().generarCartasDadasVuelta(partido.getOrdenJugadores(), listaDeCartasDeJugadoresEnMano);
+		Button responderTanto = new Button("Listo para responder al tanto");
+		this.getBotonera().getChildren().add(responderTanto);
+		responderTanto.setOnAction(new BotonResponderTantoEventHandler(accion,botonera,vuelta));
+	}
 	
 	public void crearBotoneraDeRetruque (Accion accionOriginal, VBox botonera, Vuelta vuelta){
 		botonera.getChildren().clear();
@@ -337,7 +370,7 @@ public class ImprimirTablero {
 	}
 
 	public void enviarAccionAJugador(Accion accion, Jugador jugadorSiguienteAlActual, Vuelta vuelta) {		
-		this.crearBotoneraDeRetruque(accion, this.getBotonera(), vuelta);
+		this.crearBotoneraDeRetruqueSegunCorresponda(accion,this.getBotonera(),vuelta);
 	}
 		
 	public void mostrarCartasJugador (Jugador jugador, HBox cartasJugadorEnMano, HBox cartasJugadorJugadas){
