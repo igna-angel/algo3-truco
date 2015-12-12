@@ -8,15 +8,15 @@ import javafx.stage.Stage;
 
 public class Boton2JugadoresEventHandler implements EventHandler<ActionEvent>{
 
-
+	private boolean conOSinFlor;
 	
-	public Boton2JugadoresEventHandler (Stage stage){
+	public Boton2JugadoresEventHandler (boolean florHabilitada){
+		this.conOSinFlor = florHabilitada;
 	}
-	
+
 	@Override
 	public void handle(ActionEvent actionEvent){
-		ImprimirTablero.getInstance().generarPartido2Jugadores();
-		
+		ImprimirTablero.getInstance().generarPartido2Jugadores(conOSinFlor);
 	}
 	
 }

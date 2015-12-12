@@ -67,8 +67,8 @@ public class Presentacion extends Application {
 
         stage.show();
         
-        Boton2JugadoresEventHandler boton2JugadoresEventHandler = new Boton2JugadoresEventHandler(stage);
-        boton2Jugadores.setOnAction(boton2JugadoresEventHandler);
+        BotonFlorEventHandler botonCriterio2JugadoresEventHandler = new BotonFlorEventHandler(stage);
+        boton2Jugadores.setOnAction(botonCriterio2JugadoresEventHandler);
         
         //Boton4JugadoresEventHandler boton4JugadoresEventHandler = new Boton4JugadoresEventHandler();
 		

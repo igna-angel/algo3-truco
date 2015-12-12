@@ -1,5 +1,5 @@
 package com.interfazgrafica;
-import com.modelo.Equipo;
+
 import com.modelo.Jugador;
 import com.modelo.JugadorHumano;
 import com.modelo.Partido;
@@ -18,6 +18,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -26,6 +27,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class ImprimirTablero {
@@ -72,9 +75,9 @@ public class ImprimirTablero {
 		return this._tableroDeMesa;		
 	}
 	
-	public void generarPartido2Jugadores(){		
+	public void generarPartido2Jugadores(boolean conOSinFlor){		
 		this.stage = new Stage();
-		this.partido = new Partido(false);
+		this.partido = new Partido(conOSinFlor);
 		
 		partido.agregarEquipo();
 		partido.agregarEquipo();
@@ -433,6 +436,51 @@ public class ImprimirTablero {
 
 	public Partido getPartido() {
 		return this.partido;
+	}
+
+	public void determinarJuegoConOSinFlor(Stage stage) {
+		stage.setTitle ("FonTruco");
+		
+		boolean sinFlor = false;
+		boolean conFlor = true;
+		
+		Label presentacion = new Label ();
+		presentacion.setText("Por favor determine criterio de \n"
+				+ "juego con o sin Flor: ");
+		
+		presentacion.setFont(Font.font ("VerdanaItalic" , FontWeight.BOLD , 12));
+		presentacion.setTextFill(Color.ANTIQUEWHITE);
+		
+        Image imagenTruco = new Image("https://raw.githubusercontent.com/igna-angel/algo3-truco/5e5aa5b00030f72bbe2f85ab055ca5482076829b/cartas%20espa%C3%B1olas/truco.png");
+        ImageView imagenInicio = new ImageView (imagenTruco);
+        imagenInicio.setFitWidth(120);
+        imagenInicio.setPreserveRatio(true);
+        imagenInicio.setSmooth(true);
+        imagenInicio.setCache(true);
+        
+		presentacion.setTextAlignment(TextAlignment.CENTER);
+		
+		Button botonConFlor = new Button();
+		botonConFlor.setText ("Con Flor");
+	
+		Button botonSinFlor = new Button();
+		botonSinFlor.setText ("Sin Flor");
+		
+		VBox contenedorFlor = new VBox(presentacion, botonConFlor, botonSinFlor,imagenInicio);
+		contenedorFlor.setBackground(new Background(new BackgroundFill(Color.DARKGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
+		contenedorFlor.setAlignment(Pos.CENTER);
+		contenedorFlor.setSpacing(10);
+		contenedorFlor.setPadding(new Insets(15));
+        		
+        Scene scene = new Scene(contenedorFlor, 300, 340);
+		
+		stage.setScene(scene);
+		
+		Boton2JugadoresEventHandler boton2JugadoresConFlorEventHandler = new Boton2JugadoresEventHandler(conFlor);
+        botonConFlor.setOnAction(boton2JugadoresConFlorEventHandler);
+        
+        Boton2JugadoresEventHandler boton2JugadoresSinFlorEventHandler = new Boton2JugadoresEventHandler(sinFlor);
+        botonSinFlor.setOnAction(boton2JugadoresSinFlorEventHandler);
 	}
 
 }
