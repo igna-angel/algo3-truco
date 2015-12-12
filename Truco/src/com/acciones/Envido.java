@@ -89,9 +89,5 @@ public class Envido extends Accion{
 		
 		vuelta.setAccionesDeVuelta(nuevasAccionesVuelta);
 	}
-	
-	@Override
-	public void iniciarNuevaRondaSiCorresponde() {
-		
-	}
+
 }

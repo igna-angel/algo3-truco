@@ -1,4 +1,5 @@
 package com.interfazgrafica;
+import com.modelo.Equipo;
 import com.modelo.Jugador;
 import com.modelo.JugadorHumano;
 import com.modelo.Partido;
@@ -243,13 +244,23 @@ public class ImprimirTablero {
 		}
 		
 		this.crearBotoneraAcciones();
+		ImprimirTablero.getInstance().mostrarCartasJugador();
 	}
 	
 	public void negarAccion(Accion accion){
+		
 		accion.negar();
 		accion.reemplazarAccionOriginalEnVuelta(this.partido.getVueltaActual());
 		accion.limpiarAccionesRelacionadasEnVuelta(this.partido.getVueltaActual());
 		this.crearBotoneraAcciones();
+		ImprimirTablero.getInstance().mostrarCartasJugador();
+//		int puntosPorAccionNoQuerida = accion.getPuntosNoQueridos();
+//		Partido partido = ImprimirTablero.getInstance().getPartido();
+//		Equipo EquipoASumarPuntos = partido.getEquipoDeJugador(accion.getOrigen());
+//		partido.agregarPuntosAlEquipo(EquipoASumarPuntos, puntosPorAccionNoQuerida);
+//		if (accion.esDeTruco()){
+//			ImprimirTablero.getInstance().iniciarNuevaRonda();
+//		}
 	}
 
 	private void crearTableros(){

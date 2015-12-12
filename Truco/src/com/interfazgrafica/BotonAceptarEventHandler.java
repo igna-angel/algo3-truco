@@ -14,7 +14,6 @@ public class BotonAceptarEventHandler implements EventHandler<ActionEvent> {
 	}
 	
 	public void handle (ActionEvent actionEvent){
-		ImprimirTablero.getInstance().mostrarCartasJugador();
 		ImprimirTablero.getInstance().aceptarAccion(accionBase);
 	}
 }

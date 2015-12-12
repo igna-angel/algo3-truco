@@ -25,11 +25,14 @@ public abstract class Ronda {
 	private List<Vuelta> _vueltas;
 	private List<Jugador> _ganadoresVueltas = null;
 
+	private boolean _esFinDeRonda;
+
 	public Ronda(Partido partido, Jugador reparte){
 		this._partido = partido;
 		this._repartio = reparte;
 		this._ganadoresVueltas = new ArrayList<Jugador>();
 		this._vueltas = new ArrayList<Vuelta>();
+		this._esFinDeRonda = false;
 		this.recolectarCartasDeJugadores();
 		this.mezclarYRepartir();
 		this.nuevaVuelta();
@@ -88,7 +91,7 @@ public abstract class Ronda {
 			}
 			
 			this.getVueltas().add(new Vuelta(this, accionesBase, this.getPartido().getJugadorSiguienteA(this.getRepartio())));
-		}else if(this.esFinDeRonda()){
+		}else if(this.esFinDeRonda()/*|| trucoNoQuerido*/){
 			this.procesarAcciones();
 			this._partido.nuevaRonda();
 		}else{
@@ -137,7 +140,11 @@ public abstract class Ronda {
 	}
 	
 	public boolean esFinDeRonda(){
-		return ( (!this.hayParda() && this.hayGanador()) || this.seJugaronTodasLasVueltas());
+		return ( (!this.hayParda() && this.hayGanador()) || this.seJugaronTodasLasVueltas() || this._esFinDeRonda);
+	}
+	
+	public void definirFinDeRonda(){
+		this._esFinDeRonda = true;
 	}
 	
 	private boolean seJugaronTodasLasVueltas(){

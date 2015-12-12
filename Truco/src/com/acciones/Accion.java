@@ -208,14 +208,22 @@ public abstract class Accion{
 		
 		//this.limpiarAccionesRelacionadasEnVuelta(vuelta);
 	}
-	
-	public abstract void iniciarNuevaRondaSiCorresponde();
 
 	public boolean esDeTanto() {
 		if(this.getID().equals(Accion.ACCION_REAL_ENVIDO) ||
 		   this.getID().equals(Accion.ACCION_ENVIDO_ENVIDO) ||
 		   this.getID().equals(Accion.ACCION_FALTA_ENVIDO) ||
 		   this.getID().equals(Accion.ACCION_ENVIDO)){
+				return true;
+		} else {
+				return false;
+		}
+	}
+	
+	public boolean esDeTruco() {
+		if(this.getID().equals(Accion.ACCION_TRUCO) ||
+		   this.getID().equals(Accion.ACCION_RE_TRUCO) ||
+		   this.getID().equals(Accion.ACCION_VALE_CUATRO)){
 				return true;
 		} else {
 				return false;

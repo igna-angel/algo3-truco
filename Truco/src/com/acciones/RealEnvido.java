@@ -91,9 +91,4 @@ public class RealEnvido extends Accion {
 		
 		vuelta.setAccionesDeVuelta(nuevasAccionesVuelta);
 	}
-	
-	@Override
-	public void iniciarNuevaRondaSiCorresponde() {
-		
-	}
 }

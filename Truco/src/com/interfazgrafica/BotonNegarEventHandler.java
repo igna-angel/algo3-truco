@@ -16,13 +16,7 @@ public class BotonNegarEventHandler implements EventHandler<ActionEvent> {
 	}
 	
 	public void handle (ActionEvent actionEvent){
-		ImprimirTablero.getInstance().mostrarCartasJugador();
 		ImprimirTablero.getInstance().negarAccion(accionBase);
-		int puntosPorAccionNoQuerida = accionBase.getPuntosNoQueridos();
-		Partido partido = ImprimirTablero.getInstance().getPartido();
-		Equipo EquipoASumarPuntos = partido.getEquipoDeJugador(this.accionBase.getOrigen());
-		partido.agregarPuntosAlEquipo(EquipoASumarPuntos, puntosPorAccionNoQuerida);
-		accionBase.iniciarNuevaRondaSiCorresponde();
 	}
 }
 

@@ -78,8 +78,4 @@ public class ReTruco extends Accion{
 		vuelta.setAccionesDeVuelta(nuevasAccionesVuelta);
 	}	
 	
-	@Override
-	public void iniciarNuevaRondaSiCorresponde() {
-		ImprimirTablero.getInstance().iniciarNuevaRonda();
-	}
 }

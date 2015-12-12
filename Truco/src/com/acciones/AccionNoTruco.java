@@ -56,10 +56,6 @@ public class AccionNoTruco extends Accion{
 		// TODO Auto-generated method stub
 		
 	}
-	
-	@Override
-	public void iniciarNuevaRondaSiCorresponde() {
-		
-	}
+
 
 }
