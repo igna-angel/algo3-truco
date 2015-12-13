@@ -14,13 +14,12 @@ public class VueltaParda extends Vuelta{
 		if(!this.getRonda().hayParda()){
 			this.getRonda().definirFinDeRonda();
 		}
-		Jugador jugadorGanadorParda = this.getRonda().getJugadorConCartaGanadora(this.getCartaGanadora());
-		this.setJugadorConCartaGanadoraPardaParaVueltaAnterior(jugadorGanadorParda);
+		this.setJugadorConCartaGanadoraPardaParaVueltaAnterior();
 		return this.getRonda().getJugadorConCartaGanadora(this.getCartaGanadora());
 	}
 	
-	public void setJugadorConCartaGanadoraPardaParaVueltaAnterior(Jugador jugador) {
-		int posVueltaAnterior = this.getRonda().getCantidadDeVueltas() - 2;
-		this.getRonda().getVueltas().get(posVueltaAnterior).asignarJugadorInicial(jugador);
+	private void setJugadorConCartaGanadoraPardaParaVueltaAnterior() {
+		Jugador jugadorGanadorParda = this.getRonda().getJugadorConCartaGanadora(this.getCartaGanadora());
+		this.getRonda().asignarGanadorDeVueltaParda(jugadorGanadorParda);
 	}
 }
