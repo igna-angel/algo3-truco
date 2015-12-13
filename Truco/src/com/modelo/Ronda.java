@@ -94,6 +94,9 @@ public abstract class Ronda {
 		}else if(this.esFinDeRonda()){
 			this.procesarAcciones();
 			this._partido.nuevaRonda();
+		} else if (this.hayParda()){
+			this.getVueltaActual().limpiarAccionesDeTanto();
+			this.getVueltas().add(new VueltaParda(this,this.getVueltaActual().getAccionesDeVuelta(),this.getPartido().getJugadorSiguienteA(this.getRepartio())));
 		}else{
 			this.getVueltaActual().limpiarAccionesDeTanto();
 			this.getVueltas().add(new Vuelta(this, this.getVueltaActual().getAccionesDeVuelta(), this.getVueltaActual().getJugadorConCartaGanadora()));
@@ -157,7 +160,7 @@ public abstract class Ronda {
 		return this.getPartido().getEquipoDeJugador(this.getGanadoresDeVueltas().get(0)) == this.getPartido().getEquipoDeJugador(this.getGanadoresDeVueltas().get(1));
 	}
 	
-	private boolean hayParda(){
+	public boolean hayParda(){
 		if(this.getVueltas().isEmpty()) return false;
 		if(this.getCantidadDeVueltas() == 1 && this.getVueltas().get(0).getEsParda()) return true;
 		if(this.getCantidadDeVueltas() == 2){
