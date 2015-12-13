@@ -22,6 +22,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -353,6 +354,7 @@ public class ImprimirTablero {
 	}
 	
 	public void ejecutarEstoyListo(){
+
 		ImprimirTablero.getInstance().crearBotoneraAcciones();
 		
 		int numeroDeJugadorActual = partido.getNumeroJugadorActual();			
@@ -448,50 +450,123 @@ public class ImprimirTablero {
 	public Partido getPartido() {
 		return this.partido;
 	}
-
-	public void determinarJuegoConOSinFlor(Stage stage) {
-		stage.setTitle ("FonTruco");
-		
-		boolean sinFlor = false;
-		boolean conFlor = true;
-		
+	
+	private ImageView crearImagenTruco(){
+        Image imagenTruco = new Image("https://raw.githubusercontent.com/igna-angel/algo3-truco/5e5aa5b00030f72bbe2f85ab055ca5482076829b/cartas%20espa%C3%B1olas/truco.png");
+        ImageView imagen = new ImageView (imagenTruco);
+        imagen.setFitWidth(120);
+        imagen.setPreserveRatio(true);
+        imagen.setSmooth(true);
+        imagen.setCache(true);
+        return imagen;
+	}
+	
+	private Label crearPresentacionDeFlor() {
 		Label presentacion = new Label ();
 		presentacion.setText("Por favor determine criterio de \n"
 				+ "juego con o sin Flor: ");
-		
 		presentacion.setFont(Font.font ("VerdanaItalic" , FontWeight.BOLD , 12));
 		presentacion.setTextFill(Color.ANTIQUEWHITE);
-		
-        Image imagenTruco = new Image("https://raw.githubusercontent.com/igna-angel/algo3-truco/5e5aa5b00030f72bbe2f85ab055ca5482076829b/cartas%20espa%C3%B1olas/truco.png");
-        ImageView imagenInicio = new ImageView (imagenTruco);
-        imagenInicio.setFitWidth(120);
-        imagenInicio.setPreserveRatio(true);
-        imagenInicio.setSmooth(true);
-        imagenInicio.setCache(true);
-        
 		presentacion.setTextAlignment(TextAlignment.CENTER);
 		
-		Button botonConFlor = new Button();
-		botonConFlor.setText ("Con Flor");
+		return presentacion;
+	}
 	
-		Button botonSinFlor = new Button();
-		botonSinFlor.setText ("Sin Flor");
-		
+	private Button crearBoton(String nombre){
+		Button botonFlor = new Button();
+		botonFlor.setText (nombre);
+		return botonFlor;
+	}
+	
+	private VBox crearContenedorFlor(Label presentacion, ImageView imagenInicio, Button botonConFlor, Button botonSinFlor){
 		VBox contenedorFlor = new VBox(presentacion, botonConFlor, botonSinFlor,imagenInicio);
 		contenedorFlor.setBackground(new Background(new BackgroundFill(Color.DARKGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
 		contenedorFlor.setAlignment(Pos.CENTER);
 		contenedorFlor.setSpacing(10);
-		contenedorFlor.setPadding(new Insets(15));
-        		
+		contenedorFlor.setPadding(new Insets(15));		
+		return contenedorFlor;
+	}
+
+	public void determinarJuegoConOSinFlor(Stage stage) {
+		stage.setTitle ("FonTruco");
+		boolean sinFlor = false;
+		boolean conFlor = true;
+		Label presentacion = crearPresentacionDeFlor();
+		ImageView imagenInicio = crearImagenTruco();
+		Button botonConFlor = crearBoton("Con Flor");
+		Button botonSinFlor = crearBoton("Sin Flor");
+		VBox contenedorFlor = crearContenedorFlor(presentacion,imagenInicio,botonConFlor,botonSinFlor);
+		
         Scene scene = new Scene(contenedorFlor, 300, 340);
 		
 		stage.setScene(scene);
-		
-		Boton2JugadoresEventHandler boton2JugadoresConFlorEventHandler = new Boton2JugadoresEventHandler(conFlor);
+
+		Boton2JugadoresEventHandler boton2JugadoresConFlorEventHandler = new Boton2JugadoresEventHandler(conFlor,stage);
         botonConFlor.setOnAction(boton2JugadoresConFlorEventHandler);
         
-        Boton2JugadoresEventHandler boton2JugadoresSinFlorEventHandler = new Boton2JugadoresEventHandler(sinFlor);
+        Boton2JugadoresEventHandler boton2JugadoresSinFlorEventHandler = new Boton2JugadoresEventHandler(sinFlor,stage);
         botonSinFlor.setOnAction(boton2JugadoresSinFlorEventHandler);
+	}
+	
+	private Label crearMensajeFinalDePartida(){
+		Label mensajeFinal = new Label ();
+		mensajeFinal.setText("El ganador de la partida es \n"
+							+ "el equipo numero: " + this.getPartido().getEquipoGanador() + "!");
+		
+		mensajeFinal.setFont(Font.font ("VerdanaItalic" , FontWeight.BOLD , 16));
+		mensajeFinal.setTextFill(Color.ANTIQUEWHITE);
+		return mensajeFinal;
+	}
+	
+	private Label crearMensajeElegirOpcion(){
+		Label elegirOpcion = new Label ();
+		elegirOpcion.setText("Por favor elija una opcion");
+		elegirOpcion.setFont(Font.font ("VerdanaItalic" , FontWeight.BOLD , 13));
+		elegirOpcion.setTextFill(Color.ANTIQUEWHITE);
+		return elegirOpcion;
+	}
+
+	public void imprimirPantallaFinDeJuego(){
+		
+		Label mensajeFinal = crearMensajeFinalDePartida();
+		Label elegirOpcion = crearMensajeElegirOpcion();
+        ImageView imagenFinal = crearImagenTruco();
+		Button botonJugarRevancha = crearBoton("Jugar Revancha");
+		Button botonVolverAlMenu = crearBoton("Volver al menu principal");
+		Button botonSalir = crearBoton("Salir");
+		
+		HBox mensaje = new HBox(mensajeFinal);
+		mensaje.setAlignment(Pos.TOP_CENTER);
+		mensaje.setPadding(new Insets (35));
+	
+		VBox botones = new VBox(imagenFinal,elegirOpcion,botonJugarRevancha,botonVolverAlMenu,botonSalir);
+		botones.setAlignment(Pos.CENTER);
+		botones.setSpacing(15);
+		botones.setPadding(new Insets (50));
+		
+		VBox contenedorFinal = new VBox(mensaje,botones);
+		contenedorFinal.setBackground(new Background(new BackgroundFill(Color.DARKGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
+		contenedorFinal.setSpacing(10);
+		contenedorFinal.setPadding(new Insets(15));
+		
+        Scene scene = new Scene(contenedorFinal, 700, 600);
+		
+		stage.setScene(scene);
+		
+		Boton2JugadoresEventHandler boton2JugadoresNuevaPartidaEventHandler = new Boton2JugadoresEventHandler(this.getPartido().seJuegaConnFlor(),stage);
+		botonJugarRevancha.setOnAction(boton2JugadoresNuevaPartidaEventHandler);
+		
+		BotonVueltaAlMenuEventHandler botonVueltaMenuEventHandler = new BotonVueltaAlMenuEventHandler();
+		botonVolverAlMenu.setOnAction(botonVueltaMenuEventHandler);
+		
+		BotonCerrarJuegoEventHandler botonSalirDelJuegoEventHandler = new BotonCerrarJuegoEventHandler(this.stage);
+		botonSalir.setOnAction(botonSalirDelJuegoEventHandler);
+	}
+
+	public void nuevaPresentacion() throws Exception {
+		Presentacion nuevaPresentacion = new Presentacion();
+		nuevaPresentacion.start(new Stage());
+		stage.close();
 	}
 
 }
