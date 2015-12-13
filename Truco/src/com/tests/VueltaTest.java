@@ -4,9 +4,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.modelo.Jugador;
 import com.modelo.JugadorHumano;
 import com.modelo.Partido;
-import com.modelo.RondaRedonda;
 import com.modelo.Vuelta;
 import com.modelo.cartas.Carta;
 import com.modelo.cartas.Carta.Palo;
@@ -17,10 +17,27 @@ import com.modelo.cartas.CartaNormal;
 
 public class VueltaTest {
 	private Vuelta _vuelta;
+	private Partido _partido;
 	
 	@Before
 	public void setup(){
-		this._vuelta = new Vuelta(new RondaRedonda(new Partido(), new JugadorHumano()), new JugadorHumano());
+		this._partido = new Partido(false);
+		this._partido.agregarEquipo();
+		this._partido.agregarEquipo();
+		
+		Jugador jugadorA = new JugadorHumano();
+		Jugador jugadorB = new JugadorHumano();
+		
+		this._partido.agregarJugadorAEquipo(jugadorA, 0);
+		this._partido.agregarJugadorAEquipo(jugadorB, 1);
+		
+		this._partido.crearPartido();
+		this._partido.nuevaRonda();
+		
+		this._partido.recolectarCartasDeJugadores();
+		
+		this._vuelta = this._partido.getVueltaActual(); 
+				//new Vuelta(new RondaRedonda(partido, partido.getEquipos().getFirst().getJugadores().getFirst()), null,new JugadorHumano());
 
 	}
 	
@@ -35,6 +52,10 @@ public class VueltaTest {
 		Carta cartaNormal = new CartaNormal(Palo.Copa, 12);
 		Carta cartaDos = new CartaDos(Palo.Oro); 
 		Carta cartaFalso = new CartaAnchoFalso(Palo.Oro); 
+		
+		this._partido.getOrdenJugadores().getFirst().recibirCarta(cartaNormal);
+		this._partido.getOrdenJugadores().getFirst().recibirCarta(cartaFalso);
+		this._partido.getOrdenJugadores().getLast().recibirCarta(cartaDos);
 		
 		this._vuelta.recibirCarta(cartaNormal);
 		Assert.assertEquals(1, this._vuelta.getCantidadDeCartasEnVuelta());

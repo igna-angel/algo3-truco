@@ -17,7 +17,7 @@ public class PartidoTest {
 	
 	@Before
 	public void setup(){
-		this._partido = new Partido();
+		this._partido = new Partido(false);
 	}
 	
 	@Test (expected = NoHayEquiposException.class)
@@ -183,6 +183,7 @@ public class PartidoTest {
 		this._partido.agregarJugadorAEquipo(new JugadorHumano(), 0);
 		this._partido.agregarJugadorAEquipo(new JugadorHumano(), 0);
 		this._partido.agregarJugadorAEquipo(new JugadorHumano(), 0);
+		
 		this._partido.agregarJugadorAEquipo(new JugadorHumano(), 1);
 		this._partido.agregarJugadorAEquipo(new JugadorHumano(), 1);
 		this._partido.agregarJugadorAEquipo(new JugadorHumano(), 1);

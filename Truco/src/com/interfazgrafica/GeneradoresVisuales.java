@@ -1,70 +1,75 @@
 package com.interfazgrafica;
 
+import java.util.HashMap;
+import java.util.List;
+
+import com.modelo.CircularList;
+import com.modelo.Jugador;
 import com.modelo.cartas.Carta;
 
-import javafx.application.Application;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.TextAlignment;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
-import javafx.stage.Stage;
 
 public class GeneradoresVisuales {
 	
+	private Image _imagenCartaDorso = null;
+	private Image _imagenEspacioVacio = null;
+	private HashMap<String, Image> _imagenesCartas = null;
+	
+	private static GeneradoresVisuales instance = null;
+	
+	private GeneradoresVisuales(){
+		this._imagenesCartas = new HashMap<String, Image>();
+	}
+	
+	public static GeneradoresVisuales getInstance(){
+		if (GeneradoresVisuales.instance == null){
+			GeneradoresVisuales.instance = new GeneradoresVisuales();
+		}
+		return GeneradoresVisuales.instance;
+	}
+	
 	public ImageView generarVisionCartaDorso (){
-		Image dorsoAzul = new Image("file:C:\\Users\\Ska-Ska-Ska\\Desktop\\Cartas Españolas\\CartaDorsoAzul.png");
-		ImageView cartaDorsoAzul = new ImageView (dorsoAzul);
-        cartaDorsoAzul.setFitWidth(70);
-        cartaDorsoAzul.setPreserveRatio(true);
-        cartaDorsoAzul.setSmooth(true);
-        cartaDorsoAzul.setCache(true);
-        return cartaDorsoAzul;
-	}
-	
-	public HBox generarCartasComienzoDeJugador (){
-		ImageView cartaDorso1 = this.generarVisionCartaDorso();
-        ImageView cartaDorso2 = this.generarVisionCartaDorso();
-        ImageView cartaDorso3 = this.generarVisionCartaDorso();
-		HBox cartasJugador = new HBox (cartaDorso1, cartaDorso2, cartaDorso3);
-		cartasJugador.setSpacing(5);
-		cartasJugador.setPadding(new Insets(15));
-		cartasJugador.setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
-		return cartasJugador;
-	}
-	
-	public HBox generarEspacioVacioVertical (){
+		if(this._imagenCartaDorso == null){
+			this._imagenCartaDorso = new Image("com/interfazgrafica/CartaDorsoAzul.png");
+		}
 		
-		Image imagenEspacioVacio = new Image("file:C:\\Users\\Ska-Ska-Ska\\Desktop\\Cartas Españolas\\espacioCarta.png");
-		ImageView espacioVacioCarta = new ImageView (imagenEspacioVacio);
-		espacioVacioCarta.setFitWidth(70);
-		espacioVacioCarta.setPreserveRatio(true);
-		espacioVacioCarta.setSmooth(true);
-		espacioVacioCarta.setCache(true);
-		HBox espacioVacio = new HBox (espacioVacioCarta);
-		espacioVacio.setSpacing(5);
-		espacioVacio.setPadding(new Insets(15));
-		espacioVacio.setBackground(new Background(new BackgroundFill(Color.DARKGREEN, CornerRadii.EMPTY, Insets.EMPTY)));
-		return espacioVacio;
+		ImageView nuevo = new ImageView (this._imagenCartaDorso);
+		nuevo.setFitWidth(70);
+		nuevo.setPreserveRatio(true);
+		nuevo.setSmooth(true);
+		nuevo.setCache(true);
+			
+        return nuevo;
 	}
+	
+	public void generarCartasDadasVuelta (CircularList<Jugador> listaDeJugadores, List<HBox> contenedoresDeCartas){
+		for (int i=0; i < contenedoresDeCartas.size(); i++){
+			contenedoresDeCartas.get(i).getChildren().clear();
+			for (int j=0; j < listaDeJugadores.getAt(i).getCantidadCartasEnMano(); j++ ){
+				contenedoresDeCartas.get(i).getChildren().add(this.generarVisionCartaDorso());
+			}
+			contenedoresDeCartas.get(i).setSpacing(5);
+			contenedoresDeCartas.get(i).setPadding(new Insets(15));
+			contenedoresDeCartas.get(i).setBackground(new Background(new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, Insets.EMPTY)));
+		}
+	}
+	
 	
 	// Pre: La imagen de la carta debe estar con extension ".png"
 	// Post: Devuelve la visual aplicable a Boxes de la carta
 	public ImageView generadorDeVisualDeCarta (Carta unaCarta){
-		Image imagenDeUnaCarta = new Image ("file:C:\\Users\\Ska-Ska-Ska\\Desktop\\Cartas Españolas\\"+unaCarta.getPalo().toString()+"\\"+Integer.toString(unaCarta.getNumero())+".png");
-		ImageView visualDeUnaCarta = new ImageView (imagenDeUnaCarta);
+		if(!this._imagenesCartas.containsKey(unaCarta.getPalo().toString()+unaCarta.getNumero())){
+			this._imagenesCartas.put(unaCarta.getPalo().toString()+unaCarta.getNumero(), new Image ("com/interfazgrafica/baraja/"+unaCarta.getPalo().toString()+"/"+unaCarta.getNumero()+".png"));
+		}
+		
+		ImageView visualDeUnaCarta = new ImageView (this._imagenesCartas.get(unaCarta.getPalo().toString()+unaCarta.getNumero()));
 		visualDeUnaCarta.setFitWidth(70);
 		visualDeUnaCarta.setPreserveRatio(true);
 		visualDeUnaCarta.setSmooth(true);

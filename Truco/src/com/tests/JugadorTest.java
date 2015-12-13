@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import com.modelo.Jugador;
 import com.modelo.JugadorHumano;
+import com.modelo.Partido;
 import com.modelo.RondaRedonda;
 import com.modelo.Vuelta;
 import com.modelo.cartas.Carta;
@@ -48,8 +49,15 @@ public class JugadorTest {
 	
 	@Test
 	public void testSeBajaUnaCarta(){
-
-		Vuelta vuelta = new Vuelta(new RondaRedonda(null, null), new JugadorHumano());
+		Partido partido = new Partido(false);
+		partido.agregarEquipo();
+		partido.agregarEquipo();
+		partido.agregarJugadorAEquipo(new JugadorHumano(), 0);
+		partido.agregarJugadorAEquipo(new JugadorHumano(), 1);
+		partido.crearPartido();
+		partido.nuevaRonda();
+		
+		Vuelta vuelta = new Vuelta(new RondaRedonda(partido, partido.getEquipos().getFirst().getJugadores().getFirst()), null, new JugadorHumano());
 		
 		Carta cartaTest = new CartaNormal();
 
@@ -57,10 +65,10 @@ public class JugadorTest {
 
 		this._jugador.recibirCarta(cartaTest);
 
-		Assert.assertEquals(1, this._jugador.getCartasEnMano());
+		Assert.assertEquals(1, this._jugador.getCantidadCartasEnMano());
 		
 		this._jugador.bajarCarta(vuelta, cartaTest);
 
-		Assert.assertEquals(0, this._jugador.getCartasEnMano());	
+		Assert.assertEquals(0, this._jugador.getCantidadCartasEnMano());	
 	}
 }

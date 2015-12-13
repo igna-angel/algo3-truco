@@ -1,36 +1,14 @@
 package com.modelo;
 
-import java.util.Scanner;
-
-import com.exceptions.AccionNoPosibleException;
-import com.exceptions.EmptyListException;
-import com.modelo.acciones.envido.AccionTanto;
-import com.modelo.acciones.envido.ContraFlorAlResto;
-import com.modelo.acciones.envido.Envido;
-import com.modelo.acciones.envido.TantoDecorator;
-import com.modelo.acciones.envido.FaltaEnvido;
-import com.modelo.acciones.envido.Flor;
-import com.modelo.acciones.envido.FlorMeAchico;
-import com.modelo.acciones.envido.FlorQuiero;
-import com.modelo.acciones.envido.NoQuieroTanto;
-import com.modelo.acciones.envido.QuieroTanto;
-import com.modelo.acciones.envido.RealEnvido;
-import com.modelo.acciones.truco.AccionTruco;
-import com.modelo.acciones.truco.NoQuiero;
-import com.modelo.acciones.truco.Quiero;
-import com.modelo.acciones.truco.ReTruco;
-import com.modelo.acciones.truco.ValeCuatro;
-import com.modelo.cartas.Carta;
-
 public class JugadorVirtual extends Jugador {
-	private static final int MIN_TANTO_ENVIDO = 23;
+	/*private static final int MIN_TANTO_ENVIDO = 23;
 	private static final int MIN_TANTO_REAL_ENVIDO = 28;
 	private static final int MIN_TANTO_FALTA_ENVIDO = 31;
-	
+	*/
 	public JugadorVirtual() {
 		super();
 	}
-	
+/*	
 	public void elegirCartaABajarYBajarla (Vuelta vuelta) {
 		Carta cartaAJugar;
 		
@@ -45,7 +23,7 @@ public class JugadorVirtual extends Jugador {
 	
 	public void cantarTantoOFlorSiCorresponde (Ronda ronda) {
 		int tantoEnMano = this._mano.getTantoEnMano();
-		if (this._mano.florEnMano()) {
+		if (this._mano.hayFlor()) {
 			ronda.seCantoFlor(this);
 		}
 		
@@ -84,15 +62,15 @@ public class JugadorVirtual extends Jugador {
 			return manejadorDeRonda.cantarReTruco(new ReTruco(accion));
 		} else {
 			throw new AccionNoPosibleException();
-		}*/
-	}	
-	
-	public Accion responderA(ReTruco accion, ManejadorDeRonda manejadorDeRonda,Partido partido) {
+		}
+	}	*/
+	/*
+	public TrucoDecorator responderA(ReTruco accion, ManejadorDeRonda manejadorDeRonda,Partido partido) {
 		return new Quiero(accion);
 
 	}	
 	
-	public Accion responderA(ValeCuatro accion) {
+	public TrucoDecorator responderA(ValeCuatro accion) {
 		return new Quiero(accion);
 	}
 
@@ -100,15 +78,15 @@ public class JugadorVirtual extends Jugador {
 		int tantoEnMano = this._mano.getTantoEnMano();
 		
 		if (tantoEnMano < MIN_TANTO_ENVIDO){
-			return new NoQuieroTanto(accion, this, accion.getOrigen(), partido.getRondaActual());
+			return new NoQuieroTanto(accion, this, accion.getOrigen());
 		} else
 		
 		if (tantoEnMano >= MIN_TANTO_ENVIDO && tantoEnMano < MIN_TANTO_REAL_ENVIDO){
-			return new QuieroTanto(accion, this, accion.getOrigen(), partido.getRondaActual());
+			return new QuieroTanto(accion, this, accion.getOrigen());
 		} else if (tantoEnMano >= MIN_TANTO_REAL_ENVIDO && tantoEnMano < MIN_TANTO_FALTA_ENVIDO){
-			return manejadorDeRonda.cantarRealEnvido(new RealEnvido(accion, this, accion.getOrigen(), partido.getRondaActual()));
+			return manejadorDeRonda.cantarRealEnvido(new RealEnvido(accion, this, accion.getOrigen()));
 		} else if (tantoEnMano >= MIN_TANTO_FALTA_ENVIDO){
-			return manejadorDeRonda.cantarFaltaEnvido(new FaltaEnvido(accion, this, accion.getOrigen(), partido.getRondaActual()));
+			return manejadorDeRonda.cantarFaltaEnvido(new FaltaEnvido(accion, this, accion.getOrigen()));
 		} else {
 			throw new AccionNoPosibleException();
 		}
@@ -118,29 +96,29 @@ public class JugadorVirtual extends Jugador {
 		int tantoEnMano = this._mano.getTantoEnMano();
 		
 		if (tantoEnMano < MIN_TANTO_REAL_ENVIDO){
-			return new NoQuieroTanto(accion, this, accion.getOrigen(), partido.getRondaActual());
+			return new NoQuieroTanto(accion, this, accion.getOrigen());
 		} else
 		
 		if (tantoEnMano >= MIN_TANTO_REAL_ENVIDO && tantoEnMano < MIN_TANTO_FALTA_ENVIDO){
-			return new QuieroTanto(accion, this, partido.getJugadorSiguienteA(this), partido.getRondaActual());
+			return new QuieroTanto(accion, this, partido.getJugadorSiguienteA(this));
 		} else 
 			
 		if (tantoEnMano >= MIN_TANTO_FALTA_ENVIDO){
-			return manejadorDeRonda.cantarFaltaEnvido(new FaltaEnvido(accion, this, accion.getOrigen(), partido.getRondaActual()));
+			return manejadorDeRonda.cantarFaltaEnvido(new FaltaEnvido(accion, this, accion.getOrigen()));
 		} else {
 			throw new AccionNoPosibleException();
 		}
 	}
 
-	public TantoDecorator responderA(FaltaEnvido accion, ManejadorDeRonda manejadorDeRonda) {
+	public TantoDecorator responderA(FaltaEnvido accion) {
 		int tantoEnMano = this._mano.getTantoEnMano();
 		
 		if (tantoEnMano < MIN_TANTO_FALTA_ENVIDO){
-			return new NoQuieroTanto(accion, this, accion.getOrigen(), manejadorDeRonda.getPartido().getRondaActual());
+			return new NoQuieroTanto(accion, this, accion.getOrigen());
 		} else
 		
 		if (tantoEnMano >= MIN_TANTO_FALTA_ENVIDO){
-			return new QuieroTanto(accion, this, accion.getOrigen(), manejadorDeRonda.getPartido().getRondaActual());
+			return new QuieroTanto(accion, this, accion.getOrigen());
 		} else {
 			throw new AccionNoPosibleException();
 		}
@@ -148,14 +126,14 @@ public class JugadorVirtual extends Jugador {
 
 	public TantoDecorator responderA(Flor accion, ManejadorDeRonda manejadorDeRonda, Partido partido) {
 		// Para hacerlo básico, la flor la queremos siempre (solo querer)
-		if (this._mano.florEnMano()) {
+		if (this._mano.hayFlor()) {
 			return new FlorQuiero(accion,this,accion.getOrigen());
 		}
 		
 		return new FlorMeAchico(accion,this,accion.getOrigen());
 		
 	}
-
+*/
 
 	@Override
 	public void jugar(Vuelta vuelta) {

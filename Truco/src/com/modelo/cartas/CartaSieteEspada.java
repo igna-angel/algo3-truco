@@ -57,26 +57,6 @@ public class CartaSieteEspada extends Carta{
 	}
 
 	@Override
-	public Carta ganador(CartaPardaNormal pardaNormal) {
-		return this;
-	}
-
-	@Override
-	public Carta ganador(CartaPardaAnchoFalso pardaFalso) {
-		return this;
-	}
-
-	@Override
-	public Carta ganador(CartaPardaDos pardaDos) {
-		return this;
-	}
-
-	@Override
-	public Carta ganador(CartaPardaTres pardaTres) {
-		return this;
-	}
-	
-	@Override
 	public int getPuntosEnvido() {
 		return this.getNumero();
 	}

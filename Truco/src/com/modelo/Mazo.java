@@ -127,5 +127,4 @@ public class Mazo {
 			jugadores.getCurrent().recibirCarta(this.getCarta(this.getMazoMezclado()[i]));			
 		}
 	}
-
 }

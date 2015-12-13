@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.exceptions.NoSePuedenRecibirMasCartasException;
 import com.modelo.Mano;
 import com.modelo.cartas.Carta;
 import com.modelo.cartas.CartaNormal;
@@ -29,6 +30,14 @@ public class ManoTest {
 		Assert.assertEquals(1, this._mano.getCantidadCartas());
 	}
 	
+	@Test (expected = NoSePuedenRecibirMasCartasException.class)
+	public void testSeAgreganCuatroCartasALaManoDebeLanzarExcepcion(){
+		this._mano.recibirCarta(new CartaNormal());
+		this._mano.recibirCarta(new CartaNormal());
+		this._mano.recibirCarta(new CartaNormal());
+		this._mano.recibirCarta(new CartaNormal());
+	}
+	
 	@Test
 	public void testSeRemueveUnaCartaDeLaMano(){
 		Carta cartaA = new CartaNormal();
@@ -52,8 +61,7 @@ public class ManoTest {
 		this._mano.recibirCarta(new CartaNormal());
 		this._mano.recibirCarta(new CartaNormal());
 		this._mano.recibirCarta(new CartaNormal());
-		this._mano.recibirCarta(new CartaNormal());
-		Assert.assertEquals(4, this._mano.getCantidadCartas());
+		Assert.assertEquals(3, this._mano.getCantidadCartas());
 		this._mano.devolverCartas();
 		Assert.assertEquals(0, this._mano.getCantidadCartas());
 	}
