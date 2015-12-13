@@ -118,16 +118,13 @@ public class Vuelta implements IRecibible {
 	}
 	
 	private boolean definirSiEsParda(Carta cartaGanadora, Carta cartaNueva){
-		if(cartaGanadora.getNumero() == cartaNueva.getNumero()) return true;
-		
-		if(this._esParda && cartaGanadora.getNumero() > cartaNueva.getNumero())	return true;
-		
-		return false;
+		return cartaGanadora.ganador(cartaNueva).equals(cartaGanadora) && cartaNueva.ganador(cartaGanadora).equals(cartaNueva);
 	}
 	
 	@Override
 	public void recibirCarta(Carta carta) {
 		this._esParda = this.definirSiEsParda(this.getCartaGanadora(), carta);
+		
 		this.setCartaGanadora(this.getCartaGanadora().ganador(carta));
 		this.getCartas().push(carta);
 		
@@ -145,10 +142,12 @@ public class Vuelta implements IRecibible {
 
 	public void procesarAcciones() {
 		for(Accion accion : this.getAccionesDeVuelta()){
-			try{
-				accion.procesarAccion(this.getRonda().getPartido(), this.getRonda());
-			}catch(EstadoIndefinidoException e){
-				System.out.println("Accion con estado indefinido, salteando");
+			if (!(accion.esDeTanto() || accion.esDeFlor())) {
+				try{
+					accion.procesarAccion(this.getRonda().getPartido(), this.getRonda());
+				}catch(EstadoIndefinidoException e){
+					System.out.println("Accion con estado indefinido, salteando");
+				}
 			}
 		}
 	}

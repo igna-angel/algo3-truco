@@ -37,7 +37,7 @@ public class GeneradoresVisuales {
 	
 	public ImageView generarVisionCartaDorso (){
 		if(this._imagenCartaDorso == null){
-			this._imagenCartaDorso = new Image("https://raw.githubusercontent.com/igna-angel/algo3-truco/5e5aa5b00030f72bbe2f85ab055ca5482076829b/cartas%20espa%C3%B1olas/CartaDorsoAzul.png");
+			this._imagenCartaDorso = new Image("com/interfazgrafica/CartaDorsoAzul.png");
 		}
 		
 		ImageView nuevo = new ImageView (this._imagenCartaDorso);
@@ -66,7 +66,7 @@ public class GeneradoresVisuales {
 	// Post: Devuelve la visual aplicable a Boxes de la carta
 	public ImageView generadorDeVisualDeCarta (Carta unaCarta){
 		if(!this._imagenesCartas.containsKey(unaCarta.getPalo().toString()+unaCarta.getNumero())){
-			this._imagenesCartas.put(unaCarta.getPalo().toString()+unaCarta.getNumero(), new Image ("https://raw.githubusercontent.com/igna-angel/algo3-truco/5e5aa5b00030f72bbe2f85ab055ca5482076829b/cartas%20espa%C3%B1olas/"+unaCarta.getPalo().toString()+"/"+unaCarta.getNumero()+".png"));
+			this._imagenesCartas.put(unaCarta.getPalo().toString()+unaCarta.getNumero(), new Image ("com/interfazgrafica/baraja/"+unaCarta.getPalo().toString()+"/"+unaCarta.getNumero()+".png"));
 		}
 		
 		ImageView visualDeUnaCarta = new ImageView (this._imagenesCartas.get(unaCarta.getPalo().toString()+unaCarta.getNumero()));

@@ -1,6 +1,8 @@
 package com.interfazgrafica;
 
 import com.acciones.Accion;
+import com.modelo.Equipo;
+import com.modelo.Partido;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

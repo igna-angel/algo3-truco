@@ -22,6 +22,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -242,30 +243,43 @@ public class ImprimirTablero {
 	
 	public void aceptarAccion(Accion accion){
 		accion.aceptar();
+		if (accion.esDeTanto() || accion.esDeFlor()) {
+			accion.procesarAccion(this.partido, this.partido.getRondaActual());
+		}
+		ImprimirTablero.getInstance().generarPuntajesDeEquipos();
 		accion.reemplazarAccionOriginalEnVuelta(this.partido.getVueltaActual());
 		accion.limpiarAccionesRelacionadasEnVuelta(this.partido.getVueltaActual());
 		
 		this.crearBotoneraAcciones();
 		ImprimirTablero.getInstance().mostrarCartasJugador();
+		this.partido.terminarSiEquipoAlcanzoLosTantosNecesarios();
 	}
 	
 	public void negarAccion(Accion accion){
 		if(accion.esDeTruco()){
 			accion.negar(this.getPartido().getRondaActual());
+			//accion.procesarAccion(this.partido, this.partido.getRondaActual());
+			ImprimirTablero.getInstance().generarPuntajesDeEquipos();
 			this.limpiarTableros();
 			this.imprimirTablero();
 		}else if(accion.esDeTanto()){
 			accion.negar();
+			accion.procesarAccion(this.partido, this.partido.getRondaActual());
+			ImprimirTablero.getInstance().generarPuntajesDeEquipos();
 			accion.reemplazarAccionOriginalEnVuelta(this.partido.getVueltaActual());
 			accion.limpiarAccionesRelacionadasEnVuelta(this.partido.getVueltaActual());
 			this.crearBotoneraAcciones();
 			ImprimirTablero.getInstance().mostrarCartasJugador();
 		}else{
 			accion.negar();
+			accion.procesarAccion(this.partido, this.partido.getRondaActual());
+			ImprimirTablero.getInstance().generarPuntajesDeEquipos();
 			accion.limpiarAccionesRelacionadasEnVuelta(this.partido.getVueltaActual());
 			this.crearBotoneraAcciones();
 			ImprimirTablero.getInstance().mostrarCartasJugador();
 		}
+		
+		this.partido.terminarSiEquipoAlcanzoLosTantosNecesarios();
 	}
 
 	private void crearTableros(){
@@ -510,7 +524,7 @@ public class ImprimirTablero {
 	private Label crearMensajeFinalDePartida(){
 		Label mensajeFinal = new Label ();
 		mensajeFinal.setText("El ganador de la partida es \n"
-							+ "el equipo numero: " + this.getPartido().getEquipoGanador() + "!");
+							+ "el equipo numero: " + (this.getPartido().getEquipoGanador() + 1) + "!");
 		
 		mensajeFinal.setFont(Font.font ("VerdanaItalic" , FontWeight.BOLD , 16));
 		mensajeFinal.setTextFill(Color.ANTIQUEWHITE);
