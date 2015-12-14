@@ -94,6 +94,7 @@ public abstract class Ronda {
 		}else if(this.esFinDeRonda()){
 			this.procesarAcciones();
 			this._partido.nuevaRonda();
+			this._partido.terminarSiEquipoAlcanzoLosTantosNecesarios();
 		} else if (this.hayParda()){
 			this.getVueltaActual().limpiarAccionesDeTanto();
 			this.getVueltas().add(new VueltaParda(this,this.getVueltaActual().getAccionesDeVuelta(),this.getPartido().getJugadorSiguienteA(this.getRepartio())));
