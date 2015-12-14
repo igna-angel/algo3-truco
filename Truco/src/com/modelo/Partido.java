@@ -233,7 +233,7 @@ public class Partido {
 	}
 
 	private boolean esFinDePartido(){
-		return this.getPuntajeFaltanteParaTerminarJuego() == 0;
+		return this.getPuntajeFaltanteParaTerminarJuego() <= 0;
 	}
 
 	public Jugador getJugadorConCartaGanadora(Carta cartaGanadora) {
