@@ -22,7 +22,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -465,7 +464,7 @@ public class ImprimirTablero {
 	}
 	
 	private ImageView crearImagenTruco(){
-        Image imagenTruco = new Image("https://raw.githubusercontent.com/igna-angel/algo3-truco/5e5aa5b00030f72bbe2f85ab055ca5482076829b/cartas%20espa%C3%B1olas/truco.png");
+        Image imagenTruco = new Image("com/interfazgrafica/baraja/truco.png");
         ImageView imagen = new ImageView (imagenTruco);
         imagen.setFitWidth(120);
         imagen.setPreserveRatio(true);

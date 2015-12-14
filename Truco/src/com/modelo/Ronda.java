@@ -160,11 +160,17 @@ public abstract class Ronda {
 		return this.getPartido().getEquipoDeJugador(this.getGanadoresDeVueltas().get(0)) == this.getPartido().getEquipoDeJugador(this.getGanadoresDeVueltas().get(1));
 	}
 	
-	boolean hayParda(){
+	public boolean hayParda(){
 		if(this.getVueltas().isEmpty()) return false;
 		if(this.getCantidadDeVueltas() == 1 && this.getVueltas().get(0).getEsParda()) return true;
 		if(this.getCantidadDeVueltas() == 2){
 			if(this.getVueltas().get(0).getEsParda() && this.getVueltas().get(1).getEsParda()) return true;
+			return false;
+		}
+		if(this.getCantidadDeVueltas() == 3){
+			if(this.getVueltas().get(2).getEsParda()){
+				this.asignarGanadorDeVueltaParda(this.getPartido().getJugadorSiguienteA(this.getRepartio()));
+			}
 			return false;
 		}
 		return false;
