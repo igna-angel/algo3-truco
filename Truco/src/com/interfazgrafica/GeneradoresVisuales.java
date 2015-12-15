@@ -19,7 +19,6 @@ import javafx.scene.layout.CornerRadii;
 public class GeneradoresVisuales {
 	
 	private Image _imagenCartaDorso = null;
-	private Image _imagenEspacioVacio = null;
 	private HashMap<String, Image> _imagenesCartas = null;
 	
 	private static GeneradoresVisuales instance = null;
@@ -37,7 +36,7 @@ public class GeneradoresVisuales {
 	
 	public ImageView generarVisionCartaDorso (){
 		if(this._imagenCartaDorso == null){
-			this._imagenCartaDorso = new Image("com/interfazgrafica/CartaDorsoAzul.png");
+			this._imagenCartaDorso = new Image("com/interfazgrafica/baraja/CartaDorsoAzul.png");
 		}
 		
 		ImageView nuevo = new ImageView (this._imagenCartaDorso);

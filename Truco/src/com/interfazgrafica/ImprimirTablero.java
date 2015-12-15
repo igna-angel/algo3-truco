@@ -181,7 +181,7 @@ public class ImprimirTablero {
 				unBoton.setOnAction(new BotonAccionEventHandler(nuevaAccion, vuelta, accionOriginal.getDestino(), accionOriginal.getOrigen()));			
 			}
 		}catch(NoHayAccionesException e){
-			System.out.println("NO HAY MAS ACCIONES POSIBLES");
+			//System.out.println("NO HAY MAS ACCIONES POSIBLES");
 		}
 	}	
 	
@@ -523,7 +523,7 @@ public class ImprimirTablero {
 	private Label crearMensajeFinalDePartida(){
 		Label mensajeFinal = new Label ();
 		mensajeFinal.setText("El ganador de la partida es \n"
-							+ "el equipo numero: " + (this.getPartido().getEquipoGanador() + 1) + "!");
+							+ "el equipo numero: " + (this.getPartido().getNumeroEquipoGanador()) + "!");
 		
 		mensajeFinal.setFont(Font.font ("VerdanaItalic" , FontWeight.BOLD , 16));
 		mensajeFinal.setTextFill(Color.ANTIQUEWHITE);

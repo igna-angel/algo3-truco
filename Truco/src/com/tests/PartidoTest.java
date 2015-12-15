@@ -51,7 +51,6 @@ public class PartidoTest {
 		this._partido.agregarJugadorAEquipo(new JugadorHumano(), 0);
 		this._partido.agregarJugadorAEquipo(new JugadorHumano(), 1);
 		
-		System.out.println(this._partido.getCantidadEquipos());
 		this._partido.crearOrdenJugadores();
 		this._partido.nuevaRonda();
 		Assert.assertEquals(1, this._partido.getCantidadDeRondas());

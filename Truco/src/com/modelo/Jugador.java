@@ -41,13 +41,13 @@ public abstract class Jugador implements IRecibible{
 		return this.getMano().getCartas();
 	}
 	
-	public void imprimirCartas(){
-		this.getMano().getCartas().forEach(carta ->
-			{
-				System.out.println("Palo: " + carta.getPalo() + " Numero: " + carta.getNumero());
-			}
-		);
-	}
+//	public void imprimirCartas(){
+//		this.getMano().getCartas().forEach(carta ->
+//			{
+//				System.out.println("Palo: " + carta.getPalo() + " Numero: " + carta.getNumero());
+//			}
+//		);
+//	}
 	
 	public void bajarCarta(Vuelta vuelta, Carta carta){
 		try{
@@ -65,8 +65,6 @@ public abstract class Jugador implements IRecibible{
 	public int getTantoEnMano(){
 		return this.getMano().getMaximosPuntosEnvido();
 	}
-
-	public abstract void jugar(Vuelta vuelta);
 
 	public boolean tieneCarta(Carta cartaGanadora) {
 		return this.getMano().contiene(cartaGanadora);

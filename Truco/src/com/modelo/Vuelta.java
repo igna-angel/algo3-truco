@@ -66,10 +66,6 @@ public class Vuelta implements IRecibible {
 		return this.getRonda().getJugadorSiguienteAlActual();
 	}
 	
-	private void procesarTurnoJugadorActual(){
-		this.getJugadorActual().jugar(this);		
-	}
-	
 	private void asignarJugadorActual(Jugador jugadorActual){
 		this._jugadorActual = jugadorActual;
 	}
@@ -80,13 +76,6 @@ public class Vuelta implements IRecibible {
 	
 	public Jugador getJugadorConCartaGanadora(){
 		return this.getRonda().getJugadorConCartaGanadora(this.getCartaGanadora());
-	}
-
-	public void jugar(){
-		while(!this.esFinDeVuelta()){
-			this.procesarTurnoJugadorActual();
-			this.asignarJugadorSiguiente();
-		}
 	}
 	
 	public Stack<Carta> getCartas(){
@@ -146,7 +135,7 @@ public class Vuelta implements IRecibible {
 				try{
 					accion.procesarAccion(this.getRonda().getPartido(), this.getRonda());
 				}catch(EstadoIndefinidoException e){
-					System.out.println("Accion con estado indefinido, salteando");
+					//System.out.println("Accion con estado indefinido, salteando");
 				}
 			}
 		}

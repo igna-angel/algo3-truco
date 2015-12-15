@@ -199,14 +199,12 @@ public abstract class Accion{
 						vuelta.getAccionesDeVuelta().add(accion);
 				}
 			}catch(NoHayAccionesException e){
-				System.out.println(e.getClass());
+				//System.out.println(e.getClass());
 			}
 			
 		}catch(AccionDummyException e){
-			System.out.println(e.getClass());
+			//System.out.println(e.getClass());
 		}		
-		
-		//this.limpiarAccionesRelacionadasEnVuelta(vuelta);
 	}
 
 	public boolean esDeTanto() {

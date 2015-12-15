@@ -12,6 +12,5 @@ public class TrucoMain {
 		partido.agregarJugadorAEquipo(new JugadorHumano(), 1);
 		
 		partido.crearPartido();
-		partido.jugar();
 	}
 }

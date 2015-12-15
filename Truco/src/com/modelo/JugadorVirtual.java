@@ -135,7 +135,6 @@ public class JugadorVirtual extends Jugador {
 	}
 */
 
-	@Override
 	public void jugar(Vuelta vuelta) {
 		// TODO Auto-generated method stub
 	}

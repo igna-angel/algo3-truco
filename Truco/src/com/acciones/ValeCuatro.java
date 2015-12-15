@@ -3,7 +3,6 @@ package com.acciones;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.interfazgrafica.ImprimirTablero;
 import com.modelo.Equipo;
 import com.modelo.Jugador;
 import com.modelo.Partido;

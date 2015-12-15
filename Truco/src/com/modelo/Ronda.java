@@ -111,16 +111,6 @@ public abstract class Ronda {
 		this.getPartido().mezclarYRepartir();
 	}
 	
-	public void jugar() {
-		while(!this.esFinDeRonda()){
-			this.nuevaVuelta();
-			this.getVueltaActual().jugar();
-			this.agregarGanadorDeVuelta(this.getVueltaActual().getJugadorConCartaGanadora());
-		}
-		
-		this.procesarAcciones();
-	}
-	
 	private void procesarAcciones(){
 		this.getVueltaActual().procesarAcciones();
 	}
@@ -178,7 +168,6 @@ public abstract class Ronda {
 	}
 
 	public Equipo getEquipoGanador() {
-		System.out.println(this.hayGanador());
 		if(!this.esFinDeRonda()) throw new NoHayGanadorException();
 		
 		List<Equipo> equiposGanadores = new ArrayList<Equipo>();

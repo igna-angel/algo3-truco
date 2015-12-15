@@ -174,15 +174,14 @@ public class Partido {
 		return this.puntajeFaltanteSegunMalasOBuenas(this.getMaximoPuntaje());
 	}
 
-	public int getEquipoGanador(){
-		for (int i = 0; i < this.getEquipos().getSize(); i++){
+	public int getNumeroEquipoGanador(){
+		for (int i = 0; i < this.getCantidadEquipos(); i++){
 			Equipo equipoPosibleGanador = this.getEquipos().getAt(i);
 			if(equipoPosibleGanador.getPuntaje() >= PUNTAJE_MAXIMO_JUEGO){
-				return this.getNumeroDeEquipo(equipoPosibleGanador);
+				return (this.getNumeroDeEquipo(equipoPosibleGanador) + 1) ;
 			}
 		}
-
-		return -1;
+		throw new NoHayGanadorException();
 	}
 
 	private int puntajeFaltanteSegunMalasOBuenas(int puntaje){
@@ -219,19 +218,6 @@ public class Partido {
 		this.getMazo().repartir(this.getOrdenJugadores(), this.getOrdenJugadores().getFirst(), this.CARTAS_POR_JUGADOR);
 	}
 
-	public void jugar(){
-		while(!this.esFinDePartido()){
-			System.out.println("Jugando Ronda");
-			this.mezclarYRepartir();
-			System.out.println("Jugar Partido");
-			this.nuevaRonda();
-			//ImprimirTablero.getInstance().imprimirTablero(this);
-			this.getRondaActual().jugar();
-		}
-
-		/// mostrar pantalla victoria
-	}
-
 	private boolean esFinDePartido(){
 		return this.getPuntajeFaltanteParaTerminarJuego() <= 0;
 	}
@@ -265,16 +251,7 @@ public class Partido {
 	
 	public void terminarSiEquipoAlcanzoLosTantosNecesarios() {
 		if (esFinDePartido()) {
-			System.out.println("TERMINO EL JUEGO, EL EQUIPO GANADOR ES EL " + this.getNumeroDeEquipoGanador());
 			ImprimirTablero.getInstance().imprimirPantallaFinDeJuego();
 		}
-	}
-	
-	private int getNumeroDeEquipoGanador() {
-		if (this.getPrimerEquipo().getPuntaje() < 30 && this.getUltimoEquipo().getPuntaje() < 30) {
-			throw new NoHayGanadorException();
-		}
-
-		return this.getPrimerEquipo().getPuntaje() >= 30 ? 1 : 2; 
 	}
 }
