@@ -2,7 +2,7 @@ package com.modelo;
 
 import java.util.List;
 
-import com.acciones.Accion;
+import com.modelo.acciones.Accion;
 
 public class VueltaParda extends Vuelta{
 

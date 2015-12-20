@@ -3,16 +3,16 @@ package com.modelo;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.acciones.Accion;
-import com.acciones.AccionNoTruco;
-import com.acciones.Envido;
-import com.acciones.FaltaEnvido;
-import com.acciones.Flor;
-import com.acciones.RealEnvido;
-import com.acciones.Truco;
 import com.exceptions.NoHayGanadorException;
 import com.exceptions.NoHayVueltasException;
 import com.exceptions.NoSeEncuentraJugadorException;
+import com.modelo.acciones.Accion;
+import com.modelo.acciones.AccionNoTruco;
+import com.modelo.acciones.Envido;
+import com.modelo.acciones.FaltaEnvido;
+import com.modelo.acciones.Flor;
+import com.modelo.acciones.RealEnvido;
+import com.modelo.acciones.Truco;
 import com.modelo.cartas.Carta;
 
 public abstract class Ronda {

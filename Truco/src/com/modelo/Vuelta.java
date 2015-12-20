@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-import com.acciones.Accion;
 import com.exceptions.EstadoIndefinidoException;
+import com.modelo.acciones.Accion;
 import com.modelo.cartas.Carta;
 import com.modelo.cartas.CartaInvalida;
 

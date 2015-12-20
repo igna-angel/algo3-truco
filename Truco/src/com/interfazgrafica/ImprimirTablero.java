@@ -4,12 +4,12 @@ import com.modelo.Jugador;
 import com.modelo.JugadorHumano;
 import com.modelo.Partido;
 import com.modelo.Vuelta;
+import com.modelo.acciones.Accion;
 import com.modelo.cartas.Carta;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.acciones.Accion;
 import com.exceptions.NoHayAccionesException;
 import com.interfazgrafica.GeneradoresVisuales;
 

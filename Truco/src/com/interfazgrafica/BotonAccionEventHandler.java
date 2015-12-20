@@ -1,8 +1,8 @@
 package com.interfazgrafica;
 
-import com.acciones.Accion;
 import com.modelo.Jugador;
 import com.modelo.Vuelta;
+import com.modelo.acciones.Accion;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

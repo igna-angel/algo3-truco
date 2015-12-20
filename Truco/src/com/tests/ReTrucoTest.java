@@ -4,10 +4,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.acciones.Accion;
-import com.acciones.ReTruco;
-import com.acciones.Truco;
 import com.modelo.Partido;
+import com.modelo.acciones.Accion;
+import com.modelo.acciones.ReTruco;
+import com.modelo.acciones.Truco;
 
 public class ReTrucoTest {
 	private ReTruco _reTruco;

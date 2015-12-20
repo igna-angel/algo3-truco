@@ -4,11 +4,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.acciones.Accion;
-import com.acciones.Envido;
-import com.acciones.EnvidoEnvido;
-import com.acciones.RealEnvido;
 import com.modelo.Partido;
+import com.modelo.acciones.Accion;
+import com.modelo.acciones.Envido;
+import com.modelo.acciones.EnvidoEnvido;
+import com.modelo.acciones.RealEnvido;
 
 public class RealEnvidoTest {
 	private RealEnvido _realEnvido;

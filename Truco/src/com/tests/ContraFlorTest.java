@@ -4,11 +4,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.acciones.Accion;
-import com.acciones.ContraFlor;
-import com.acciones.Flor;
 import com.modelo.JugadorHumano;
 import com.modelo.Partido;
+import com.modelo.acciones.Accion;
+import com.modelo.acciones.ContraFlor;
+import com.modelo.acciones.Flor;
 import com.modelo.cartas.CartaNormal;
 import com.modelo.cartas.Carta.Palo;
 
